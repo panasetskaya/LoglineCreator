@@ -6,4 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".CreatingActivity">
 
+    <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
+        android:id="@+id/worm_dots_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="16dp"
+        app:dotsColor="@color/our_green"
+        app:dotsStrokeColor="@color/our_dots_nav_grey"
+        app:dotsCornerRadius="8dp"
+        app:dotsSize="16dp"
+        app:dotsSpacing="4dp"
+        app:dotsStrokeWidth="2dp"
+        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
