@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Logline Creator</string>
+    <string name="main_header">Your loglines</string>
+    <string name="main_create">Create a logline</string>
+    <string name="main_button_start">Start</string>
+    <string name="main_text">Answer 9 simple questions about your story and get a full-fledged movie logline</string>
+
 </resources>
