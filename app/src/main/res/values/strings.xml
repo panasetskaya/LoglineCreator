@@ -4,5 +4,7 @@
     <string name="main_create">Create a logline</string>
     <string name="main_button_start">Start</string>
     <string name="main_text">Answer 9 simple questions about your story and get a full-fledged movie logline</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
