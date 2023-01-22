@@ -4,7 +4,16 @@
     <string name="main_create">Create a logline</string>
     <string name="main_button_start">Start</string>
     <string name="main_text">Answer 9 simple questions about your story and get a full-fledged movie logline</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- dummies -->
+    <string name="dummy_major_event">major event</string>
+    <string name="dummy_main_char">main character</string>
+    <string name="dummy_theme">theme</string>
+    <string name="dummy_main_action">main action</string>
+    <string name="dummy_mid_point">mid point event</string>
+    <string name="dummy_story_world">story world</string>
+    <string name="dummy_deadline">deadline</string>
+    <string name="dummy_ready">your logline is ready</string>
+
 
 </resources>
