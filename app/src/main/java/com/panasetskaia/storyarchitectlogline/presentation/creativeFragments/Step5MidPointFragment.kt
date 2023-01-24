@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.panasetskaia.storyarchitectlogline.R
+import com.panasetskaia.storyarchitectlogline.presentation.CreativeActivity
 
 class Step5MidPointFragment : Fragment() {
 
@@ -16,6 +17,7 @@ class Step5MidPointFragment : Fragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_step5_mid_point, container, false)
     }
+
 
     companion object {
 

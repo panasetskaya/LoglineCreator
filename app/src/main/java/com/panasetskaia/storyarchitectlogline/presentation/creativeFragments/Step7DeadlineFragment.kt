@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.panasetskaia.storyarchitectlogline.R
+import com.panasetskaia.storyarchitectlogline.presentation.CreativeActivity
 
 class Step7DeadlineFragment : Fragment() {
 
@@ -16,6 +17,8 @@ class Step7DeadlineFragment : Fragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_step7_deadline, container, false)
     }
+
+
 
     companion object {
 

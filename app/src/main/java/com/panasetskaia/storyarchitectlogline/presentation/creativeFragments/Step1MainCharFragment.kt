@@ -34,12 +34,7 @@ class Step1MainCharFragment : Fragment() {
     }
 
     private fun setListeners() {
-//        binding.buttonHint.setOnClickListener {
-//            (requireActivity() as CreativeActivity).sideSheetDialog.show()
-//        }
-//        binding.buttonChangeHint.setOnClickListener {
-//
-//        }
+
     }
 
     companion object {

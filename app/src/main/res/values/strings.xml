@@ -8,7 +8,6 @@
     <string name="toolbar_create">Create a logline</string>
 
 
-
     <!-- dummies -->
     <string name="dummy_major_event">major event</string>
     <string name="dummy_main_char">main character</string>
@@ -25,7 +24,7 @@
     <string name="search_title">Search</string>
     <string name="main_text_when_empty">Answer 9 simple questions about your story and get a full-fledged movie logline</string>
 
-    <!-- main character -->
+    <!-- main character fragment-->
     <string name="mc_header">Main character</string>
     <string name="mc_info">Describe your main character</string>
     <string name="mc_info_eg">No name, please. Just who they are and what they do, e.g. "a lonesome cowboy" or "an arrogant publicist".</string>
@@ -40,11 +39,34 @@
         and/or strength. Loglines only have character names if the names are already a part of popular culture.</string>
 
 
-    <!-- major event -->
+    <!-- major event fragment -->
     <string name="major_event_hint">Events are things that happen to the main character, and that motivates their actions.
         They\'re never anything the character does. Here we\'re looking for the story\'s main event or
         Inciting Incident/Call To Adventure. This typically happens in the first 10–20 minutes.</string>
 
+    <!-- main action fragment -->
+    <string name="theme_hint">Even if theme is important in most stories, it is not critical to a basic logline.
+        And often theme is established further down the development process.
+        Leave it out for now, or try something and change it later.</string>
 
+    <!-- theme fragment -->
+    <string name="action_hint">The main action or goal is \'what the story is about\' for the broad audience.
+        It is that part of the story we can visualise when we hear the logline, and
+        which (hopefully) makes us want to see the film or show episode. It is the
+        objective the main character will pursue for most of the time.</string>
+
+    <!-- mid point fragment -->
+    <string name="mid_point_hint">This event often happens just when the goal is within reach.
+        It flips the character\'s fortune, and any gains now seem lost.
+        But it may also be the motivation for the character\'s change in goal or approach.
+        After the MPR, they often change their behaviour and start doing \'the right thing\'.</string>
+
+    <!-- world fragment -->
+    <string name="world_hint">Only add this if it is essential to understand the story.</string>
+
+    <!-- deadline fragment -->
+    <string name="deadline_hint">To make the logline work, write this as a full sentence like in the examples.
+        \n\nOften the stakes are clear from the Main Event. But in some cases, adding negative
+        stakes adds urgency to the logline, ultimately improving its emotional impact.</string>
 
 </resources>

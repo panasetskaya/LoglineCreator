@@ -22,7 +22,7 @@ class CreativeActivity : AppCompatActivity() {
     private lateinit var viewPager2: ViewPager2
     private lateinit var sideSheetDialog: SideSheetDialog
     private lateinit var sideSheetView: View
-    lateinit var hintText: TextView
+    private lateinit var hintText: TextView
     private lateinit var adapter: StepsPagerAdapter
     private lateinit var buttonBack: Button
     private lateinit var buttonNext: Button
@@ -37,6 +37,7 @@ class CreativeActivity : AppCompatActivity() {
         setHint()
         setDots()
         setBottomButtons()
+        setHintText()
     }
 
     private fun setHint() {
@@ -78,7 +79,20 @@ class CreativeActivity : AppCompatActivity() {
     }
 
     private fun setHintText() {
-        //todo: у адаптера должен быть какой-то слушатель
+        viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                when (position) {
+                    0 -> hintText.text = getString(R.string.mc_hint)
+                    1 -> hintText.text = getString(R.string.major_event_hint)
+                    2 -> hintText.text = getString(R.string.theme_hint)
+                    3 -> hintText.text = getString(R.string.action_hint)
+                    4 -> hintText.text = getString(R.string.mid_point_hint)
+                    5 -> hintText.text = getString(R.string.world_hint)
+                    6 -> hintText.text = getString(R.string.deadline_hint)
+                    else -> hintText.text = "" //todo: тут вообще не должно быть
+                }
+            }
+        })
     }
 
     private fun setupMenu() {

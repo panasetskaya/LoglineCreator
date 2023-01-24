@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.panasetskaia.storyarchitectlogline.R
+import com.panasetskaia.storyarchitectlogline.presentation.CreativeActivity
 
 class Step4MainActionFragment : Fragment() {
 
@@ -16,6 +17,9 @@ class Step4MainActionFragment : Fragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_step4_main_action, container, false)
     }
+
+
+
 
     companion object {
 
