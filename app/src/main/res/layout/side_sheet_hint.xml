@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/side_sheet_hint"
+        style="@style/Widget.Material3.SideSheet"
+        android:layout_width="256dp"
+        android:layout_height="match_parent"
+
+        >
+
+        <ImageView
+            android:id="@+id/iv_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_hint"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_margin="16dp"/>
+
+        <TextView
+            android:id="@+id/tv_hint_header"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/hint"
+            android:textSize="16sp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iv_hint"
+            android:layout_margin="16dp"
+            android:textFontWeight="600"/>
+
+        <TextView
+            android:id="@+id/tv_mc_hint"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto"
+            android:text="@string/mc_hint"
+            android:textColor="@color/our_text_grey"
+            android:textSize="14sp"
+            app:layout_constraintTop_toBottomOf="@+id/iv_hint"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="32dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="16dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+<!--    app:layout_behavior="com.google.android.material.sidesheet.SideSheetBehavior"-->

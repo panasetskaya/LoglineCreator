@@ -1,9 +1,11 @@
 <resources>
+
     <string name="app_name">Logline Creator</string>
-    <string name="main_header">Your loglines</string>
-    <string name="main_create">Create a logline</string>
-    <string name="main_button_start">Start</string>
-    <string name="main_text">Answer 9 simple questions about your story and get a full-fledged movie logline</string>
+    <string name="hint">Hint</string>
+    <string name="back">Back</string>
+    <string name="next">Next</string>
+
+
 
     <!-- dummies -->
     <string name="dummy_major_event">major event</string>
@@ -14,6 +16,33 @@
     <string name="dummy_story_world">story world</string>
     <string name="dummy_deadline">deadline</string>
     <string name="dummy_ready">your logline is ready</string>
+    <string name="dummy_change_hint">disable swiping</string>
+
+    <!-- main acitivity -->
+    <string name="main_header">Your loglines</string>
+    <string name="main_create">Create a logline</string>
+    <string name="main_button_start">Start</string>
+    <string name="main_text_when_empty">Answer 9 simple questions about your story and get a full-fledged movie logline</string>
+
+    <!-- main character -->
+    <string name="mc_header">Main character</string>
+    <string name="mc_info">Describe your main character</string>
+    <string name="mc_info_eg">No name, please. Just who they are and what they do, e.g. "a lonesome cowboy" or "an arrogant publicist".</string>
+    <string name="mc_gender">What is their gender?</string>
+    <string-array name="mc_gender_choice">
+        <item>Male</item>
+        <item>Female</item>
+        <item>Other</item>
+    </string-array>
+    <string name="mc_gender_eg">Is the MAIN CHARACTER described in the event by more than "he" or "she"?</string>
+    <string name="mc_hint">Typically this includes the character\'s function or job, and some weakness
+        and/or strength. Loglines only have character names if the names are already a part of popular culture.</string>
+
+
+    <!-- major event -->
+    <string name="major_event_hint">Events are things that happen to the main character, and that motivates their actions.
+        They\'re never anything the character does. Here we\'re looking for the story\'s main event or
+        Inciting Incident/Call To Adventure. This typically happens in the first 10–20 minutes.</string>
 
 
 </resources>
