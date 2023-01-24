@@ -18,21 +18,49 @@
         android:paddingLeft="0dp"
         android:paddingRight="0dp"/>
 
+    <Button
+        android:id="@+id/button_back"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        style="@style/Widget.MaterialComponents.Button.Icon"
+        app:icon="@drawable/ic_arrow_back"
+        app:iconGravity="textStart"
+        app:iconPadding="0dp"
+        android:padding="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/worm_dots_indicator"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="@string/back"/>
+
     <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
         android:id="@+id/worm_dots_indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/view_pager_steps"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button_back"
+        app:layout_constraintEnd_toStartOf="@+id/button_next"
         android:layout_margin="16dp"
         app:dotsColor="@color/our_green"
         app:dotsStrokeColor="@color/our_dots_nav_grey"
         app:dotsCornerRadius="8dp"
-        app:dotsSize="16dp"
+        app:dotsSize="8dp"
         app:dotsSpacing="4dp"
         app:dotsStrokeWidth="2dp"
         />
+
+    <Button
+        android:id="@+id/button_next"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        style="@style/Widget.MaterialComponents.Button.Icon"
+        app:icon="@drawable/ic_arrow_forward"
+        app:iconGravity="textEnd"
+        app:iconPadding="0dp"
+        android:padding="0dp"
+        app:layout_constraintStart_toEndOf="@+id/worm_dots_indicator"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="@string/next"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

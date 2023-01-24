@@ -12,8 +12,8 @@ class StepsPagerAdapter(parentActivity: AppCompatActivity): FragmentStateAdapter
 
     override fun createFragment(position: Int): Fragment {
         return when (position) {
-            0 -> Step1MajorEventFragment()
-            1 -> Step2MainCharacterFragment()
+            0 -> Step1MainCharFragment()
+            1 -> Step2MajorEventFragment()
             2 -> Step3ThemeFragment()
             3 -> Step4MainActionFragment()
             4 -> Step5MidPointFragment()
