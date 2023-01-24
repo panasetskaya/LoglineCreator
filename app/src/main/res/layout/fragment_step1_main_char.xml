@@ -17,28 +17,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/button_hint"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/hint"
-        app:layout_constraintTop_toBottomOf="@+id/tv_main_char"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_margin="16dp"
-        />
-
-    <Button
-        android:id="@+id/button_change_hint"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/dummy_change_hint"
-        app:layout_constraintTop_toBottomOf="@+id/button_hint"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_margin="16dp"
-        />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

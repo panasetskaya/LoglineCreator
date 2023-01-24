@@ -37,16 +37,16 @@
             android:id="@+id/tv_mc_hint"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="16dp"
             android:fontFamily="@font/roboto"
             android:text="@string/mc_hint"
             android:textColor="@color/our_text_grey"
             android:textSize="14sp"
-            app:layout_constraintTop_toBottomOf="@+id/iv_hint"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="32dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="16dp"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_hint" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

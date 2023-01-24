@@ -6,6 +6,27 @@
     android:layout_height="match_parent"
     tools:context=".presentation.MainActivity">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/main_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:minHeight="?attr/actionBarSize"
+        android:elevation="2dp"
+        >
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/main_toolbar"
+            app:titleTextAppearance="@style/MyToolbarTextAppearance"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+
+            android:background="?attr/colorSecondaryVariant" />
+    </com.google.android.material.appbar.AppBarLayout>
+
     <Button
         android:id="@+id/button_start"
         android:layout_width="wrap_content"

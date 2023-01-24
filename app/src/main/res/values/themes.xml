@@ -7,11 +7,24 @@
         <item name="colorOnPrimary">@color/our_text_grey</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/our_purple</item>
-        <item name="colorSecondaryVariant">@color/our_background_grey</item>
-        <item name="colorOnSecondary">@color/our_text_grey</item>
+        <item name="colorSecondaryVariant">@color/white</item>
+        <item name="colorOnSecondary">@color/our_headline_grey</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
         <item name="fontFamily">@font/roboto</item>
+
+<!--        <item name="android:windowAnimationStyle">@null</item>-->
+
+
+
+
+    </style>
+
+
+    <style name="MyToolbarTextAppearance">
+        <item name="android:textSize">22sp</item>
+        <item name="fontFamily">@font/nunito</item>
+        <item name="android:textStyle">bold</item>
     </style>
 </resources>

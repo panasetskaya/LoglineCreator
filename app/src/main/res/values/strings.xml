@@ -4,6 +4,8 @@
     <string name="hint">Hint</string>
     <string name="back">Back</string>
     <string name="next">Next</string>
+    <string name="toolbar_your_loglines">Your loglines</string>
+    <string name="toolbar_create">Create a logline</string>
 
 
 
@@ -19,9 +21,8 @@
     <string name="dummy_change_hint">disable swiping</string>
 
     <!-- main acitivity -->
-    <string name="main_header">Your loglines</string>
-    <string name="main_create">Create a logline</string>
     <string name="main_button_start">Start</string>
+    <string name="search_title">Search</string>
     <string name="main_text_when_empty">Answer 9 simple questions about your story and get a full-fledged movie logline</string>
 
     <!-- main character -->
@@ -43,6 +44,7 @@
     <string name="major_event_hint">Events are things that happen to the main character, and that motivates their actions.
         They\'re never anything the character does. Here we\'re looking for the story\'s main event or
         Inciting Incident/Call To Adventure. This typically happens in the first 10–20 minutes.</string>
+
 
 
 </resources>

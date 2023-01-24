@@ -6,13 +6,36 @@
     android:layout_height="match_parent"
     tools:context=".presentation.CreativeActivity">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/creative_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:minHeight="?attr/actionBarSize"
+        android:elevation="2dp"
+        >
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            style="@style/Widget.MaterialComponents.Toolbar.Primary"
+            app:titleTextAppearance="@style/MyToolbarTextAppearance"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:navigationIcon="?attr/homeAsUpIndicator"
+            android:background="?attr/colorSecondaryVariant"
+            />
+    </com.google.android.material.appbar.AppBarLayout>
+
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/view_pager_steps"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/creative_bar"
         app:layout_constraintBottom_toTopOf="@+id/worm_dots_indicator"
         android:clipToPadding="false"
         android:paddingLeft="0dp"

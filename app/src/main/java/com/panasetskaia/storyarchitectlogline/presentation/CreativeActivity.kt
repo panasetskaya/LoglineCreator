@@ -2,10 +2,15 @@ package com.panasetskaia.storyarchitectlogline.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
+import android.os.SystemClock
+import android.transition.Explode
+import android.view.*
 import android.widget.Button
 import android.widget.TextView
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.sidesheet.SideSheetDialog
 import com.panasetskaia.storyarchitectlogline.R
 import com.panasetskaia.storyarchitectlogline.presentation.adapters.StepsPagerAdapter
@@ -14,17 +19,21 @@ import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
 class CreativeActivity : AppCompatActivity() {
 
     private lateinit var wormDotsIndicator: WormDotsIndicator
-    lateinit var viewPager2: ViewPager2
-    lateinit var sideSheetDialog: SideSheetDialog
-    lateinit var sideSheetView: View
+    private lateinit var viewPager2: ViewPager2
+    private lateinit var sideSheetDialog: SideSheetDialog
+    private lateinit var sideSheetView: View
     lateinit var hintText: TextView
     private lateinit var adapter: StepsPagerAdapter
     private lateinit var buttonBack: Button
     private lateinit var buttonNext: Button
+    private lateinit var toolbar: MaterialToolbar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_creative)
+        setSupportActionBar(findViewById(R.id.toolbar))
+        title = getString(R.string.toolbar_create)
+        setupMenu()
         setHint()
         setDots()
         setBottomButtons()
@@ -70,5 +79,30 @@ class CreativeActivity : AppCompatActivity() {
 
     private fun setHintText() {
         //todo: у адаптера должен быть какой-то слушатель
+    }
+
+    private fun setupMenu() {
+        toolbar = findViewById(R.id.toolbar)
+        toolbar.setNavigationOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+            true
+        }
+        addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.menu_creative, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                return when (menuItem.itemId) {
+                    R.id.toolbar_menu_hint -> {
+                        sideSheetDialog.show()
+                        true
+                    }
+                    else -> {
+                        true
+                    }
+                }
+            }
+        }, this)
     }
 }
