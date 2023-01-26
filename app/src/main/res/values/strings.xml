@@ -26,15 +26,16 @@
 
     <!-- main character fragment-->
     <string name="mc_header">Main character</string>
-    <string name="mc_info">Describe your main character</string>
+    <string name="mc_info">Describe your Main Character (MC)</string>
     <string name="mc_info_eg">No name, please. Just who they are and what they do, e.g. "a lonesome cowboy" or "an arrogant publicist".</string>
-    <string name="mc_gender">What is their gender?</string>
+    <string name="mc_gender">What is the gender of your MC?</string>
     <string-array name="mc_gender_choice">
+        <item></item>
         <item>Male</item>
         <item>Female</item>
         <item>Other</item>
     </string-array>
-    <string name="mc_gender_eg">Is the MAIN CHARACTER described in the event by more than "he" or "she"?</string>
+    <string name="mc_gender_eg">Is the MAIN CHARACTER described in the event by more than \"he\" or \"she\"?</string>
     <string name="mc_hint">Typically this includes the character\'s function or job, and some weakness
         and/or strength. Loglines only have character names if the names are already a part of popular culture.</string>
 
@@ -47,19 +48,25 @@
     <!-- main action fragment -->
     <string name="theme_hint">Even if theme is important in most stories, it is not critical to a basic logline.
         And often theme is established further down the development process.
-        Leave it out for now, or try something and change it later.</string>
+        Leave it out for now, or try something and change it later.
+        \n\nStart your answer with "To", E.g. "to become less selfish", "to find purpose", "to re-establish her self-esteem".  </string>
 
     <!-- theme fragment -->
     <string name="action_hint">The main action or goal is \'what the story is about\' for the broad audience.
         It is that part of the story we can visualise when we hear the logline, and
         which (hopefully) makes us want to see the film or show episode. It is the
-        objective the main character will pursue for most of the time.</string>
+        objective the main character will pursue for most of the time.
+        \n\nStart your answer with "To", E.g. "to find his son and return him home".  </string>
 
     <!-- mid point fragment -->
     <string name="mid_point_hint">This event often happens just when the goal is within reach.
         It flips the character\'s fortune, and any gains now seem lost.
         But it may also be the motivation for the character\'s change in goal or approach.
         After the MPR, they often change their behaviour and start doing \'the right thing\'.</string>
+    <string name="mid_point_hint_alternative">This is optional, in case you know what an MPR is.
+        \n\nThis Event makes the character change their behaviour usually for the better in the 2nd half of the story.
+        \n\nThis can be a change of approach, or a new goal entirely, E.g. "to venture into the ocean to kill the shark".
+    </string>
 
     <!-- world fragment -->
     <string name="world_hint">Only add this if it is essential to understand the story.</string>

@@ -5,6 +5,7 @@
         <item name="colorPrimary">@color/our_green</item>
         <item name="colorPrimaryVariant">@color/our_background_grey</item>
         <item name="colorOnPrimary">@color/our_text_grey</item>
+        <item name="colorOnSurface">@color/our_text_grey</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/our_purple</item>
         <item name="colorSecondaryVariant">@color/white</item>
@@ -16,15 +17,43 @@
 
 <!--        <item name="android:windowAnimationStyle">@null</item>-->
 
-
-
-
     </style>
-
 
     <style name="MyToolbarTextAppearance">
         <item name="android:textSize">22sp</item>
         <item name="fontFamily">@font/nunito</item>
         <item name="android:textStyle">bold</item>
     </style>
+
+    <style name="MySubHeaderTextAppearance">
+        <item name="android:fontFamily">@font/nunito</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/our_subheader_grey</item>
+    </style>
+
+    <style name="MyExplanationsTextAppearance">
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/our_eg_grey</item>
+    </style>
+
+    <style name="RoundedStyle" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">4dp</item>
+    </style>
+
+    <style name="SpinnerStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/spinner_outlined</item>
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_marginEnd">16dp</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">20dp</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:paddingBottom">5dp</item>
+        <item name="android:popupBackground">#DFFFFFFF</item>
+    </style>
+
 </resources>

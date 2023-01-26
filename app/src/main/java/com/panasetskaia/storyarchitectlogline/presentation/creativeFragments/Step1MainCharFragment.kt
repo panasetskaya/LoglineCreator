@@ -1,15 +1,14 @@
 package com.panasetskaia.storyarchitectlogline.presentation.creativeFragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import com.google.android.material.sidesheet.SideSheetDialog
+import android.widget.ArrayAdapter
+import androidx.fragment.app.Fragment
 import com.panasetskaia.storyarchitectlogline.R
 import com.panasetskaia.storyarchitectlogline.databinding.FragmentStep1MainCharBinding
-import com.panasetskaia.storyarchitectlogline.presentation.CreativeActivity
+
 
 class Step1MainCharFragment : Fragment() {
 
@@ -31,6 +30,7 @@ class Step1MainCharFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setListeners()
+        setSpinner()
     }
 
     private fun setListeners() {
@@ -49,4 +49,12 @@ class Step1MainCharFragment : Fragment() {
 
     //            (requireActivity() as CreativeActivity).hintText.setText(R.string.major_event_hint) //change hint text
 
+    private fun setSpinner() {
+        val adapter = ArrayAdapter.createFromResource(
+            requireContext(), R.array.mc_gender_choice,
+            R.layout.spinner_item_gender
+        )
+        adapter.setDropDownViewResource(R.layout.spinner_item_gender)
+        binding.spinnerMcGender.adapter = adapter
+    }
 }
