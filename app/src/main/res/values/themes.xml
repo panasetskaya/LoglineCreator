@@ -7,7 +7,7 @@
         <item name="colorOnPrimary">@color/our_text_grey</item>
         <item name="colorOnSurface">@color/our_text_grey</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/our_purple</item>
+        <item name="colorSecondary">@color/our_green</item>
         <item name="colorSecondaryVariant">@color/white</item>
         <item name="colorOnSecondary">@color/our_headline_grey</item>
         <!-- Status bar color. -->
@@ -36,6 +36,12 @@
         <item name="android:fontFamily">@font/roboto</item>
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/our_eg_grey</item>
+    </style>
+
+    <style name="MyPlainTextAppearance">
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/our_text_grey</item>
     </style>
 
     <style name="RoundedStyle" parent="ShapeAppearance.MaterialComponents.SmallComponent">

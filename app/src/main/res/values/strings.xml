@@ -44,19 +44,27 @@
     <string name="major_event_hint">Events are things that happen to the main character and motivate their actions.
         They\'re never anything the character does. Here we\'re looking for the story\'s main event or
         Inciting Incident/Call To Adventure. This typically happens in the first 10–20 minutes.</string>
+    <string name="major_event_header">Major event</string>
+    <string name="major_event_info">What is the MAJOR EVENT that kicks off the story?</string>
+    <string name="major_event_info_eg">Full sentence, e.g. \"A shark kills a swimmer.\"</string>
+    <string name="major_event_incl_mc">Major event include the MC</string>
 
     <!-- theme fragment -->
+    <string name="theme_header">Theme</string>
+    <string name="theme_i_want">I want to include a THEME or Character Arc. </string>
     <string name="theme_hint">Even if theme is important in most stories, it is not critical to a basic logline.
         And often theme is established further down the development process.
         Leave it out for now, or try something and change it later.
-        \n\nStart your answer with \"To\", E.g. \"to become less selfish\", \"to find purpose\", \"to re-establish her self-esteem\".  </string>
+        \n\nStart your answer with \"to\", e.g. \"to become less selfish\", \"to find purpose\", \"to re-establish her self-esteem\".  </string>
+    <string name="theme_info">What does the MC have to learn/overcome?</string>
+    <string name="theme_eg">E.g. \"to become a better person\".</string>
 
     <!--  main action fragment-->
     <string name="action_hint">The main action or goal is \'what the story is about\' for the broad audience.
         It is that part of the story we can visualise when we hear the logline, and
         which (hopefully) makes us want to see the film or show episode. It is the
         objective the main character will pursue for most of the time.
-        \n\nStart your answer with \"To\", E.g. \"to find his son and return him home\".  </string>
+        \n\nStart your answer with \"To\", e.g. \"to find his son and return him home\".  </string>
 
     <!-- mid point fragment -->
     <string name="mid_point_hint">This event often happens just when the goal is within reach.
