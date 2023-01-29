@@ -60,11 +60,14 @@
     <string name="theme_eg">E.g. \"to become a better person\".</string>
 
     <!--  main action fragment-->
+    <string name="main_action_header">Main action</string>
     <string name="action_hint">The main action or goal is \'what the story is about\' for the broad audience.
         It is that part of the story we can visualise when we hear the logline, and
         which (hopefully) makes us want to see the film or show episode. It is the
         objective the main character will pursue for most of the time.
-        \n\nStart your answer with \"To\", e.g. \"to find his son and return him home\".  </string>
+        \n\nStart your answer with \"to\", e.g. \"to find his son and return him home\".  </string>
+    <string name="main_action_info">What is the story\'s main ACTION/GOAL?</string>
+    <string name="main_action_eg">E.g. ""to do the Main Action"</string>
 
     <!-- mid point fragment -->
     <string name="mid_point_hint">This event often happens just when the goal is within reach.
@@ -75,6 +78,13 @@
         \n\nThis Event makes the character change their behaviour usually for the better in the 2nd half of the story.
         \n\nThis can be a change of approach, or a new goal entirely, E.g. \"to venture into the ocean to kill the shark\".
     </string>
+    <string name="mid_point_i_want">I want to include an MPR (Mid Point Reversal)</string>
+    <string name="mid_point_header">Mid Point Reversal</string>
+    <string name="mid_point_eg">E.g. \"something happens that changes everything,\"</string>
+    <string name="mid_point_info">"What is the MPR EVENT? "</string>
+    <string name="mid_point_after_info">"What does the MC do/pursue after the MPR Event? "</string>
+    <string name="mid_point_after_eg">E.g. \"to take a New Approach\"</string>
+
 
     <!-- world fragment -->
     <string name="world_hint">Only add this if it is essential to understand the story.</string>
@@ -83,5 +93,6 @@
     <string name="deadline_hint">To make the logline work, write this as a full sentence like in the examples.
         \n\nOften the stakes are clear from the Main Event. But in some cases, adding negative
         stakes adds urgency to the logline, ultimately improving its emotional impact.</string>
+
 
 </resources>

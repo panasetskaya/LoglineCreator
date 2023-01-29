@@ -19,6 +19,13 @@
 
     </style>
 
+    <style name="MyNavButtonsStyle" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="android:padding">0dp</item>
+        <item name="backgroundTint">@android:color/transparent</item>
+        <item name="android:textColor">@color/our_subheader_grey</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="MyToolbarTextAppearance">
         <item name="android:textSize">22sp</item>
         <item name="fontFamily">@font/nunito</item>
