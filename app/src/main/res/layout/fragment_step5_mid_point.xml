@@ -30,12 +30,12 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="24dp"
         android:layout_marginTop="12dp"
-        app:layout_constraintEnd_toStartOf="@id/switch_major_event_incl_mc"
+        app:layout_constraintEnd_toStartOf="@id/switch_include_mpr"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_mid_point" />
 
     <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/switch_major_event_incl_mc"
+        android:id="@+id/switch_include_mpr"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
@@ -122,5 +122,12 @@
         android:gravity="start"
         style="@style/MyExplanationsTextAppearance"
         android:text="@string/mid_point_after_eg"/>
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group_mpr_included"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:constraint_referenced_ids="tv_mid_point_after_eg, tv_mid_point_eg,ti_mid_point, ti_mid_point_after"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

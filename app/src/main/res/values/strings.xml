@@ -88,11 +88,21 @@
 
     <!-- world fragment -->
     <string name="world_hint">Only add this if it is essential to understand the story.</string>
+    <string name="world_question">Is this a special world, with special rules?</string>
+    <string name="world_info">How is the world of your story different from reality?</string>
+    <string name="world_eg">E.g. "a Special World"</string>
+    <string name="world_subheader">Story world</string>
 
     <!-- deadline fragment -->
     <string name="deadline_hint">To make the logline work, write this as a full sentence like in the examples.
         \n\nOften the stakes are clear from the Main Event. But in some cases, adding negative
         stakes adds urgency to the logline, ultimately improving its emotional impact.</string>
+    <string name="deadline_question">Include a Deadline/Stakes?</string>
+    <string name="deadline_info">What happens if the main character fails?</string>
+    <string name="deadline_eg">E.g. \'the police catches the girls\', or \'the shark attacks again\'.</string>
+    <string name="deadline_subheader">Deadline</string>
+    <string name="close">Close</string>
+    <string name="logline_ready">Your logline is ready!</string>
 
 
 </resources>

@@ -30,6 +30,7 @@ class CreativeActivity : AppCompatActivity() {
     private lateinit var buttonBack: Button
     private lateinit var buttonNext: Button
     private lateinit var toolbar: MaterialToolbar
+    lateinit var menuProvider: MenuProvider
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -104,11 +105,10 @@ class CreativeActivity : AppCompatActivity() {
             onBackPressedDispatcher.onBackPressed()
             true
         }
-        addMenuProvider(object : MenuProvider {
+        menuProvider = object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menuInflater.inflate(R.menu.menu_creative, menu)
             }
-
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 return when (menuItem.itemId) {
                     R.id.toolbar_menu_hint -> {
@@ -120,7 +120,8 @@ class CreativeActivity : AppCompatActivity() {
                     }
                 }
             }
-        }, this)
+        }
+        addMenuProvider(menuProvider, this)
     }
 
 //    private fun setUpRecyclerView(recyclerView: RecyclerView) {

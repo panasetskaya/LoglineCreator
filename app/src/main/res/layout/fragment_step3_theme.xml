@@ -30,12 +30,12 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="24dp"
         android:layout_marginTop="12dp"
-        app:layout_constraintEnd_toStartOf="@id/switch_major_event_incl_mc"
+        app:layout_constraintEnd_toStartOf="@id/switch_include_theme"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_theme" />
 
     <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/switch_major_event_incl_mc"
+        android:id="@+id/switch_include_theme"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
@@ -82,5 +82,12 @@
         android:gravity="start"
         style="@style/MyExplanationsTextAppearance"
         android:text="@string/theme_eg"/>
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group_theme_included"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:constraint_referenced_ids="tv_theme_eg, ti_theme"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
