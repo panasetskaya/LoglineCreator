@@ -2,18 +2,21 @@ package com.panasetskaia.storyarchitectlogline.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.SystemClock
-import android.transition.Explode
 import android.view.*
 import android.widget.Button
 import android.widget.TextView
-import androidx.core.view.MenuHost
+import android.widget.Toast
 import androidx.core.view.MenuProvider
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.sidesheet.SideSheetDialog
 import com.panasetskaia.storyarchitectlogline.R
 import com.panasetskaia.storyarchitectlogline.presentation.adapters.StepsPagerAdapter
+import com.panasetskaia.storyarchitectlogline.presentation.adapters.SwipeHelper
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
 
 class CreativeActivity : AppCompatActivity() {
@@ -118,5 +121,38 @@ class CreativeActivity : AppCompatActivity() {
                 }
             }
         }, this)
+    }
+
+//    private fun setUpRecyclerView(recyclerView: RecyclerView) {
+//        recyclerView.adapter = Adapter(listOf(
+//            "Item 0: No action",
+//            "Item 1: Delete",
+//            "Item 2: Delete & Mark as unread",
+//            "Item 3: Delete, Mark as unread & Archive"
+//        ))
+//        recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+//        recyclerView.layoutManager = LinearLayoutManager(this)
+//
+//        val itemTouchHelper = ItemTouchHelper(object : SwipeHelper(recyclerView) {
+//            override fun instantiateUnderlayButton(position: Int): List<UnderlayButton> {
+//                val deleteButton = createDeleteButton(position)
+//                return listOf(deleteButton)
+//            }
+//        })
+//
+//        itemTouchHelper.attachToRecyclerView(recyclerView)
+//    }
+
+    private fun createDeleteButton(position: Int) : SwipeHelper.UnderlayButton {
+        return SwipeHelper.UnderlayButton(
+            this,
+            "Delete",
+            14.0f,
+            android.R.color.holo_red_light, //todo: заменить на иконку!!!
+            object : SwipeHelper.UnderlayButtonClickListener {
+                override fun onClick() {
+                    Toast.makeText(this@CreativeActivity, "We are deleting position: $position", Toast.LENGTH_SHORT).show()
+                }
+            })
     }
 }
