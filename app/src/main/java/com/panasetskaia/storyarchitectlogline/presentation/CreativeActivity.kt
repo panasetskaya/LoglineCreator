@@ -7,10 +7,6 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.MenuProvider
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.sidesheet.SideSheetDialog
@@ -30,14 +26,16 @@ class CreativeActivity : AppCompatActivity() {
     private lateinit var buttonBack: Button
     private lateinit var buttonNext: Button
     private lateinit var toolbar: MaterialToolbar
-    lateinit var menuProvider: MenuProvider
+    lateinit var defaultMenuProvider: MenuProvider
+    lateinit var readyMenuProvider: MenuProvider
+    private var isGoingBackFromReady = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_creative)
         setSupportActionBar(findViewById(R.id.toolbar))
-        title = getString(R.string.toolbar_create)
-        setupMenu()
+        setupToolbar()
+        setupDefaultMenu()
         setHint()
         setDots()
         setBottomButtons()
@@ -92,20 +90,33 @@ class CreativeActivity : AppCompatActivity() {
                     3 -> hintText.text = getString(R.string.action_hint)
                     4 -> hintText.text = getString(R.string.mid_point_hint)
                     5 -> hintText.text = getString(R.string.world_hint)
-                    6 -> hintText.text = getString(R.string.deadline_hint)
-                    else -> hintText.text = "" //todo: тут вообще не должно быть
+                    6 -> {
+                        if (isGoingBackFromReady) {
+                            changeBackToDefaultMenu()
+                            isGoingBackFromReady = false
+                        }
+                        hintText.text = getString(R.string.deadline_hint)
+                    }
+                    else -> {
+                        isGoingBackFromReady = true
+                        setupReadyMenu()
+                    }
                 }
             }
         })
     }
 
-    private fun setupMenu() {
+    private fun setupToolbar() {
         toolbar = findViewById(R.id.toolbar)
         toolbar.setNavigationOnClickListener {
             onBackPressedDispatcher.onBackPressed()
             true
         }
-        menuProvider = object : MenuProvider {
+    }
+
+    private fun setupDefaultMenu() {
+        title = getString(R.string.toolbar_create)
+        defaultMenuProvider = object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menuInflater.inflate(R.menu.menu_creative, menu)
             }
@@ -121,7 +132,34 @@ class CreativeActivity : AppCompatActivity() {
                 }
             }
         }
-        addMenuProvider(menuProvider, this)
+        addMenuProvider(defaultMenuProvider, this)
+    }
+
+    private fun setupReadyMenu() {
+        title = getString(R.string.logline_ready)
+        removeMenuProvider(defaultMenuProvider)
+        readyMenuProvider = object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.menu_ready, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                return when (menuItem.itemId) {
+                    R.id.toolbar_menu_close -> {
+                        onBackPressedDispatcher.onBackPressed()
+                        true
+                    }
+                    else -> true
+                }
+            }
+        }
+        addMenuProvider(readyMenuProvider, this)
+    }
+
+    private fun changeBackToDefaultMenu() {
+        title = getString(R.string.toolbar_create)
+        removeMenuProvider(readyMenuProvider)
+        addMenuProvider(defaultMenuProvider, this)
     }
 
 //    private fun setUpRecyclerView(recyclerView: RecyclerView) {

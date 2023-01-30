@@ -31,29 +31,8 @@ class Step8ReadyFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupMenu()
     }
 
-    private fun setupMenu() { //todo: это надо вынести как функции в активити, и менять менюшки/bottom buttons оттуда!
-        requireActivity().title = getString(R.string.logline_ready)
-        val existingProvider = (requireActivity() as CreativeActivity).menuProvider
-        (requireActivity() as MenuHost).removeMenuProvider(existingProvider)
-        (requireActivity() as MenuHost).addMenuProvider(object : MenuProvider {
-            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                menuInflater.inflate(R.menu.menu_ready, menu)
-            }
-
-            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                return when (menuItem.itemId) {
-                    R.id.toolbar_menu_close -> {
-                        requireActivity().onBackPressedDispatcher.onBackPressed()
-                        true
-                    }
-                    else -> true
-                }
-            }
-        }, viewLifecycleOwner)
-    }
 
     companion object {
         @JvmStatic
