@@ -7,7 +7,7 @@
         <item name="colorOnPrimary">@color/our_text_grey</item>
         <item name="colorOnSurface">@color/our_text_grey</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/our_purple</item>
+        <item name="colorSecondary">@color/our_green</item>
         <item name="colorSecondaryVariant">@color/white</item>
         <item name="colorOnSecondary">@color/our_headline_grey</item>
         <!-- Status bar color. -->
@@ -17,6 +17,13 @@
 
 <!--        <item name="android:windowAnimationStyle">@null</item>-->
 
+    </style>
+
+    <style name="MyNavButtonsStyle" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="android:padding">0dp</item>
+        <item name="backgroundTint">@android:color/transparent</item>
+        <item name="android:textColor">@color/our_subheader_grey</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="MyToolbarTextAppearance">
@@ -36,6 +43,12 @@
         <item name="android:fontFamily">@font/roboto</item>
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/our_eg_grey</item>
+    </style>
+
+    <style name="MyPlainTextAppearance">
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/our_text_grey</item>
     </style>
 
     <style name="RoundedStyle" parent="ShapeAppearance.MaterialComponents.SmallComponent">

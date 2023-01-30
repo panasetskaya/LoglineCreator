@@ -1,11 +1,12 @@
 package com.panasetskaia.storyarchitectlogline.presentation.creativeFragments
 
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import com.panasetskaia.storyarchitectlogline.R
+import com.panasetskaia.storyarchitectlogline.presentation.CreativeActivity
 
 private const val ARG_LOGLINE_STRING = "logline string"
 
@@ -27,6 +28,11 @@ class Step8ReadyFragment : Fragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_step8_ready, container, false)
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+    }
+
 
     companion object {
         @JvmStatic
