@@ -33,6 +33,23 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="MyRoundButtonsStyle" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:padding">16dp</item>
+        <item name="backgroundTint">@android:color/transparent</item>
+        <item name="android:textColor">@color/our_purple</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="textAllCaps">false</item>
+        <item name="colorOutlineVariant">@color/our_purple</item>
+        <item name="shapeAppearanceOverlay">@style/RoundedShapeAppearance</item>
+    </style>
+
+    <style name="RoundedShapeAppearance">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">32dp</item>
+    </style>
+
     <style name="MyToolbarTextAppearance">
         <item name="android:textSize">22sp</item>
         <item name="fontFamily">@font/nunito</item>
