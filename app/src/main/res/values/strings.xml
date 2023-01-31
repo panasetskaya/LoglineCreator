@@ -103,6 +103,7 @@
     <string name="deadline_subheader">Deadline</string>
     <string name="close">Close</string>
     <string name="logline_ready">Your logline is ready!</string>
+    <string name="save">Save</string>
 
 
 </resources>

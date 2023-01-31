@@ -41,7 +41,7 @@
         android:paddingLeft="0dp"
         android:paddingRight="0dp"/>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button_back"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -72,12 +72,11 @@
         app:dotsStrokeWidth="2dp"
         />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button_next"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         style="@style/MyNavButtonsStyle"
-        app:icon="@drawable/ic_arrow_forward"
         app:iconTint="@color/our_subheader_grey"
         app:iconGravity="textEnd"
         app:iconPadding="0dp"
@@ -87,3 +86,5 @@
         android:text="@string/next"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+<!--    -->

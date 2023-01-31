@@ -1,5 +1,6 @@
 package com.panasetskaia.storyarchitectlogline.presentation
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.*
@@ -9,6 +10,7 @@ import android.widget.Toast
 import androidx.core.view.MenuProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.sidesheet.SideSheetDialog
 import com.panasetskaia.storyarchitectlogline.R
 import com.panasetskaia.storyarchitectlogline.presentation.adapters.StepsPagerAdapter
@@ -23,8 +25,8 @@ class CreativeActivity : AppCompatActivity() {
     private lateinit var sideSheetView: View
     private lateinit var hintText: TextView
     private lateinit var adapter: StepsPagerAdapter
-    private lateinit var buttonBack: Button
-    private lateinit var buttonNext: Button
+    private lateinit var buttonBack: MaterialButton
+    private lateinit var buttonNext: MaterialButton
     private lateinit var toolbar: MaterialToolbar
     lateinit var defaultMenuProvider: MenuProvider
     lateinit var readyMenuProvider: MenuProvider
@@ -35,10 +37,11 @@ class CreativeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_creative)
         setSupportActionBar(findViewById(R.id.toolbar))
         setupToolbar()
+        createMenuProviders()
         setupDefaultMenu()
         setHint()
         setDots()
-        setBottomButtons()
+        setDefaultBottomButtons()
         setHintText()
     }
 
@@ -57,16 +60,33 @@ class CreativeActivity : AppCompatActivity() {
         wormDotsIndicator.attachTo(viewPager2)
     }
 
-    private fun setBottomButtons() {
+    private fun setDefaultBottomButtons() {
         buttonNext = findViewById(R.id.button_next)
         buttonBack = findViewById(R.id.button_back)
         buttonBack.setOnClickListener {
             val currentItem = viewPager2.currentItem
             viewPager2.currentItem = currentItem - 1
         }
+        setRightButtonAsNext()
+    }
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private fun setRightButtonAsNext() {
+        buttonNext.setText(R.string.next)
+        buttonNext.icon = getDrawable(R.drawable.ic_arrow_forward)
+        buttonNext.setTextColor(resources.getColor(R.color.our_subheader_grey))
         buttonNext.setOnClickListener {
             val currentItem = viewPager2.currentItem
             viewPager2.currentItem = currentItem + 1
+        }
+    }
+
+    private fun setRightButtonAsSave() {
+        buttonNext.icon = null
+        buttonNext.setText(R.string.save)
+        buttonNext.setTextColor(resources.getColor(R.color.our_purple))
+        buttonNext.setOnClickListener {
+            Toast.makeText(this@CreativeActivity, "We are saving it!", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -99,7 +119,7 @@ class CreativeActivity : AppCompatActivity() {
                     }
                     else -> {
                         isGoingBackFromReady = true
-                        setupReadyMenu()
+                        changeToReadyMenu()
                     }
                 }
             }
@@ -114,8 +134,22 @@ class CreativeActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupDefaultMenu() {
-        title = getString(R.string.toolbar_create)
+    private fun createMenuProviders() {
+        readyMenuProvider = object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.menu_ready, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                return when (menuItem.itemId) {
+                    R.id.toolbar_menu_close -> {
+                        onBackPressedDispatcher.onBackPressed()
+                        true
+                    }
+                    else -> true
+                }
+            }
+        }
         defaultMenuProvider = object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menuInflater.inflate(R.menu.menu_creative, menu)
@@ -132,34 +166,25 @@ class CreativeActivity : AppCompatActivity() {
                 }
             }
         }
+
+    }
+
+    private fun setupDefaultMenu() {
+        title = getString(R.string.toolbar_create)
         addMenuProvider(defaultMenuProvider, this)
     }
 
-    private fun setupReadyMenu() {
+    private fun changeToReadyMenu() {
         title = getString(R.string.logline_ready)
         removeMenuProvider(defaultMenuProvider)
-        readyMenuProvider = object : MenuProvider {
-            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                menuInflater.inflate(R.menu.menu_ready, menu)
-            }
-
-            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                return when (menuItem.itemId) {
-                    R.id.toolbar_menu_close -> {
-                        onBackPressedDispatcher.onBackPressed()
-                        true
-                    }
-                    else -> true
-                }
-            }
-        }
         addMenuProvider(readyMenuProvider, this)
+        setRightButtonAsSave()
     }
 
     private fun changeBackToDefaultMenu() {
-        title = getString(R.string.toolbar_create)
         removeMenuProvider(readyMenuProvider)
-        addMenuProvider(defaultMenuProvider, this)
+        setupDefaultMenu()
+        setRightButtonAsNext()
     }
 
 //    private fun setUpRecyclerView(recyclerView: RecyclerView) {
