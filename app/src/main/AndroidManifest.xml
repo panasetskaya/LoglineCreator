@@ -12,13 +12,6 @@
         android:theme="@style/Theme.MySplash"
         tools:targetApi="31">
         <activity
-            android:name=".presentation.SplashActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".presentation.CreativeActivity"
             android:exported="false">
             <meta-data
