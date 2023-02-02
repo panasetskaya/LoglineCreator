@@ -1,51 +1,206 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".presentation.creativeFragments.Step8ReadyFragment">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/ti_ready"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="32dp"
-        android:hint="@string/logline_your"
-        app:boxStrokeColor="?attr/colorPrimary"
-        app:endIconMode="clear_text"
-        app:hintTextColor="@color/our_hint_grey"
-        android:nestedScrollingEnabled="true"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:shapeAppearance="@style/RoundedStyle">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_world"
-            android:layout_width="match_parent"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/ti_ready"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:minHeight="80dp"
-            android:text="@string/dummy_ready"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="16dp"
+            android:hint="@string/logline_your"
             android:nestedScrollingEnabled="true"
-            android:textColorHint="@color/our_hint_grey"
-            android:inputType="textMultiLine"/>
-    </com.google.android.material.textfield.TextInputLayout>
+            app:boxStrokeColor="?attr/colorPrimary"
+            app:endIconMode="clear_text"
+            app:hintTextColor="@color/our_hint_grey"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearance="@style/RoundedStyle">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/button_save"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/save"
-        android:layout_margin="16dp"
-        app:strokeColor="@color/our_purple"
-        android:backgroundTint="@color/our_purple"
-        android:textColor="@color/white"
-        style="@style/MyRoundButtonsStyle"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ti_ready" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_world"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:minHeight="80dp"
+                android:nestedScrollingEnabled="true"
+                android:text="@string/dummy_ready"
+                android:textColorHint="@color/our_hint_grey" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_save"
+            style="@style/MyRoundButtonsStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:backgroundTint="@color/our_purple"
+            android:text="@string/save"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toTopOf="@+id/card_adv_1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ti_ready"
+            app:strokeColor="@color/our_purple" />
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_adv_1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="72dp"
+            android:clickable="true"
+            android:focusable="true"
+            app:cardBackgroundColor="@color/our_green"
+            app:cardCornerRadius="16dp"
+            app:layout_constraintBottom_toTopOf="@id/card_adv_2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/button_save">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/tv_learn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito"
+                    android:text="@string/ready_learn"
+                    android:textColor="@color/our_text_grey"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@id/button_adv_1"
+                    app:layout_constraintEnd_toStartOf="@id/iv_pic_adv_1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/button_adv_1"
+                    style="@style/MyLinkButtonsStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="4dp"
+                    android:gravity="start|center"
+                    android:padding="0dp"
+                    android:text="@string/ready_learn_url"
+                    app:icon="@drawable/ic_link"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/iv_pic_adv_1"
+                    app:layout_constraintStart_toEndOf="@+id/link_icon"
+                    app:layout_constraintTop_toBottomOf="@id/tv_learn" />
+
+                <ImageView
+                    android:id="@+id/link_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_link"
+                    app:layout_constraintBottom_toBottomOf="@id/button_adv_1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/button_adv_1" />
+
+                <ImageView
+                    android:id="@+id/iv_pic_adv_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/pic_adv_1"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_adv_2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="8dp"
+            android:clickable="true"
+            android:focusable="true"
+            app:cardBackgroundColor="@color/our_adv_green"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/card_adv_1">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/tv_continue"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito"
+                    android:text="@string/ready_continue"
+                    android:textColor="@color/our_text_grey"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@id/button_adv_2"
+                    app:layout_constraintEnd_toStartOf="@id/iv_pic_adv_2"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/button_adv_2"
+                    style="@style/MyLinkButtonsStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="4dp"
+                    android:gravity="start|center"
+                    android:padding="0dp"
+                    android:text="@string/ready_continue_url"
+                    app:icon="@drawable/ic_link"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/iv_pic_adv_2"
+                    app:layout_constraintStart_toEndOf="@+id/link_icon2"
+                    app:layout_constraintTop_toBottomOf="@id/tv_continue" />
+
+                <ImageView
+                    android:id="@+id/link_icon2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_link"
+                    app:layout_constraintBottom_toBottomOf="@id/button_adv_2"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/button_adv_2" />
+
+                <ImageView
+                    android:id="@+id/iv_pic_adv_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/pic_adv_2"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

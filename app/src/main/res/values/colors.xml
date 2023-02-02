@@ -12,7 +12,7 @@
     <color name="our_hint_grey">#6A6D74</color>
     <color name="our_eg_grey">#606A6D74</color>
     <color name="our_dots_nav_grey">#C4C4C4</color>
-    <color name="our_adv_green">#2067E591</color>
+    <color name="our_adv_green">#4067E591</color>
     <color name="mtrl_textinput_default_box_stroke_color" tools:override="true">@color/our_text_grey</color>
 
 </resources>
