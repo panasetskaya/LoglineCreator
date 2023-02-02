@@ -6,6 +6,7 @@
     <string name="next">Next</string>
     <string name="toolbar_your_loglines">Your loglines</string>
     <string name="toolbar_create">Create a logline</string>
+    <string name="close">Close</string>
 
 
     <!-- dummies -->
@@ -16,7 +17,7 @@
     <string name="dummy_mid_point">mid point event</string>
     <string name="dummy_story_world">story world</string>
     <string name="dummy_deadline">deadline</string>
-    <string name="dummy_ready">your logline is ready</string>
+    <string name="dummy_ready">your absolutely magnificent logline</string>
     <string name="dummy_change_hint">disable swiping</string>
 
     <!-- main acitivity -->
@@ -101,9 +102,18 @@
     <string name="deadline_info">What happens if the main character fails?</string>
     <string name="deadline_eg">E.g. \'the police catches the girls\', or \'the shark attacks again\'.</string>
     <string name="deadline_subheader">Deadline</string>
-    <string name="close">Close</string>
+
+
+    <!-- ready fragment -->
     <string name="logline_ready">Your logline is ready!</string>
+    <string name="logline_your">Your logline</string>
     <string name="save">Save</string>
+    <string name="share">Share on Twitter</string>
+    <string name="copy">Copy</string>
+    <string name="ready_learn">Learn the basics of writing strong stories</string>
+    <string name="ready_learn_url">https://scriptwriting.courses/</string>
+    <string name="ready_continue">Continue writing story in Story Architect</string>
+    <string name="ready_continue_url">https://starc/download</string>
 
 
 </resources>

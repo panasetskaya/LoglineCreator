@@ -83,6 +83,8 @@
         android:text="@string/main_button_start"
         android:layout_marginBottom="16dp"
         app:strokeColor="@color/our_purple"
+        android:backgroundTint="@android:color/transparent"
+        android:textColor="@color/our_purple"
         style="@style/MyRoundButtonsStyle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

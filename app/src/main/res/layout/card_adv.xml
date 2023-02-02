@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="32dp"
+    app:cardBackgroundColor="@color/our_green">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/tv_learn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ready_learn"
+            android:textColor="@color/our_text_grey"
+            android:textSize="16sp"
+            android:fontFamily="@font/nunito"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_next"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            style="@style/MyLinkButtonsStyle"
+            app:iconTint="@color/our_subheader_grey"
+            app:iconGravity="textEnd"
+            app:iconPadding="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:text="@string/next"/>
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>
