@@ -258,6 +258,13 @@
             android:visibility="gone"
             app:constraint_referenced_ids="button_save"/>
 
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/group_for_first_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            app:constraint_referenced_ids="button_copy, button_twitter"/>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
