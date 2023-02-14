@@ -128,22 +128,16 @@ abstract class SwipeHelper(
     class UnderlayButton(
         private val context: Context,
         private val title: String,
-        textSize: Float,
+        private val bitmap: Bitmap,
         @ColorRes private val colorRes: Int,
         private val clickListener: UnderlayButtonClickListener
     ) {
         private var clickableRegion: RectF? = null
-        private val textSizeInPixel: Float = textSize * context.resources.displayMetrics.density // dp to px
-        private val horizontalPadding = 50.0f
+        private val horizontalPadding = 150.0f
         val intrinsicWidth: Float
 
         init {
-            val paint = Paint()
-            paint.textSize = textSizeInPixel
-            paint.typeface = Typeface.DEFAULT_BOLD
-            paint.textAlign = Paint.Align.LEFT
             val titleBounds = Rect()
-            paint.getTextBounds(title, 0, title.length, titleBounds)
             intrinsicWidth = titleBounds.width() + 2 * horizontalPadding
         }
 
@@ -154,17 +148,9 @@ abstract class SwipeHelper(
             paint.color = ContextCompat.getColor(context, colorRes)
             canvas.drawRect(rect, paint)
 
-            // Draw title
+            // Draw icon
             paint.color = ContextCompat.getColor(context, android.R.color.white)
-            paint.textSize = textSizeInPixel
-            paint.typeface = Typeface.DEFAULT_BOLD
-            paint.textAlign = Paint.Align.LEFT
-
-            val titleBounds = Rect()
-            paint.getTextBounds(title, 0, title.length, titleBounds)
-
-            val y = rect.height() / 2 + titleBounds.height() / 2 - titleBounds.bottom
-            canvas.drawText(title, rect.left + horizontalPadding, rect.top + y, paint)
+            canvas.drawBitmap(bitmap, rect.centerX() - (bitmap.width / 2), rect.centerY() - (bitmap.height / 2),  paint)
 
             clickableRegion = rect
         }

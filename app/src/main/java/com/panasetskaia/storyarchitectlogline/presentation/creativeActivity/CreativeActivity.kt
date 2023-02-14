@@ -14,7 +14,7 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.sidesheet.SideSheetDialog
 import com.panasetskaia.storyarchitectlogline.R
 import com.panasetskaia.storyarchitectlogline.presentation.creativeActivity.adapters.StepsPagerAdapter
-import com.panasetskaia.storyarchitectlogline.presentation.creativeActivity.adapters.SwipeHelper
+
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
 
 class CreativeActivity : AppCompatActivity() {

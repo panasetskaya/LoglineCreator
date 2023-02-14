@@ -114,12 +114,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun createDeleteButton(position: Int): SwipeHelper.UnderlayButton {
-        val idDrawable = R.drawable.ic_delete_white
+        val idDrawable = R.drawable.ic_delete_outline
         val bitmap = getBitmapFromVectorDrawable(idDrawable)
         return SwipeHelper.UnderlayButton(
             this,
             "Delete",
-            14.0f,
+            bitmap!!,
             android.R.color.holo_red_light, //todo: заменить на иконку!!!
             object : SwipeHelper.UnderlayButtonClickListener {
                 override fun onClick() {
