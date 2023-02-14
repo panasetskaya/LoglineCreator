@@ -115,6 +115,9 @@
     <string name="ready_learn_url">https://scriptwriting.courses/</string>
     <string name="ready_continue">Continue writing story in Story Architect</string>
     <string name="ready_continue_url">https://starc/download</string>
+    <string name="dummy_logline">На Аляске терпит крушение самолет, и оставшиеся в живых пассажиры оказываются в плену безлюдной… </string>
+    <string name="dummy_date">11.02.2023</string>
+    <string name="dummy_word_count">256 слов</string>
 
 
 </resources>
