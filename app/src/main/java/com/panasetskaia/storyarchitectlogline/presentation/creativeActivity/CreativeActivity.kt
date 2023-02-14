@@ -187,37 +187,4 @@ class CreativeActivity : AppCompatActivity() {
         setupDefaultMenu()
         setRightButtonAsNext()
     }
-
-//    private fun setUpRecyclerView(recyclerView: RecyclerView) {
-//        recyclerView.adapter = Adapter(listOf(
-//            "Item 0: No action",
-//            "Item 1: Delete",
-//            "Item 2: Delete & Mark as unread",
-//            "Item 3: Delete, Mark as unread & Archive"
-//        ))
-//        recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
-//        recyclerView.layoutManager = LinearLayoutManager(this)
-//
-//        val itemTouchHelper = ItemTouchHelper(object : SwipeHelper(recyclerView) {
-//            override fun instantiateUnderlayButton(position: Int): List<UnderlayButton> {
-//                val deleteButton = createDeleteButton(position)
-//                return listOf(deleteButton)
-//            }
-//        })
-//
-//        itemTouchHelper.attachToRecyclerView(recyclerView)
-//    }
-
-    private fun createDeleteButton(position: Int) : SwipeHelper.UnderlayButton {
-        return SwipeHelper.UnderlayButton(
-            this,
-            "Delete",
-            14.0f,
-            android.R.color.holo_red_light, //todo: заменить на иконку!!!
-            object : SwipeHelper.UnderlayButtonClickListener {
-                override fun onClick() {
-                    Toast.makeText(this@CreativeActivity, "We are deleting position: $position", Toast.LENGTH_SHORT).show()
-                }
-            })
-    }
 }

@@ -1,4 +1,4 @@
-package com.panasetskaia.storyarchitectlogline.presentation.creativeActivity.adapters
+package com.panasetskaia.storyarchitectlogline.presentation.mainActivity
 
 import android.annotation.SuppressLint
 import android.content.Context
