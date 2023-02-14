@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    tools:context=".presentation.creativeFragments.Step3ThemeFragment">
+    tools:context=".presentation.creativeActivity.creativeFragments.Step3ThemeFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

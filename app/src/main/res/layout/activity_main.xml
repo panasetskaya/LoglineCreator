@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.MainActivity">
+    tools:context=".presentation.mainActivity.MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/main_bar_layout"
@@ -95,7 +95,43 @@
         android:id="@+id/group_when_empty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="visible"
+        android:visibility="gone"
         app:constraint_referenced_ids="button_start,iv_writer_pic,tv_main_create_logline,tv_answer_questions"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_your_loglines"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/main_bar_layout"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_create"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/main_create_button"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        app:strokeColor="@color/our_green"
+        android:backgroundTint="@color/our_green"
+        android:textColor="@color/our_text_grey"
+        style="@style/MyRoundButtonsStyle"
+        app:icon="@drawable/ic_create"
+        app:iconGravity="textStart"
+        app:iconPadding="8dp"
+        app:iconTint="@color/our_text_grey"
+        app:cornerRadius="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group_when_not_empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:constraint_referenced_ids="rv_your_loglines, button_create"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

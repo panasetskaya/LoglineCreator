@@ -1,4 +1,4 @@
-package com.panasetskaia.storyarchitectlogline.presentation.creativeFragments
+package com.panasetskaia.storyarchitectlogline.presentation.creativeActivity.creativeFragments
 
 import android.os.Bundle
 import android.view.LayoutInflater

@@ -1,12 +1,9 @@
-package com.panasetskaia.storyarchitectlogline.presentation.creativeFragments
+package com.panasetskaia.storyarchitectlogline.presentation.creativeActivity.creativeFragments
 
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
-import androidx.core.view.MenuHost
-import androidx.core.view.MenuProvider
 import com.panasetskaia.storyarchitectlogline.R
-import com.panasetskaia.storyarchitectlogline.presentation.CreativeActivity
 
 private const val ARG_LOGLINE_STRING = "logline string"
 

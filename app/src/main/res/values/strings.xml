@@ -24,6 +24,7 @@
     <string name="main_button_start">Start</string>
     <string name="search_title">Search</string>
     <string name="main_text_when_empty">Answer 9 simple questions about your story and get a full-fledged movie logline</string>
+    <string name="main_create_button">Create</string>
 
     <!-- main character fragment-->
     <string name="mc_header">Main character</string>

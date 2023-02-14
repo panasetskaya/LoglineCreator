@@ -1,4 +1,4 @@
-package com.panasetskaia.storyarchitectlogline.presentation
+package com.panasetskaia.storyarchitectlogline.presentation.mainActivity
 
 
 import android.content.Intent
@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.MenuItemCompat
 import com.panasetskaia.storyarchitectlogline.R
+import com.panasetskaia.storyarchitectlogline.presentation.creativeActivity.CreativeActivity
 
 
 class MainActivity : AppCompatActivity() {

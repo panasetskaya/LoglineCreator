@@ -1,10 +1,9 @@
-package com.panasetskaia.storyarchitectlogline.presentation
+package com.panasetskaia.storyarchitectlogline.presentation.creativeActivity
 
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.*
-import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -14,8 +13,8 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.sidesheet.SideSheetDialog
 import com.panasetskaia.storyarchitectlogline.R
-import com.panasetskaia.storyarchitectlogline.presentation.adapters.StepsPagerAdapter
-import com.panasetskaia.storyarchitectlogline.presentation.adapters.SwipeHelper
+import com.panasetskaia.storyarchitectlogline.presentation.creativeActivity.adapters.StepsPagerAdapter
+import com.panasetskaia.storyarchitectlogline.presentation.creativeActivity.adapters.SwipeHelper
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
 
 class CreativeActivity : AppCompatActivity() {
