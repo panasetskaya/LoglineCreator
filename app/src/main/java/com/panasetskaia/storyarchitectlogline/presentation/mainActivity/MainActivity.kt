@@ -33,19 +33,22 @@ class MainActivity : AppCompatActivity() {
             0,
             "На Аляске терпит крушение самолет, и оставшиеся в живых пассажиры оказываются в плену безлюдной снежной пустыни, где только стая волков скрашивает пейзаж.",
             "11.01.2023",
-            256
+            256,
+            0
         ),
         Logline(
             1,
             "На Аляске терпит крушение самолет, и оставшиеся в живых пассажиры оказываются в плену безлюдной снежной пустыни, где только стая волков скрашивает пейзаж.",
             "12.01.2023",
-            281
+            281,
+            1
         ),
         Logline(
             2,
             "На Аляске терпит крушение самолет, и оставшиеся в живых пассажиры оказываются в плену безлюдной снежной пустыни, где только стая волков скрашивает пейзаж.",
             "13.01.2023",
-            220
+            220,
+            2
         )
     )
 
@@ -104,7 +107,7 @@ class MainActivity : AppCompatActivity() {
     private fun setUpRecyclerView(recyclerView: RecyclerView) {
         recyclerView.adapter = loglineAdapter
         recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
-        val itemTouchHelper = ItemTouchHelper(object : SwipeHelper(recyclerView) {
+        val itemTouchHelper = ItemTouchHelper(object : SwipeHelper(recyclerView, loglineAdapter) {
             override fun instantiateUnderlayButton(position: Int): UnderlayButton {
                 return createDeleteButton(position)
             }
@@ -120,7 +123,7 @@ class MainActivity : AppCompatActivity() {
             this,
             "Delete",
             bitmap!!,
-            android.R.color.holo_red_light, //todo: заменить на иконку!!!
+            android.R.color.holo_red_light,
             object : SwipeHelper.UnderlayButtonClickListener {
                 override fun onClick() {
                     deleteFromList(position)
