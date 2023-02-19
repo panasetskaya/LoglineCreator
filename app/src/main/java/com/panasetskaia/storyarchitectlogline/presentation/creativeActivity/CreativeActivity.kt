@@ -87,7 +87,9 @@ class CreativeActivity : AppCompatActivity() {
         buttonNext.setText(R.string.save)
         buttonNext.setTextColor(resources.getColor(R.color.our_purple))
         buttonNext.setOnClickListener {
-            Toast.makeText(this@CreativeActivity, "We are saving it!", Toast.LENGTH_SHORT).show()
+            saveLogline()
+            onBackPressedDispatcher.onBackPressed()
+
         }
     }
 
@@ -186,5 +188,9 @@ class CreativeActivity : AppCompatActivity() {
         removeMenuProvider(readyMenuProvider)
         setupDefaultMenu()
         setRightButtonAsNext()
+    }
+
+    private fun saveLogline() { //переписать на сохранение во вьюмодель!
+        Toast.makeText(this@CreativeActivity, "We are saving it!", Toast.LENGTH_SHORT).show()
     }
 }

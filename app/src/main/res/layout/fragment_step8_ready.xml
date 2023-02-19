@@ -95,6 +95,7 @@
             android:focusable="true"
             app:cardBackgroundColor="@color/our_green"
             app:cardCornerRadius="16dp"
+
             app:layout_constraintBottom_toTopOf="@id/card_adv_2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
@@ -108,12 +109,14 @@
                     android:id="@+id/tv_learn"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
                     android:fontFamily="@font/nunito"
                     android:text="@string/ready_learn"
                     android:textColor="@color/our_text_grey"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:layout_marginEnd="16dp"
+                    android:clickable="false"
+                    android:focusable="false"
                     app:layout_constraintBottom_toTopOf="@id/button_adv_1"
                     app:layout_constraintEnd_toStartOf="@id/guideline_card1"
                     app:layout_constraintStart_toStartOf="parent"
@@ -130,6 +133,8 @@
                     android:padding="0dp"
                     android:text="@string/ready_learn_url"
                     android:textSize="14sp"
+                    android:clickable="false"
+                    android:focusable="false"
                     app:icon="@drawable/ic_link"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/guideline_card1"
@@ -141,6 +146,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_link"
+                    android:clickable="false"
+                    android:focusable="false"
                     app:layout_constraintBottom_toBottomOf="@id/button_adv_1"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@id/button_adv_1" />
@@ -150,7 +157,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    app:layout_constraintGuide_percent="0.75"/>
+                    app:layout_constraintGuide_percent="0.75" />
 
 
                 <ImageView
@@ -158,9 +165,11 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:src="@drawable/pic_adv_1"
-                    app:layout_constraintStart_toEndOf="@id/guideline_card1"
+                    android:clickable="false"
+                    android:focusable="false"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/guideline_card1"
                     app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -172,17 +181,17 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="32dp"
-            android:layout_marginTop="8dp"
             android:clickable="true"
             android:focusable="true"
             app:cardBackgroundColor="@color/our_adv_green"
             app:cardCornerRadius="16dp"
             app:cardElevation="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintStart_toStartOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -193,12 +202,14 @@
                     android:id="@+id/tv_continue"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
                     android:fontFamily="@font/nunito"
                     android:text="@string/ready_continue"
                     android:textColor="@color/our_text_grey"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:layout_marginEnd="16dp"
+                    android:clickable="false"
+                    android:focusable="false"
                     app:layout_constraintBottom_toTopOf="@id/button_adv_2"
                     app:layout_constraintEnd_toStartOf="@id/guideline_card2"
                     app:layout_constraintStart_toStartOf="parent"
@@ -210,12 +221,14 @@
                     android:layout_width="0dp"
                     android:layout_height="35dp"
                     android:layout_marginStart="4dp"
+                    android:layout_marginEnd="16dp"
                     android:gravity="start|center"
                     android:padding="0dp"
                     android:text="@string/ready_continue_url"
                     android:textSize="14sp"
+                    android:clickable="false"
+                    android:focusable="false"
                     app:icon="@drawable/ic_link"
-                    android:layout_marginEnd="16dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/guideline_card2"
                     app:layout_constraintStart_toEndOf="@+id/link_icon2"
@@ -226,6 +239,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_link"
+                    android:clickable="false"
+                    android:focusable="false"
                     app:layout_constraintBottom_toBottomOf="@id/button_adv_2"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@id/button_adv_2" />
@@ -235,16 +250,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    app:layout_constraintGuide_percent="0.75"/>
+                    app:layout_constraintGuide_percent="0.75" />
 
                 <ImageView
                     android:id="@+id/iv_pic_adv_2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:src="@drawable/pic_adv_2"
-                    app:layout_constraintStart_toEndOf="@id/guideline_card2"
+                    android:clickable="false"
+                    android:focusable="false"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/guideline_card2"
                     app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -256,14 +273,30 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            app:constraint_referenced_ids="button_save"/>
+            app:constraint_referenced_ids="button_save" />
 
         <androidx.constraintlayout.widget.Group
             android:id="@+id/group_for_first_save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            app:constraint_referenced_ids="button_copy, button_twitter"/>
+            app:constraint_referenced_ids="button_copy, button_twitter" />
+
+        <WebView
+            android:id="@+id/webView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

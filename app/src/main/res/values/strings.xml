@@ -113,12 +113,13 @@
     <string name="share">Share on Twitter</string>
     <string name="copy">Copy</string>
     <string name="ready_learn">Learn the basics of writing strong stories</string>
-    <string name="ready_learn_url">https://scriptwriting.courses/</string>
+    <string name="ready_learn_url">https://www.scriptwriting.courses/</string>
     <string name="ready_continue">Continue writing story in Story Architect</string>
-    <string name="ready_continue_url">https://starc/download</string>
+    <string name="ready_continue_url">https://www.starc.app/download</string>
     <string name="dummy_logline">На Аляске терпит крушение самолет, и оставшиеся в живых пассажиры оказываются в плену безлюдной пустыни. Смогут ли они выбраться из этой безнадежной передряги?</string>
     <string name="dummy_date">11.02.2023</string>
     <string name="dummy_word_count">256 слов</string>
+    <string name="twitter_share_base_url">https://www.twitter.com/intent/tweet?text=</string>
 
 
 </resources>

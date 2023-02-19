@@ -1,13 +1,25 @@
 package com.panasetskaia.storyarchitectlogline.presentation.creativeActivity.creativeFragments
 
+import android.annotation.SuppressLint
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
+import android.net.http.*
 import android.os.Bundle
 import android.view.*
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import com.panasetskaia.storyarchitectlogline.R
+import com.panasetskaia.storyarchitectlogline.databinding.FragmentStep8ReadyBinding
+
 
 private const val ARG_LOGLINE_STRING = "logline string"
 
 class Step8ReadyFragment : Fragment() {
+
+    private var _binding: FragmentStep8ReadyBinding? = null
+    private val binding: FragmentStep8ReadyBinding
+        get() = _binding ?: throw RuntimeException("FragmentStep8ReadyBinding is null")
 
     private var loglineParam: String? = null
 
@@ -21,13 +33,53 @@ class Step8ReadyFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_step8_ready, container, false)
+    ): View {
+        _binding = FragmentStep8ReadyBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setButtons()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.progressBar.visibility = View.GONE
+    }
+
+    @SuppressLint("SetJavaScriptEnabled")
+    private fun setButtons() {
+        with(binding) {
+            webView.settings.javaScriptEnabled = true
+            buttonTwitter.setOnClickListener {
+                progressBar.visibility = View.VISIBLE
+                val twtrUrl = getString(R.string.twitter_share_base_url)
+                val lgln = etWorld.text.toString()
+                webView.loadUrl("$twtrUrl$lgln")
+            }
+            buttonCopy.setOnClickListener {
+                val clipboard = requireActivity().getSystemService(Context.CLIPBOARD_SERVICE)
+                        as ClipboardManager
+                val lgln = etWorld.text.toString()
+                val clip: ClipData = ClipData.newPlainText("simple text", lgln)
+                clipboard.setPrimaryClip(clip)
+
+            }
+            cardAdv1.setOnClickListener {
+                progressBar.visibility = View.VISIBLE
+                webView.loadUrl(getString(R.string.ready_learn_url))
+            }
+            cardAdv2.setOnClickListener {
+                progressBar.visibility = View.VISIBLE
+                webView.loadUrl(getString(R.string.ready_continue_url))
+            }
+        }
     }
 
 
