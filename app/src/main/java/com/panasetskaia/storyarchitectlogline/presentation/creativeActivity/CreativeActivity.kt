@@ -14,7 +14,7 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.sidesheet.SideSheetDialog
 import com.panasetskaia.storyarchitectlogline.R
 import com.panasetskaia.storyarchitectlogline.presentation.creativeActivity.adapters.StepsPagerAdapter
-import com.panasetskaia.storyarchitectlogline.presentation.creativeActivity.adapters.SwipeHelper
+
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
 
 class CreativeActivity : AppCompatActivity() {
@@ -87,7 +87,9 @@ class CreativeActivity : AppCompatActivity() {
         buttonNext.setText(R.string.save)
         buttonNext.setTextColor(resources.getColor(R.color.our_purple))
         buttonNext.setOnClickListener {
-            Toast.makeText(this@CreativeActivity, "We are saving it!", Toast.LENGTH_SHORT).show()
+            saveLogline()
+            onBackPressedDispatcher.onBackPressed()
+
         }
     }
 
@@ -188,36 +190,7 @@ class CreativeActivity : AppCompatActivity() {
         setRightButtonAsNext()
     }
 
-//    private fun setUpRecyclerView(recyclerView: RecyclerView) {
-//        recyclerView.adapter = Adapter(listOf(
-//            "Item 0: No action",
-//            "Item 1: Delete",
-//            "Item 2: Delete & Mark as unread",
-//            "Item 3: Delete, Mark as unread & Archive"
-//        ))
-//        recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
-//        recyclerView.layoutManager = LinearLayoutManager(this)
-//
-//        val itemTouchHelper = ItemTouchHelper(object : SwipeHelper(recyclerView) {
-//            override fun instantiateUnderlayButton(position: Int): List<UnderlayButton> {
-//                val deleteButton = createDeleteButton(position)
-//                return listOf(deleteButton)
-//            }
-//        })
-//
-//        itemTouchHelper.attachToRecyclerView(recyclerView)
-//    }
-
-    private fun createDeleteButton(position: Int) : SwipeHelper.UnderlayButton {
-        return SwipeHelper.UnderlayButton(
-            this,
-            "Delete",
-            14.0f,
-            android.R.color.holo_red_light, //todo: заменить на иконку!!!
-            object : SwipeHelper.UnderlayButtonClickListener {
-                override fun onClick() {
-                    Toast.makeText(this@CreativeActivity, "We are deleting position: $position", Toast.LENGTH_SHORT).show()
-                }
-            })
+    private fun saveLogline() { //переписать на сохранение во вьюмодель!
+        Toast.makeText(this@CreativeActivity, "We are saving it!", Toast.LENGTH_SHORT).show()
     }
 }

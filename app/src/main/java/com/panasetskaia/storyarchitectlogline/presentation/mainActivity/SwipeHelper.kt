@@ -1,4 +1,4 @@
-package com.panasetskaia.storyarchitectlogline.presentation.creativeActivity.adapters
+package com.panasetskaia.storyarchitectlogline.presentation.mainActivity
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -14,11 +14,15 @@ import kotlin.math.abs
 import kotlin.math.max
 
 abstract class SwipeHelper(
-    private val recyclerView: RecyclerView
+    private val recyclerView: RecyclerView,
+    private val adapter: LoglineAdapter
 ) : ItemTouchHelper.SimpleCallback(
-    ItemTouchHelper.ACTION_STATE_IDLE,
+    ItemTouchHelper.UP or ItemTouchHelper.DOWN,
     ItemTouchHelper.LEFT
 ) {
+
+    private val mAdapter: ItemTouchHelperContract = adapter
+
     private var swipedPosition = -1
     private val buttonsBuffer: MutableMap<Int, UnderlayButton> = mutableMapOf()
     private val recoverQueue = object : LinkedList<Int>() {
@@ -109,6 +113,9 @@ abstract class SwipeHelper(
         viewHolder: RecyclerView.ViewHolder,
         target: RecyclerView.ViewHolder
     ): Boolean {
+        val draggedItemIndex = viewHolder.bindingAdapterPosition
+        val targetIndex = target.bindingAdapterPosition
+        mAdapter.onItemMoved(draggedItemIndex,targetIndex)
         return false
     }
 
@@ -128,43 +135,27 @@ abstract class SwipeHelper(
     class UnderlayButton(
         private val context: Context,
         private val title: String,
-        textSize: Float,
+        private val bitmap: Bitmap,
         @ColorRes private val colorRes: Int,
         private val clickListener: UnderlayButtonClickListener
     ) {
         private var clickableRegion: RectF? = null
-        private val textSizeInPixel: Float = textSize * context.resources.displayMetrics.density // dp to px
-        private val horizontalPadding = 50.0f
+        private val horizontalPadding = 150.0f
         val intrinsicWidth: Float
 
         init {
-            val paint = Paint()
-            paint.textSize = textSizeInPixel
-            paint.typeface = Typeface.DEFAULT_BOLD
-            paint.textAlign = Paint.Align.LEFT
             val titleBounds = Rect()
-            paint.getTextBounds(title, 0, title.length, titleBounds)
             intrinsicWidth = titleBounds.width() + 2 * horizontalPadding
         }
 
         fun draw(canvas: Canvas, rect: RectF) {
             val paint = Paint()
 
-            // Draw background
             paint.color = ContextCompat.getColor(context, colorRes)
             canvas.drawRect(rect, paint)
 
-            // Draw title
             paint.color = ContextCompat.getColor(context, android.R.color.white)
-            paint.textSize = textSizeInPixel
-            paint.typeface = Typeface.DEFAULT_BOLD
-            paint.textAlign = Paint.Align.LEFT
-
-            val titleBounds = Rect()
-            paint.getTextBounds(title, 0, title.length, titleBounds)
-
-            val y = rect.height() / 2 + titleBounds.height() / 2 - titleBounds.bottom
-            canvas.drawText(title, rect.left + horizontalPadding, rect.top + y, paint)
+            canvas.drawBitmap(bitmap, rect.centerX() - (bitmap.width / 2), rect.centerY() - (bitmap.height / 2),  paint)
 
             clickableRegion = rect
         }
@@ -176,6 +167,10 @@ abstract class SwipeHelper(
                 }
             }
         }
+    }
+
+    interface ItemTouchHelperContract {
+        fun onItemMoved(fromPosition: Int, toPosition: Int)
     }
 }
 
