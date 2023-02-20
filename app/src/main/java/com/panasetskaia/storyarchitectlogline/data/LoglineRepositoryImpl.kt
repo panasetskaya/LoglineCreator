@@ -17,9 +17,21 @@ class LoglineRepositoryImpl: LoglineRepository {
         TODO("Not yet implemented")
     }
 
-    override suspend fun addLogline(lgln: Logline) {
+    override suspend fun addLogline(
+        pronoun: String,
+        majorEvent: String,
+        storyGoal: String,
+        majorEventIncludesMainCharacter: Boolean,
+        characterInfo: String,
+        theme: String?,
+        mprEvent: String?,
+        afterMprEvent: String?,
+        stakes: String?,
+        worldText: String?
+    ) {
         TODO("Not yet implemented")
     }
+
 
     override suspend fun changeOrder(id: Int, newPosition: Int) {
         TODO("Not yet implemented")
