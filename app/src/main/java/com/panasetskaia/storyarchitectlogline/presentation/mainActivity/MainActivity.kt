@@ -10,6 +10,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.SearchView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
@@ -126,7 +127,7 @@ class MainActivity : AppCompatActivity() {
             android.R.color.holo_red_light,
             object : SwipeHelper.UnderlayButtonClickListener {
                 override fun onClick() {
-                    deleteFromList(position)
+                    showDeleteDialog(position)
                 }
             })
     }
@@ -142,7 +143,7 @@ class MainActivity : AppCompatActivity() {
         ).show()
     }
 
-    fun getBitmapFromVectorDrawable(drawableId: Int): Bitmap? {
+    private fun getBitmapFromVectorDrawable(drawableId: Int): Bitmap? {
         val drawable = ContextCompat.getDrawable(this, drawableId)
         val bitmap = Bitmap.createBitmap(
             drawable!!.intrinsicWidth,
@@ -152,6 +153,23 @@ class MainActivity : AppCompatActivity() {
         drawable.setBounds(0, 0, canvas.width, canvas.height)
         drawable.draw(canvas)
         return bitmap
+    }
+
+    private fun showDeleteDialog(position: Int) {
+        val builder = AlertDialog.Builder(this,R.style.AlertDialogTheme)
+        builder.setMessage(getString(R.string.are_you_sure))
+        builder.setTitle(getString(R.string.you_want_delete))
+        builder.setCancelable(true)
+        builder.setPositiveButton(getString(R.string.yes)) {
+                dialog, _ ->
+            deleteFromList(position)
+            dialog.cancel()
+        }
+        builder.setNegativeButton(getString(R.string.no)) {
+                dialog, _ -> dialog.cancel()
+        }
+        val alertDialog = builder.create()
+        alertDialog.show()
     }
 
 

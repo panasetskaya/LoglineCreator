@@ -26,6 +26,10 @@
     <string name="main_text_when_empty">Answer 9 simple questions about your story and get a full-fledged movie logline</string>
     <string name="main_create_button">Create</string>
     <string name="words_count">%d WORDS</string>
+    <string name="you_want_delete">You want to delete a logline</string>
+    <string name="are_you_sure">Are you sure you want to permanently delete this logline?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 
     <!-- main character fragment-->
     <string name="mc_header">Main character</string>
