@@ -27,7 +27,7 @@ class LoglineBuilder(
             lglnText,
             date,
             wordsCount,
-            0
+            0 //todo: тут может полететь
         )
     }
 

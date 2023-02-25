@@ -5,6 +5,9 @@ import com.panasetskaia.storyarchitectlogline.domain.LoglineRepository
 import kotlinx.coroutines.flow.Flow
 
 class LoglineRepositoryImpl: LoglineRepository {
+
+    val currentList = mutableListOf<Logline>()
+
     override fun getAllSavedLoglines(): Flow<List<Logline>> {
         TODO("Not yet implemented")
     }
@@ -14,7 +17,10 @@ class LoglineRepositoryImpl: LoglineRepository {
     }
 
     override suspend fun deleteLogline(id: Int) {
-        TODO("Not yet implemented")
+        currentList.removeIf {
+            it.id == id
+        }
+        //todo: переделать 
     }
 
     override suspend fun addLogline(
@@ -29,7 +35,19 @@ class LoglineRepositoryImpl: LoglineRepository {
         stakes: String?,
         worldText: String?
     ) {
-        TODO("Not yet implemented")
+        val newLogline = LoglineBuilder(
+            pronoun,
+            majorEvent,
+            storyGoal,
+            majorEventIncludesMainCharacter,
+            characterInfo,
+            theme,
+            mprEvent,
+            afterMprEvent,
+            stakes,
+            worldText
+        ).buildLogline()
+        currentList.add(newLogline)
     }
 
 
