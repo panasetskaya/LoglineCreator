@@ -15,7 +15,6 @@ import kotlinx.coroutines.launch
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repo = LoglineRepositoryImpl(application)
-    private val addLoglineUseCase = AddLoglineUseCase(repo)
     private val deleteLoglineUseCase = DeleteLoglineUseCase(repo)
     private val getAllUseCase = GetAllUseCase(repo)
     private val searchUseCase = SearchUseCase(repo)
@@ -48,34 +47,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     fun deleteLogline(id: Int) {
         viewModelScope.launch {
             deleteLoglineUseCase(id)
-        }
-    }
-
-    fun addLogline(
-        pronoun: String,
-        majorEvent: String,
-        storyGoal: String,
-        majorEventIncludesMainCharacter: Boolean,
-        characterInfo: String,
-        theme: String?,
-        mprEvent: String?,
-        afterMprEvent: String?,
-        stakes: String?,
-        worldText: String?
-    ) {
-        viewModelScope.launch {
-            addLoglineUseCase(
-                pronoun,
-                majorEvent,
-                storyGoal,
-                majorEventIncludesMainCharacter,
-                characterInfo,
-                theme,
-                mprEvent,
-                afterMprEvent,
-                stakes,
-                worldText
-            )
         }
     }
 
