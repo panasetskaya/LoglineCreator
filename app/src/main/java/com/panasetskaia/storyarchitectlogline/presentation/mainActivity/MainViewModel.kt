@@ -10,7 +10,7 @@ import com.panasetskaia.storyarchitectlogline.domain.useCases.SearchUseCase
 
 class MainViewModel(application: Application): AndroidViewModel(application) {
 
-    private val repo = LoglineRepositoryImpl()
+    private val repo = LoglineRepositoryImpl(application)
     private val addLoglineUseCase = AddLoglineUseCase(repo)
     private val deleteLoglineUseCase = DeleteLoglineUseCase(repo)
     private val getAllUseCase = GetAllUseCase(repo)

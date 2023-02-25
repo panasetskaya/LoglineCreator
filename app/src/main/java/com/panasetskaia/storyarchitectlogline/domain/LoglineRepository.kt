@@ -26,4 +26,6 @@ interface LoglineRepository {
 
     suspend fun changeOrder(id: Int, newPosition: Int)
 
+    suspend fun changeText(id: Int, newText: String)
+
 }

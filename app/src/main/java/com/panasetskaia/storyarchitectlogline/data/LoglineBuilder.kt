@@ -1,18 +1,21 @@
 package com.panasetskaia.storyarchitectlogline.data
 
 import com.panasetskaia.storyarchitectlogline.domain.Logline
+import java.text.FieldPosition
 
 class LoglineBuilder(
-    val pronoun: String,
-    val majorEvent: String,
-    val storyGoal: String,
-    val majorEventIncludesMainCharacter: Boolean,
-    val characterInfo: String,
-    val theme: String?,
-    val mprEvent: String?,
-    val afterMprEvent: String?,
-    val stakes: String?,
-    val worldText: String?
+    private val pronoun: String,
+    private val majorEvent: String,
+    private val storyGoal: String,
+    private val majorEventIncludesMainCharacter: Boolean,
+    private val characterInfo: String,
+    private val theme: String?,
+    private val mprEvent: String?,
+    private val afterMprEvent: String?,
+    private val stakes: String?,
+    private val worldText: String?,
+    private val date: String,
+    private val position: Int
 ) {
 
     fun buildLogline(): Logline {
@@ -21,13 +24,12 @@ class LoglineBuilder(
         val wordsCount = lglnText.count{
             it == ' '
         } + 1
-        val date = "00.00.0000"
         return Logline(
             0,
             lglnText,
             date,
             wordsCount,
-            0 //todo: тут может полететь
+            position
         )
     }
 

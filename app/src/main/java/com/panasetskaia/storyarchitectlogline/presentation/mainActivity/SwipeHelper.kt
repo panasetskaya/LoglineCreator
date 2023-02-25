@@ -155,7 +155,7 @@ abstract class SwipeHelper(
             canvas.drawRect(rect, paint)
 
             paint.color = ContextCompat.getColor(context, android.R.color.white)
-            canvas.drawBitmap(bitmap, rect.centerX() - (bitmap.width / 2), rect.centerY() - (bitmap.height / 2),  paint)
+            canvas.drawBitmap(bitmap, rect.centerX() - (bitmap.width / 2), rect.centerY() - (bitmap.height / 2) + (rect.centerY() - (bitmap.height / 2))/2,  paint)
 
             clickableRegion = rect
         }

@@ -1,26 +1,24 @@
 package com.panasetskaia.storyarchitectlogline.data
 
+import android.app.Application
 import com.panasetskaia.storyarchitectlogline.domain.Logline
 import com.panasetskaia.storyarchitectlogline.domain.LoglineRepository
 import kotlinx.coroutines.flow.Flow
 
-class LoglineRepositoryImpl: LoglineRepository {
+class LoglineRepositoryImpl(application: Application) : LoglineRepository {
 
-    val currentList = mutableListOf<Logline>()
+    private val dbDao = LoglineDatabase.getInstance(application).loglineDao()
 
     override fun getAllSavedLoglines(): Flow<List<Logline>> {
-        TODO("Not yet implemented")
+        return dbDao.getAllLoglines()
     }
 
     override fun searchForWords(query: String): Flow<List<Logline>> {
-        TODO("Not yet implemented")
+        return dbDao.searchLogline(query)
     }
 
     override suspend fun deleteLogline(id: Int) {
-        currentList.removeIf {
-            it.id == id
-        }
-        //todo: переделать 
+        dbDao.deleteLogline(id)
     }
 
     override suspend fun addLogline(
@@ -45,13 +43,42 @@ class LoglineRepositoryImpl: LoglineRepository {
             mprEvent,
             afterMprEvent,
             stakes,
-            worldText
+            worldText,
+            getCurrentDate(),
+            getPositionForLast()
         ).buildLogline()
-        currentList.add(newLogline)
+        dbDao.saveLogline(newLogline)
     }
 
 
     override suspend fun changeOrder(id: Int, newPosition: Int) {
-        TODO("Not yet implemented")
+        val oldLogline = dbDao.selectById(id)
+        val newLogline = oldLogline.copy(number = newPosition)
+        dbDao.saveLogline(newLogline)
+    }
+
+    override suspend fun changeText(id: Int, newText: String) {
+        val wordCount = newText.count {
+            it == ' '
+        } + 1
+        val oldLogline = dbDao.selectById(id)
+        val newLogline =
+            oldLogline.copy(
+                text = newText,
+                date = getCurrentDate(),
+                number = getPositionForLast(),
+                count = wordCount
+            )
+        dbDao.saveLogline(newLogline)
+    }
+
+    private fun getCurrentDate(): String {
+        return "00.00.0000"
+        //todo: Not yet implemented
+    }
+
+    private fun getPositionForLast(): Int {
+        return 0
+        //todo: Not yet implemented
     }
 }
