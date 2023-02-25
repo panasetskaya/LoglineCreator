@@ -12,43 +12,45 @@ class CreativeViewModel(application: Application) : AndroidViewModel(application
     private val repo = LoglineRepositoryImpl(application)
     private val addLoglineUseCase = AddLoglineUseCase(repo)
 
-    private var currentPronoun: String? = null
-    private var currentMajorEvent: String? = null
-    private var currentStoryGoal: String? = null
-    private var currentMajorEventIncludesMainCharacter: String? = null
-    private var currentCharacterInfo: String? = null
+    private var currentPronoun: String = dummyString
+    private var currentMajorEvent: String = dummyString
+    private var currentStoryGoal: String = dummyString
+    private var currentMajorEventIncludesMainCharacter: Boolean = true
+    private var currentCharacterInfo: String = dummyString
     private var currentTheme: String? = null
     private var currentMprEvent: String? = null
     private var currentAfterMprEvent: String? = null
     private var currentStakes: String? = null
     private var currentWorldText: String? = null
 
-        fun addLogline(
-        pronoun: String,
-        majorEvent: String,
-        storyGoal: String,
-        majorEventIncludesMainCharacter: Boolean,
-        characterInfo: String,
-        theme: String?,
-        mprEvent: String?,
-        afterMprEvent: String?,
-        stakes: String?,
-        worldText: String?
+    fun addLogline(
     ) {
         viewModelScope.launch {
-            addLoglineUseCase(
-                pronoun,
-                majorEvent,
-                storyGoal,
-                majorEventIncludesMainCharacter,
-                characterInfo,
-                theme,
-                mprEvent,
-                afterMprEvent,
-                stakes,
-                worldText
-            )
+            if (allRequiredFieldsNotNull()) {
+                addLoglineUseCase(
+                    currentPronoun,
+                    currentMajorEvent,
+                    currentStoryGoal,
+                    currentMajorEventIncludesMainCharacter,
+                    currentCharacterInfo,
+                    currentTheme,
+                    currentMprEvent,
+                    currentAfterMprEvent,
+                    currentStakes,
+                    currentWorldText
+                )
+            }
+
         }
+    }
+
+    private fun allRequiredFieldsNotNull(): Boolean {
+        return currentPronoun != dummyString && currentMajorEvent != dummyString &&
+                currentStoryGoal != dummyString && currentCharacterInfo != dummyString
+    }
+
+    companion object {
+        val dummyString = ""
     }
 
 }
