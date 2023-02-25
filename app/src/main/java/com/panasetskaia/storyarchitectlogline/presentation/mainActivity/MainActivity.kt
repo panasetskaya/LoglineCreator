@@ -16,6 +16,10 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.MenuItemCompat
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -23,12 +27,15 @@ import com.panasetskaia.storyarchitectlogline.R
 import com.panasetskaia.storyarchitectlogline.databinding.ActivityMainBinding
 import com.panasetskaia.storyarchitectlogline.domain.Logline
 import com.panasetskaia.storyarchitectlogline.presentation.creativeActivity.CreativeActivity
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private val loglineAdapter = LoglineAdapter(this)
+    private lateinit var viewModel: MainViewModel
+    private lateinit var loglineAdapter: LoglineAdapter
     private val dummyList: MutableList<Logline> = mutableListOf(
         Logline(
             0,
@@ -60,19 +67,20 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(findViewById(R.id.main_toolbar))
         title = getString(R.string.toolbar_your_loglines)
+        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
+        loglineAdapter = LoglineAdapter(this, viewModel)
         setButtons()
         setUpRecyclerView(binding.rvYourLoglines)
+        collectFlow()
     }
 
     private fun setButtons() {
         with(binding) {
             buttonStart.setOnClickListener {
-                val intent = Intent(this@MainActivity, CreativeActivity::class.java)
-                startActivity(intent)
+                startNewCreative()
             }
             buttonCreate.setOnClickListener {
-                val intent = Intent(this@MainActivity, CreativeActivity::class.java)
-                startActivity(intent)
+                startNewCreative()
             }
         }
     }
@@ -114,7 +122,6 @@ class MainActivity : AppCompatActivity() {
             }
         })
         itemTouchHelper.attachToRecyclerView(recyclerView)
-        loglineAdapter.submitList(dummyList)
     }
 
     private fun createDeleteButton(position: Int): SwipeHelper.UnderlayButton {
@@ -133,14 +140,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun deleteFromList(position: Int) {
-        dummyList.removeAt(position)
-        loglineAdapter.submitList(dummyList)
-        loglineAdapter.notifyDataSetChanged()
-        Toast.makeText(
-            this@MainActivity,
-            "Deleted position: $position!",
-            Toast.LENGTH_SHORT
-        ).show()
+        loglineAdapter.deleteItemOnPosition(position)
     }
 
     private fun getBitmapFromVectorDrawable(drawableId: Int): Bitmap? {
@@ -170,6 +170,24 @@ class MainActivity : AppCompatActivity() {
         }
         val alertDialog = builder.create()
         alertDialog.show()
+    }
+
+    private fun collectFlow() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    viewModel.loglinesFlow.collectLatest {
+                        loglineAdapter.submitList(it)
+                        binding.rvYourLoglines.scrollToPosition(it.size-1)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun startNewCreative() {
+        val intent = Intent(this@MainActivity, CreativeActivity::class.java)
+        startActivity(intent)
     }
 
 

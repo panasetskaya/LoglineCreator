@@ -27,8 +27,12 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val loglinesFlow: SharedFlow<List<Logline>>
         get() = _loglinesFlow
 
+    init {
+        getLatestLoglines()
+    }
 
-    fun getLatestLoglines() {
+
+    private fun getLatestLoglines() {
         viewModelScope.launch {
             _loglinesFlow.emitAll(
                 getAllUseCase()

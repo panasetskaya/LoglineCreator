@@ -1,9 +1,12 @@
 package com.panasetskaia.storyarchitectlogline.data
 
 import android.app.Application
+import android.util.Log
 import com.panasetskaia.storyarchitectlogline.domain.Logline
 import com.panasetskaia.storyarchitectlogline.domain.LoglineRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.withContext
 
 class LoglineRepositoryImpl(application: Application) : LoglineRepository {
 
@@ -18,7 +21,10 @@ class LoglineRepositoryImpl(application: Application) : LoglineRepository {
     }
 
     override suspend fun deleteLogline(id: Int) {
-        dbDao.deleteLogline(id)
+        withContext(Dispatchers.IO) {
+            dbDao.deleteLogline(id)
+        }
+
     }
 
     override suspend fun addLogline(
@@ -33,6 +39,7 @@ class LoglineRepositoryImpl(application: Application) : LoglineRepository {
         stakes: String?,
         worldText: String?
     ) {
+        Log.e("MY_TAG", "repo.addLogline")
         val newLogline = LoglineBuilder(
             pronoun,
             majorEvent,
@@ -47,29 +54,37 @@ class LoglineRepositoryImpl(application: Application) : LoglineRepository {
             getCurrentDate(),
             getPositionForLast()
         ).buildLogline()
-        dbDao.saveLogline(newLogline)
+        withContext(Dispatchers.IO) {
+            dbDao.saveLogline(newLogline)
+        }
+
     }
 
 
     override suspend fun changeOrder(id: Int, newPosition: Int) {
-        val oldLogline = dbDao.selectById(id)
-        val newLogline = oldLogline.copy(number = newPosition)
-        dbDao.saveLogline(newLogline)
+        withContext(Dispatchers.IO) {
+            val oldLogline = dbDao.selectById(id)
+            val newLogline = oldLogline.copy(number = newPosition)
+            dbDao.saveLogline(newLogline)
+        }
+
     }
 
     override suspend fun changeText(id: Int, newText: String) {
-        val wordCount = newText.count {
-            it == ' '
-        } + 1
-        val oldLogline = dbDao.selectById(id)
-        val newLogline =
-            oldLogline.copy(
-                text = newText,
-                date = getCurrentDate(),
-                number = getPositionForLast(),
-                count = wordCount
-            )
-        dbDao.saveLogline(newLogline)
+        withContext(Dispatchers.IO) {
+            val wordCount = newText.count {
+                it == ' '
+            } + 1
+            val oldLogline = dbDao.selectById(id)
+            val newLogline =
+                oldLogline.copy(
+                    text = newText,
+                    date = getCurrentDate(),
+                    number = getPositionForLast(),
+                    count = wordCount
+                )
+            dbDao.saveLogline(newLogline)
+        }
     }
 
     private fun getCurrentDate(): String {

@@ -20,7 +20,6 @@ class Step7DeadlineFragment : Fragment() {
 
 
     companion object {
-
         @JvmStatic
         fun newInstance() = Step7DeadlineFragment()
     }

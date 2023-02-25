@@ -8,12 +8,14 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.MenuProvider
+import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.sidesheet.SideSheetDialog
 import com.panasetskaia.storyarchitectlogline.R
 import com.panasetskaia.storyarchitectlogline.presentation.creativeActivity.adapters.StepsPagerAdapter
+import com.panasetskaia.storyarchitectlogline.presentation.mainActivity.MainViewModel
 
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
 
@@ -32,6 +34,8 @@ class CreativeActivity : AppCompatActivity() {
     lateinit var readyMenuProvider: MenuProvider
     private var isGoingBackFromReady = false
 
+    lateinit var viewModel: CreativeViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen()
@@ -44,6 +48,7 @@ class CreativeActivity : AppCompatActivity() {
         setDots()
         setDefaultBottomButtons()
         setHintText()
+        viewModel = ViewModelProvider(this)[CreativeViewModel::class.java]
     }
 
     private fun setHint() {
@@ -191,6 +196,7 @@ class CreativeActivity : AppCompatActivity() {
     }
 
     private fun saveLogline() { //переписать на сохранение во вьюмодель!
-        Toast.makeText(this@CreativeActivity, "We are saving it!", Toast.LENGTH_SHORT).show()
+        //todo: переписать на edit!!!
+        Toast.makeText(this@CreativeActivity, "Saved it!", Toast.LENGTH_SHORT).show()
     }
 }
