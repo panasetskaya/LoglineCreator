@@ -22,6 +22,6 @@ interface LoglineDao {
     @Query("SELECT * FROM logline WHERE text LIKE '%' || :query || '%'")
     fun searchLogline(query: String): Flow<List<Logline>>
 
-    @Query("SELECT 1 FROM logline WHERE id=:idToSelect")
+    @Query("SELECT * FROM logline WHERE id=:idToSelect LIMIT 1")
     fun selectById(idToSelect: Int): Logline
 }
