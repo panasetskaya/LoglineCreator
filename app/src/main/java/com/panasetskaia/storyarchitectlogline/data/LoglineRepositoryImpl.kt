@@ -54,20 +54,14 @@ class LoglineRepositoryImpl(application: Application) : LoglineRepository {
             getCurrentDate(),
             getPositionForLast()
         ).buildLogline()
-        withContext(Dispatchers.IO) {
-            dbDao.saveLogline(newLogline)
-        }
-
+        dbDao.saveLogline(newLogline)
     }
 
 
     override suspend fun changeOrder(id: Int, newPosition: Int) {
-        withContext(Dispatchers.IO) {
-            val oldLogline = dbDao.selectById(id)
-            val newLogline = oldLogline.copy(number = newPosition)
-            dbDao.saveLogline(newLogline)
-        }
-
+        val oldLogline = dbDao.selectById(id)
+        val newLogline = oldLogline.copy(number = newPosition)
+        dbDao.saveLogline(newLogline)
     }
 
     override suspend fun changeText(id: Int, newText: String) {

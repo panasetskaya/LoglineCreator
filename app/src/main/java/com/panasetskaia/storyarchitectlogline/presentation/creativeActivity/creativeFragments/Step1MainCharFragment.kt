@@ -4,16 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import com.panasetskaia.storyarchitectlogline.R
 import com.panasetskaia.storyarchitectlogline.databinding.FragmentStep1MainCharBinding
+import com.panasetskaia.storyarchitectlogline.presentation.creativeActivity.CreativeActivity
+import com.panasetskaia.storyarchitectlogline.presentation.creativeActivity.CreativeViewModel
 
 
 class Step1MainCharFragment : Fragment() {
 
-//    lateinit var sideSheetDialog: SideSheetDialog
-//    lateinit var sideSheetView: View
+    private lateinit var viewModel: CreativeViewModel
+    private lateinit var adapter: ArrayAdapter<CharSequence>
 
     private var _binding: FragmentStep1MainCharBinding? = null
     private val binding: FragmentStep1MainCharBinding
@@ -29,17 +33,35 @@ class Step1MainCharFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel = (requireActivity() as CreativeActivity).viewModel
         setListeners()
         setSpinner()
     }
 
     private fun setListeners() {
+        binding.etMcInfo.addTextChangedListener {
+            viewModel.changeCharacterInfo(it.toString())
+        }
+        binding.spinnerMcGender.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                }
 
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    viewModel.changePronoun(position)
+                }
+            }
     }
 
     companion object {
         @JvmStatic
         fun newInstance() = Step1MainCharFragment()
+
     }
 
     override fun onDestroyView() {
@@ -47,10 +69,8 @@ class Step1MainCharFragment : Fragment() {
         _binding = null
     }
 
-    //            (requireActivity() as CreativeActivity).hintText.setText(R.string.major_event_hint) //change hint text
-
     private fun setSpinner() {
-        val adapter = ArrayAdapter.createFromResource(
+        adapter = ArrayAdapter.createFromResource(
             requireContext(), R.array.mc_gender_choice,
             R.layout.spinner_item_gender
         )

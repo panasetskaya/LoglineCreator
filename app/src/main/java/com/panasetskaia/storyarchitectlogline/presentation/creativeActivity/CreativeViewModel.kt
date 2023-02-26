@@ -14,10 +14,10 @@ class CreativeViewModel(application: Application) : AndroidViewModel(application
     private val addLoglineUseCase = AddLoglineUseCase(repo)
 
     private var currentPronoun: String = dummy
+    private var currentCharacterInfo: String = dummy
     private var currentMajorEvent: String = dummy
     private var currentStoryGoal: String = dummy
     private var currentMajorEventIncludesMainCharacter: Boolean = true
-    private var currentCharacterInfo: String = dummy
     private var currentTheme: String? = null
     private var currentMprEvent: String? = null
     private var currentAfterMprEvent: String? = null
@@ -50,9 +50,36 @@ class CreativeViewModel(application: Application) : AndroidViewModel(application
                 currentStoryGoal != initialState && currentCharacterInfo != initialState
     }
 
+    fun characterInfoIsFilled(): Boolean {
+        return currentCharacterInfo!= initialState
+    }
+
+    fun changeCharacterInfo(newCharacterInfo: String) {
+        currentCharacterInfo = newCharacterInfo
+    }
+
+    fun pronounIsSet(): Boolean {
+        return currentPronoun!= initialState
+    }
+
+    fun changePronoun(pronounPosition: Int) {
+        currentPronoun = when (pronounPosition) {
+            genderMalePosition -> genderMale
+            genderFemalePosition -> genderFemale
+            genderOtherPosition -> genderOther
+            else -> initialState
+        }
+    }
+
     companion object {
-        val initialState = ""
-        val dummy = "dududuudud"
+        private const val initialState = ""
+        private const val dummy = "dududuudud"
+        private const val genderMalePosition = 1
+        private const val genderFemalePosition = 2
+        private  const val genderOtherPosition = 3
+        private const val genderMale = "he"
+        private const val genderFemale = "she"
+        private const val genderOther = "they"
     }
 
 }

@@ -7,6 +7,7 @@ import android.content.Context
 import android.net.http.*
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import com.panasetskaia.storyarchitectlogline.R
@@ -73,8 +74,9 @@ class Step8ReadyFragment : Fragment() {
                 val clipboard = requireActivity().getSystemService(Context.CLIPBOARD_SERVICE)
                         as ClipboardManager
                 val lgln = etWorld.text.toString()
-                val clip: ClipData = ClipData.newPlainText("simple text", lgln)
+                val clip: ClipData = ClipData.newPlainText(copyLabel, lgln)
                 clipboard.setPrimaryClip(clip)
+                Toast.makeText(requireContext(), getString(R.string.copied), Toast.LENGTH_SHORT).show()
 
             }
             cardAdv1.setOnClickListener {
@@ -90,6 +92,8 @@ class Step8ReadyFragment : Fragment() {
 
 
     companion object {
+        const val copyLabel = "simple text"
+
         @JvmStatic
         fun newInstance(param: String?) =
             Step8ReadyFragment().apply {

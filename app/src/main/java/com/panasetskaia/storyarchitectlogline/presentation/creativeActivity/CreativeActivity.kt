@@ -112,7 +112,14 @@ class CreativeActivity : AppCompatActivity() {
         viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 when (position) {
-                    0 -> hintText.text = getString(R.string.mc_hint)
+                    0 -> {
+                        hintText.text = getString(R.string.mc_hint)
+                        if (viewModel.pronounIsSet() && viewModel.characterInfoIsFilled()) {
+                            enableSwiping()
+                        } else {
+                            disableSwiping()
+                        }
+                    }
                     1 -> hintText.text = getString(R.string.major_event_hint)
                     2 -> hintText.text = getString(R.string.theme_hint)
                     3 -> hintText.text = getString(R.string.action_hint)

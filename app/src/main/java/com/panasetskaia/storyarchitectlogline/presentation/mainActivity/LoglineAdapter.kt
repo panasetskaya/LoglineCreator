@@ -1,16 +1,12 @@
 package com.panasetskaia.storyarchitectlogline.presentation.mainActivity
 
-import android.R.attr.data
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.panasetskaia.storyarchitectlogline.R
 import com.panasetskaia.storyarchitectlogline.databinding.ItemLoglineBinding
 import com.panasetskaia.storyarchitectlogline.domain.Logline
-import java.util.*
-
 
 class LoglineAdapter(val context: MainActivity, val viewModel: MainViewModel) :
     ListAdapter<Logline, LoglineAdapter.LoglineViewHolder>(LoglineDiffUtilCallback()),
@@ -52,29 +48,25 @@ class LoglineAdapter(val context: MainActivity, val viewModel: MainViewModel) :
             for (i in fromPosition until toPosition) {
 //                Collections.swap(currentList.toMutableList(), i, i + 1)
                 val itemForChange = getItem(i)
-                changeOrderOfItem(itemForChange.id, itemForChange.number-1)
+                changeOrderOfItem(itemForChange.id, itemForChange.number + 1)
             }
         } else {
             for (i in fromPosition downTo toPosition + 1) {
 //                Collections.swap(currentList.toMutableList(), i, i - 1)
                 val itemForChange = getItem(i)
-                changeOrderOfItem(itemForChange.id, itemForChange.number+1)
+                changeOrderOfItem(itemForChange.id, itemForChange.number - 1)
             }
         }
-//        notifyItemMoved(fromPosition, toPosition)
+        notifyItemMoved(fromPosition, toPosition)
     }
 
     fun deleteItemOnPosition(position: Int) {
         val item = getItem(position)
         viewModel.deleteLogline(item.id)
-        for (i in position until currentList.size) {
-            val itemForChange = getItem(i)
-            changeOrderOfItem(itemForChange.id,i)
-        }
     }
 
     private fun changeOrderOfItem(itemId: Int, newPosition: Int) {
-        viewModel.changeOrder(itemId,newPosition)
+        viewModel.changeOrder(itemId, newPosition)
     }
 
 }
