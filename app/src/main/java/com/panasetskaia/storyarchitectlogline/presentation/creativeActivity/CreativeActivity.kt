@@ -6,9 +6,13 @@ import android.os.Bundle
 import android.view.*
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.MenuProvider
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
@@ -18,6 +22,8 @@ import com.panasetskaia.storyarchitectlogline.presentation.creativeActivity.adap
 import com.panasetskaia.storyarchitectlogline.presentation.mainActivity.MainViewModel
 
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class CreativeActivity : AppCompatActivity() {
 
@@ -101,11 +107,15 @@ class CreativeActivity : AppCompatActivity() {
     fun disableSwiping() {
         viewPager2.isUserInputEnabled = false
         buttonNext.isEnabled = false
+        buttonNext.setTextColor( ContextCompat.getColor(this, R.color.our_subheader_grey))
+        buttonNext.iconTint = ContextCompat.getColorStateList(this,R.color.our_subheader_grey)
     }
 
     fun enableSwiping() {
         viewPager2.isUserInputEnabled = true
         buttonNext.isEnabled = true
+        buttonNext.setTextColor( ContextCompat.getColor(this, R.color.our_green))
+        buttonNext.iconTint = ContextCompat.getColorStateList(this,R.color.our_green)
     }
 
     private fun setHintText() {
@@ -114,10 +124,17 @@ class CreativeActivity : AppCompatActivity() {
                 when (position) {
                     0 -> {
                         hintText.text = getString(R.string.mc_hint)
-                        if (viewModel.pronounIsSet() && viewModel.characterInfoIsFilled()) {
-                            enableSwiping()
-                        } else {
-                            disableSwiping()
+                        lifecycleScope.launch {
+                            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                                viewModel.isSwipingFromPage1Allowed.collectLatest {
+                                    if (it) {
+                                        enableSwiping()
+                                    } else {
+                                        disableSwiping()
+                                         }
+                                }
+
+                            }
                         }
                     }
                     1 -> hintText.text = getString(R.string.major_event_hint)
@@ -169,6 +186,7 @@ class CreativeActivity : AppCompatActivity() {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menuInflater.inflate(R.menu.menu_creative, menu)
             }
+
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 return when (menuItem.itemId) {
                     R.id.toolbar_menu_hint -> {
