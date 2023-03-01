@@ -124,6 +124,8 @@
     <string name="dummy_date">11.02.2023</string>
     <string name="dummy_word_count">256 слов</string>
     <string name="twitter_share_base_url">https://www.twitter.com/intent/tweet?text=</string>
+    <string name="copied">Copied!</string>
+    <string name="pleaseFill">Please fill all the required fields above</string>
 
 
 </resources>

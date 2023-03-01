@@ -7,15 +7,20 @@ import android.content.Context
 import android.net.http.*
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import com.panasetskaia.storyarchitectlogline.R
 import com.panasetskaia.storyarchitectlogline.databinding.FragmentStep8ReadyBinding
+import com.panasetskaia.storyarchitectlogline.presentation.creativeActivity.CreativeActivity
+import com.panasetskaia.storyarchitectlogline.presentation.creativeActivity.CreativeViewModel
 
 
 private const val ARG_LOGLINE_STRING = "logline string"
 
 class Step8ReadyFragment : Fragment() {
+
+    private lateinit var viewModel: CreativeViewModel
 
     private var _binding: FragmentStep8ReadyBinding? = null
     private val binding: FragmentStep8ReadyBinding
@@ -46,6 +51,8 @@ class Step8ReadyFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setButtons()
+        viewModel = (requireActivity() as CreativeActivity).viewModel
+        viewModel.saveLogline()
     }
 
     override fun onResume() {
@@ -67,8 +74,9 @@ class Step8ReadyFragment : Fragment() {
                 val clipboard = requireActivity().getSystemService(Context.CLIPBOARD_SERVICE)
                         as ClipboardManager
                 val lgln = etWorld.text.toString()
-                val clip: ClipData = ClipData.newPlainText("simple text", lgln)
+                val clip: ClipData = ClipData.newPlainText(copyLabel, lgln)
                 clipboard.setPrimaryClip(clip)
+                Toast.makeText(requireContext(), getString(R.string.copied), Toast.LENGTH_SHORT).show()
 
             }
             cardAdv1.setOnClickListener {
@@ -84,6 +92,8 @@ class Step8ReadyFragment : Fragment() {
 
 
     companion object {
+        const val copyLabel = "simple text"
+
         @JvmStatic
         fun newInstance(param: String?) =
             Step8ReadyFragment().apply {

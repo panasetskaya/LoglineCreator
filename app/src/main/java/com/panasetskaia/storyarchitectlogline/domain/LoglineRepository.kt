@@ -1,5 +1,6 @@
 package com.panasetskaia.storyarchitectlogline.domain
 
+import com.panasetskaia.storyarchitectlogline.data.LoglineBuilder
 import kotlinx.coroutines.flow.Flow
 
 interface LoglineRepository {
@@ -10,8 +11,21 @@ interface LoglineRepository {
 
     suspend fun deleteLogline(id: Int)
 
-    suspend fun addLogline(lgln: Logline)
+    suspend fun addLogline(
+        pronoun: String,
+        majorEvent: String,
+        storyGoal: String,
+        majorEventIncludesMainCharacter: Boolean,
+        characterInfo: String,
+        theme: String?,
+        mprEvent: String?,
+        afterMprEvent: String?,
+        stakes: String?,
+        worldText: String?
+    )
 
     suspend fun changeOrder(id: Int, newPosition: Int)
+
+    suspend fun changeText(id: Int, newText: String)
 
 }

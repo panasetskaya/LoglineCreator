@@ -6,16 +6,24 @@ import android.os.Bundle
 import android.view.*
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.MenuProvider
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.sidesheet.SideSheetDialog
 import com.panasetskaia.storyarchitectlogline.R
 import com.panasetskaia.storyarchitectlogline.presentation.creativeActivity.adapters.StepsPagerAdapter
+import com.panasetskaia.storyarchitectlogline.presentation.mainActivity.MainViewModel
 
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class CreativeActivity : AppCompatActivity() {
 
@@ -32,6 +40,8 @@ class CreativeActivity : AppCompatActivity() {
     lateinit var readyMenuProvider: MenuProvider
     private var isGoingBackFromReady = false
 
+    lateinit var viewModel: CreativeViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen()
@@ -44,6 +54,7 @@ class CreativeActivity : AppCompatActivity() {
         setDots()
         setDefaultBottomButtons()
         setHintText()
+        viewModel = ViewModelProvider(this)[CreativeViewModel::class.java]
     }
 
     private fun setHint() {
@@ -96,18 +107,36 @@ class CreativeActivity : AppCompatActivity() {
     fun disableSwiping() {
         viewPager2.isUserInputEnabled = false
         buttonNext.isEnabled = false
+        buttonNext.setTextColor( ContextCompat.getColor(this, R.color.our_subheader_grey))
+        buttonNext.iconTint = ContextCompat.getColorStateList(this,R.color.our_subheader_grey)
     }
 
     fun enableSwiping() {
         viewPager2.isUserInputEnabled = true
         buttonNext.isEnabled = true
+        buttonNext.setTextColor( ContextCompat.getColor(this, R.color.our_green))
+        buttonNext.iconTint = ContextCompat.getColorStateList(this,R.color.our_green)
     }
 
     private fun setHintText() {
         viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 when (position) {
-                    0 -> hintText.text = getString(R.string.mc_hint)
+                    0 -> {
+                        hintText.text = getString(R.string.mc_hint)
+                        lifecycleScope.launch {
+                            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                                viewModel.isSwipingFromPage1Allowed.collectLatest {
+                                    if (it) {
+                                        enableSwiping()
+                                    } else {
+                                        disableSwiping()
+                                         }
+                                }
+
+                            }
+                        }
+                    }
                     1 -> hintText.text = getString(R.string.major_event_hint)
                     2 -> hintText.text = getString(R.string.theme_hint)
                     3 -> hintText.text = getString(R.string.action_hint)
@@ -157,6 +186,7 @@ class CreativeActivity : AppCompatActivity() {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menuInflater.inflate(R.menu.menu_creative, menu)
             }
+
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 return when (menuItem.itemId) {
                     R.id.toolbar_menu_hint -> {
@@ -191,6 +221,7 @@ class CreativeActivity : AppCompatActivity() {
     }
 
     private fun saveLogline() { //переписать на сохранение во вьюмодель!
-        Toast.makeText(this@CreativeActivity, "We are saving it!", Toast.LENGTH_SHORT).show()
+        //todo: переписать на edit!!!
+        Toast.makeText(this@CreativeActivity, "Saved it!", Toast.LENGTH_SHORT).show()
     }
 }
