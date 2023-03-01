@@ -19,7 +19,6 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.sidesheet.SideSheetDialog
 import com.panasetskaia.storyarchitectlogline.R
 import com.panasetskaia.storyarchitectlogline.presentation.creativeActivity.adapters.StepsPagerAdapter
-import com.panasetskaia.storyarchitectlogline.presentation.mainActivity.MainViewModel
 
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
 import kotlinx.coroutines.flow.collectLatest
@@ -126,7 +125,7 @@ class CreativeActivity : AppCompatActivity() {
                         hintText.text = getString(R.string.mc_hint)
                         lifecycleScope.launch {
                             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                                viewModel.isSwipingFromPage1Allowed.collectLatest {
+                                viewModel.isSwipingFromPageOneAllowed.collectLatest {
                                     if (it) {
                                         enableSwiping()
                                     } else {
@@ -137,8 +136,36 @@ class CreativeActivity : AppCompatActivity() {
                             }
                         }
                     }
-                    1 -> hintText.text = getString(R.string.major_event_hint)
-                    2 -> hintText.text = getString(R.string.theme_hint)
+                    1 -> {
+                        hintText.text = getString(R.string.major_event_hint)
+                        lifecycleScope.launch {
+                            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                                viewModel.isSwipingFromPageTwoAllowed.collectLatest {
+                                    if (it) {
+                                        enableSwiping()
+                                    } else {
+                                        disableSwiping()
+                                     }
+                                }
+
+                            }
+                        }
+                    }
+                    2 -> {
+                        hintText.text = getString(R.string.theme_hint)
+                        lifecycleScope.launch {
+                            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                                viewModel.isSwipingFromPageThreeAllowed.collectLatest {
+                                    if (it) {
+                                        enableSwiping()
+                                    } else {
+                                        disableSwiping()
+                                    }
+                                }
+
+                            }
+                        }
+                    }
                     3 -> hintText.text = getString(R.string.action_hint)
                     4 -> hintText.text = getString(R.string.mid_point_hint)
                     5 -> hintText.text = getString(R.string.world_hint)

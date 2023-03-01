@@ -94,7 +94,7 @@
             android:id="@+id/group_theme_included"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="visible"
+            android:visibility="invisible"
             app:constraint_referenced_ids="tv_theme_eg, ti_theme"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

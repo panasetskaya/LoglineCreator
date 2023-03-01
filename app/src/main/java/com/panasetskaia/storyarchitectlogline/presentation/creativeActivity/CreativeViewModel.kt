@@ -15,15 +15,24 @@ class CreativeViewModel(application: Application) : AndroidViewModel(application
     private val repo = LoglineRepositoryImpl(application)
     private val addLoglineUseCase = AddLoglineUseCase(repo)
 
-    private val _isSwipingFromPage1Allowed = MutableStateFlow(false)
-    val isSwipingFromPage1Allowed: StateFlow<Boolean>
-        get() = _isSwipingFromPage1Allowed
+    private val _isSwipingFromPageOneAllowed = MutableStateFlow(false)
+    val isSwipingFromPageOneAllowed: StateFlow<Boolean>
+        get() = _isSwipingFromPageOneAllowed
 
-    private var currentPronoun: String = dummy
-    private var currentCharacterInfo: String = dummy
-    private var currentMajorEvent: String = dummy
+    private val _isSwipingFromPageTwoAllowed = MutableStateFlow(true)
+    val isSwipingFromPageTwoAllowed: StateFlow<Boolean>
+        get() = _isSwipingFromPageTwoAllowed
+
+    private val _isSwipingFromPageThreeAllowed = MutableStateFlow(true)
+    val isSwipingFromPageThreeAllowed: StateFlow<Boolean>
+        get() = _isSwipingFromPageThreeAllowed
+
+    private var currentPronoun: String = initialState
+    private var currentCharacterInfo: String = initialState
+    private var currentMajorEvent: String = initialState
     private var currentStoryGoal: String = dummy
-    private var currentMajorEventIncludesMainCharacter: Boolean = true
+    private var currentMajorEventIncludesMainCharacter: Boolean = false
+    private var currentIsThemeNeeded: Boolean = false
     private var currentTheme: String? = null
     private var currentMprEvent: String? = null
     private var currentAfterMprEvent: String? = null
@@ -33,7 +42,7 @@ class CreativeViewModel(application: Application) : AndroidViewModel(application
     fun saveLogline() {
         viewModelScope.launch {
             if (allRequiredFieldsNotEmpty()) {
-                Log.e("MY_TAG", "allRequiredFieldsNotEmpty")
+                Log.e("MY_TAG", "$currentPronoun, $currentMajorEvent, $currentCharacterInfo")
                 addLoglineUseCase(
                     currentPronoun,
                     currentMajorEvent,
@@ -52,21 +61,16 @@ class CreativeViewModel(application: Application) : AndroidViewModel(application
     }
 
     private fun allRequiredFieldsNotEmpty(): Boolean {
-        return currentPronoun != initialState && currentMajorEvent != initialState &&
-                currentStoryGoal != initialState && currentCharacterInfo != initialState
+        return currentPronoun != initialState &&
+                currentStoryGoal != initialState &&
+                currentCharacterInfo != initialState
+        //дописать свитчеры
     }
 
-    fun characterInfoIsFilled(): Boolean {
-        return currentCharacterInfo != initialState
-    }
 
     fun changeCharacterInfo(newCharacterInfo: String) {
         currentCharacterInfo = newCharacterInfo
         emitSwipingFromPage1Admission()
-    }
-
-    fun pronounIsSet(): Boolean {
-        return currentPronoun != initialState
     }
 
     fun changePronoun(pronounPosition: Int) {
@@ -81,9 +85,45 @@ class CreativeViewModel(application: Application) : AndroidViewModel(application
 
     private fun emitSwipingFromPage1Admission() {
         if (currentCharacterInfo != initialState && currentPronoun != initialState) {
-            _isSwipingFromPage1Allowed.tryEmit(true)
+            _isSwipingFromPageOneAllowed.tryEmit(true)
         } else {
-            _isSwipingFromPage1Allowed.tryEmit(false)
+            _isSwipingFromPageOneAllowed.tryEmit(false)
+        }
+    }
+
+    fun changeMajorEvent(event: String) {
+        currentMajorEvent = event
+        emitSwipingFromPage2Admission()
+    }
+
+    fun changeIsMCIncludedSwitch(isIncluded: Boolean) {
+        currentMajorEventIncludesMainCharacter = isIncluded
+        emitSwipingFromPage2Admission()
+    }
+
+    private fun emitSwipingFromPage2Admission() {
+        if (currentMajorEvent==initialState && currentMajorEventIncludesMainCharacter) {
+            _isSwipingFromPageTwoAllowed.tryEmit(false)
+        } else {
+            _isSwipingFromPageTwoAllowed.tryEmit(true)
+        }
+    }
+
+    fun changeIsThemeNeeded(needed: Boolean) {
+        currentIsThemeNeeded = needed
+        emitSwipingFromPage3Admission()
+    }
+
+    fun changeTheme(theme: String) {
+        currentTheme = theme
+        emitSwipingFromPage3Admission()
+    }
+
+    private fun emitSwipingFromPage3Admission() {
+        if (currentIsThemeNeeded && currentTheme==null) {
+            _isSwipingFromPageThreeAllowed.tryEmit(false)
+        } else {
+            _isSwipingFromPageThreeAllowed.tryEmit(true)
         }
     }
 
