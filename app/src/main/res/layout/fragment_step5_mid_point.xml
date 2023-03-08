@@ -134,7 +134,7 @@
             android:id="@+id/group_mpr_included"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="visible"
+            android:visibility="invisible"
             app:constraint_referenced_ids="tv_mid_point_after_eg, tv_mid_point_eg,ti_mid_point, ti_mid_point_after"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

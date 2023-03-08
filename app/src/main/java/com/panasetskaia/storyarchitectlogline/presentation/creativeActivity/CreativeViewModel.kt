@@ -31,13 +31,18 @@ class CreativeViewModel(application: Application) : AndroidViewModel(application
     val isSwipingFromPageFourAllowed: StateFlow<Boolean>
         get() = _isSwipingFromPageFourAllowed
 
+    private val _isSwipingFromPageFiveAllowed = MutableStateFlow(true)
+    val isSwipingFromPageFiveAllowed: StateFlow<Boolean>
+        get() = _isSwipingFromPageFiveAllowed
+
     private var currentPronoun: String = initialState
     private var currentCharacterInfo: String = initialState
     private var currentMajorEvent: String = initialState
-    private var currentStoryGoal: String = dummy
+    private var currentStoryGoal: String = initialState
     private var currentMajorEventIncludesMainCharacter: Boolean = false
     private var currentIsThemeNeeded: Boolean = false
     private var currentTheme: String? = null
+    private var currentIsMprNeeded: Boolean = false
     private var currentMprEvent: String? = null
     private var currentAfterMprEvent: String? = null
     private var currentStakes: String? = null
@@ -68,7 +73,7 @@ class CreativeViewModel(application: Application) : AndroidViewModel(application
         return currentPronoun != initialState &&
                 currentStoryGoal != initialState &&
                 currentCharacterInfo != initialState
-        //дописать свитчеры
+        //todo: дописать свитчеры
     }
 
 
@@ -144,9 +149,31 @@ class CreativeViewModel(application: Application) : AndroidViewModel(application
         }
     }
 
+    fun changeIsMprNeeded(needed: Boolean) {
+        currentIsMprNeeded = needed
+        emitSwipingFromPage5Admission()
+    }
+
+    fun changeMidPoint(newMidPoint: String) {
+        currentMprEvent = newMidPoint
+        emitSwipingFromPage5Admission()
+    }
+
+    fun changeAfterMpr(newAfterMprEvent: String) {
+        currentAfterMprEvent = newAfterMprEvent
+        emitSwipingFromPage5Admission()
+    }
+
+    private fun emitSwipingFromPage5Admission() {
+        if (currentIsMprNeeded && (currentMprEvent==null || currentAfterMprEvent==null )) {
+            _isSwipingFromPageFiveAllowed.tryEmit(false)
+        } else {
+            _isSwipingFromPageFiveAllowed.tryEmit(true)
+        }
+    }
+
     companion object {
         private const val initialState = ""
-        private const val dummy = "dududuudud"
         private const val genderMalePosition = 1
         private const val genderFemalePosition = 2
         private const val genderOtherPosition = 3

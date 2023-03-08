@@ -187,7 +187,21 @@ class CreativeActivity : AppCompatActivity() {
                             }
                         }
                     }
-                    4 -> hintText.text = getString(R.string.mid_point_hint)
+                    4 -> {
+                        hintText.text = getString(R.string.mid_point_hint)
+                        lifecycleScope.launch {
+                            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                                viewModel.isSwipingFromPageFiveAllowed.collectLatest {
+                                    if (it) {
+                                        enableSwiping()
+                                    } else {
+                                        disableSwiping()
+                                    }
+                                }
+
+                            }
+                        }
+                    }
                     5 -> hintText.text = getString(R.string.world_hint)
                     6 -> {
                         if (isGoingBackFromReady) {
