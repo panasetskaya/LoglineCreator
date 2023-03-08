@@ -39,6 +39,8 @@ class CreativeActivity : AppCompatActivity() {
     lateinit var readyMenuProvider: MenuProvider
     private var isGoingBackFromReady = false
 
+    private var isSwipingAllowed = false
+
     lateinit var viewModel: CreativeViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -87,8 +89,13 @@ class CreativeActivity : AppCompatActivity() {
         buttonNext.icon = getDrawable(R.drawable.ic_arrow_forward)
         buttonNext.setTextColor(resources.getColor(R.color.our_subheader_grey))
         buttonNext.setOnClickListener {
-            val currentItem = viewPager2.currentItem
-            viewPager2.currentItem = currentItem + 1
+            if (isSwipingAllowed) {
+                val currentItem = viewPager2.currentItem
+                viewPager2.currentItem = currentItem + 1
+            } else {
+                Toast.makeText(this@CreativeActivity, getString(R.string.pleaseFill), Toast.LENGTH_SHORT).show()
+            }
+
         }
     }
 
@@ -104,15 +111,15 @@ class CreativeActivity : AppCompatActivity() {
     }
 
     fun disableSwiping() {
+        isSwipingAllowed = false
         viewPager2.isUserInputEnabled = false
-        buttonNext.isEnabled = false
         buttonNext.setTextColor( ContextCompat.getColor(this, R.color.our_subheader_grey))
         buttonNext.iconTint = ContextCompat.getColorStateList(this,R.color.our_subheader_grey)
     }
 
     fun enableSwiping() {
+        isSwipingAllowed = true
         viewPager2.isUserInputEnabled = true
-        buttonNext.isEnabled = true
         buttonNext.setTextColor( ContextCompat.getColor(this, R.color.our_green))
         buttonNext.iconTint = ContextCompat.getColorStateList(this,R.color.our_green)
     }
@@ -166,7 +173,20 @@ class CreativeActivity : AppCompatActivity() {
                             }
                         }
                     }
-                    3 -> hintText.text = getString(R.string.action_hint)
+                    3 -> {
+                        hintText.text = getString(R.string.action_hint)
+                        lifecycleScope.launch {
+                            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                                viewModel.isSwipingFromPageFourAllowed.collectLatest {
+                                    if (it) {
+                                        enableSwiping()
+                                    } else {
+                                        disableSwiping()
+                                    }
+                                }
+                            }
+                        }
+                    }
                     4 -> hintText.text = getString(R.string.mid_point_hint)
                     5 -> hintText.text = getString(R.string.world_hint)
                     6 -> {

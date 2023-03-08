@@ -33,7 +33,6 @@ class Step3ThemeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (requireActivity() as CreativeActivity).viewModel
         setListeners()
-
     }
 
     private fun setListeners() {

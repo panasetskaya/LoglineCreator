@@ -27,6 +27,10 @@ class CreativeViewModel(application: Application) : AndroidViewModel(application
     val isSwipingFromPageThreeAllowed: StateFlow<Boolean>
         get() = _isSwipingFromPageThreeAllowed
 
+    private val _isSwipingFromPageFourAllowed = MutableStateFlow(false)
+    val isSwipingFromPageFourAllowed: StateFlow<Boolean>
+        get() = _isSwipingFromPageFourAllowed
+
     private var currentPronoun: String = initialState
     private var currentCharacterInfo: String = initialState
     private var currentMajorEvent: String = initialState
@@ -124,6 +128,19 @@ class CreativeViewModel(application: Application) : AndroidViewModel(application
             _isSwipingFromPageThreeAllowed.tryEmit(false)
         } else {
             _isSwipingFromPageThreeAllowed.tryEmit(true)
+        }
+    }
+
+    fun changeStoryGoal(newGoal: String) {
+        currentStoryGoal = newGoal
+        emitSwipingFromPage4Admission()
+    }
+
+    private fun emitSwipingFromPage4Admission() {
+        if (currentStoryGoal!= initialState) {
+            _isSwipingFromPageFourAllowed.tryEmit(true)
+        } else {
+            _isSwipingFromPageFourAllowed.tryEmit(false)
         }
     }
 
