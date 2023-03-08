@@ -51,13 +51,26 @@ class Step8ReadyFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setButtons()
-        viewModel = (requireActivity() as CreativeActivity).viewModel
-        viewModel.saveLogline()
+        if (loglineParam==null) {
+            launchInitialSavingState()
+        } else {
+            launchEditState()
+        }
+
     }
 
     override fun onResume() {
         super.onResume()
         binding.progressBar.visibility = View.GONE
+    }
+
+    private fun launchInitialSavingState() {
+        viewModel = (requireActivity() as CreativeActivity).viewModel
+        viewModel.saveLogline()
+    }
+
+    private fun launchEditState() {
+
     }
 
     @SuppressLint("SetJavaScriptEnabled")
