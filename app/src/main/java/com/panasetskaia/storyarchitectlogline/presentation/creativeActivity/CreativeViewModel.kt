@@ -12,6 +12,7 @@ import kotlinx.coroutines.launch
 
 class CreativeViewModel(application: Application) : AndroidViewModel(application) {
 
+
     private val repo = LoglineRepositoryImpl(application)
     private val addLoglineUseCase = AddLoglineUseCase(repo)
 
@@ -35,6 +36,14 @@ class CreativeViewModel(application: Application) : AndroidViewModel(application
     val isSwipingFromPageFiveAllowed: StateFlow<Boolean>
         get() = _isSwipingFromPageFiveAllowed
 
+    private val _isSwipingFromPageSixAllowed = MutableStateFlow(true)
+    val isSwipingFromPageSixAllowed: StateFlow<Boolean>
+        get() = _isSwipingFromPageSixAllowed
+
+    private val _isSwipingFromPageSevenAllowed = MutableStateFlow(true)
+    val isSwipingFromPageSevenAllowed: StateFlow<Boolean>
+        get() = _isSwipingFromPageSevenAllowed
+
     private var currentPronoun: String = initialState
     private var currentCharacterInfo: String = initialState
     private var currentMajorEvent: String = initialState
@@ -45,8 +54,10 @@ class CreativeViewModel(application: Application) : AndroidViewModel(application
     private var currentIsMprNeeded: Boolean = false
     private var currentMprEvent: String? = null
     private var currentAfterMprEvent: String? = null
+    private var currentIsWorldNeeded = false
+    private var currentStoryWorld: String? = null
+    private var currentAreStakesNeeded = false
     private var currentStakes: String? = null
-    private var currentWorldText: String? = null
 
     fun saveLogline() {
         viewModelScope.launch {
@@ -62,7 +73,7 @@ class CreativeViewModel(application: Application) : AndroidViewModel(application
                     currentMprEvent,
                     currentAfterMprEvent,
                     currentStakes,
-                    currentWorldText
+                    currentStoryWorld
                 )
             }
 
@@ -169,6 +180,42 @@ class CreativeViewModel(application: Application) : AndroidViewModel(application
             _isSwipingFromPageFiveAllowed.tryEmit(false)
         } else {
             _isSwipingFromPageFiveAllowed.tryEmit(true)
+        }
+    }
+
+    fun changeIsStoryWorldNeeded(needed: Boolean) {
+        currentIsWorldNeeded = needed
+        emitSwipingFromPage6Admission()
+    }
+
+    fun changeStoryWorld(newWorld: String) {
+        currentStoryWorld = newWorld
+        emitSwipingFromPage6Admission()
+    }
+
+    private fun emitSwipingFromPage6Admission() {
+        if (currentIsWorldNeeded && currentStoryWorld==null) {
+            _isSwipingFromPageSixAllowed.tryEmit(false)
+        } else {
+            _isSwipingFromPageSixAllowed.tryEmit(true)
+        }
+    }
+
+    fun changeAreStakesNeeded(needed: Boolean) {
+        currentAreStakesNeeded = needed
+        emitSwipingFromPage7Admission()
+    }
+
+    fun changeStakes(newStakes: String) {
+        currentStakes = newStakes
+        emitSwipingFromPage7Admission()
+    }
+
+    private fun emitSwipingFromPage7Admission() {
+        if (currentAreStakesNeeded && currentStakes==null) {
+            _isSwipingFromPageSevenAllowed.tryEmit(false)
+        } else {
+            _isSwipingFromPageSevenAllowed.tryEmit(true)
         }
     }
 

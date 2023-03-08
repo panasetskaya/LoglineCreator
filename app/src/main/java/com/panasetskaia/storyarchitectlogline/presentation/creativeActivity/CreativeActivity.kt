@@ -202,13 +202,39 @@ class CreativeActivity : AppCompatActivity() {
                             }
                         }
                     }
-                    5 -> hintText.text = getString(R.string.world_hint)
+                    5 -> {
+                        hintText.text = getString(R.string.world_hint)
+                        lifecycleScope.launch {
+                            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                                viewModel.isSwipingFromPageSixAllowed.collectLatest {
+                                    if (it) {
+                                        enableSwiping()
+                                    } else {
+                                        disableSwiping()
+                                    }
+                                }
+
+                            }
+                        }
+                    }
                     6 -> {
                         if (isGoingBackFromReady) {
                             changeBackToDefaultMenu()
                             isGoingBackFromReady = false
                         }
                         hintText.text = getString(R.string.deadline_hint)
+                        lifecycleScope.launch {
+                            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                                viewModel.isSwipingFromPageSevenAllowed.collectLatest {
+                                    if (it) {
+                                        enableSwiping()
+                                    } else {
+                                        disableSwiping()
+                                    }
+                                }
+
+                            }
+                        }
                     }
                     else -> {
                         isGoingBackFromReady = true
