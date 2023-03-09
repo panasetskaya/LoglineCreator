@@ -32,7 +32,7 @@ class Step8ReadyFragment : Fragment() {
     private val binding: FragmentStep8ReadyBinding
         get() = _binding ?: throw RuntimeException("FragmentStep8ReadyBinding is null")
 
-    private var loglineParam: Int = newLoglineParam
+    private var loglineParam: Int = noParam
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,7 +58,8 @@ class Step8ReadyFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.webView.settings.javaScriptEnabled = true
-        if (loglineParam== newLoglineParam) {
+        viewModel = (requireActivity() as CreativeActivity).viewModel
+        if (loglineParam==newLoglineParam) {
             launchInitialSavingState()
         } else {
             launchEditState()
@@ -73,7 +74,6 @@ class Step8ReadyFragment : Fragment() {
 
     private fun launchInitialSavingState() {
         with(binding) {
-            viewModel = (requireActivity() as CreativeActivity).viewModel
             viewModel.saveLogline()
             binding.groupEditMode.visibility = View.GONE
             binding.groupFirstSaveMode.visibility = View.VISIBLE
@@ -88,9 +88,10 @@ class Step8ReadyFragment : Fragment() {
                     }
                 }
             }
-            etReadyLogline.addTextChangedListener {
-                viewModel.editLoglineText(loglineParam, it.toString())
-            }
+//            etReadyLogline.addTextChangedListener {
+//                viewModel.editLoglineText(loglineParam, it.toString())
+//            }
+            //todo: сохранение изменений!
             setInitialModeButtons()
         }
 
@@ -111,6 +112,7 @@ class Step8ReadyFragment : Fragment() {
             buttonCopy.setOnClickListener {
                 copyText()
             }
+
             setAdverts()
         }
     }
@@ -122,6 +124,9 @@ class Step8ReadyFragment : Fragment() {
             }
             buttonTwitterEditMode.setOnClickListener {
                 shareOntwitter()
+            }
+            buttonSaveEditMode.setOnClickListener {
+                viewModel.editLoglineText(loglineParam, etReadyLogline.text.toString())
             }
         }
         setAdverts()
@@ -164,6 +169,7 @@ class Step8ReadyFragment : Fragment() {
 
         const val copyLabel = "simple text"
         const val newLoglineParam = -1
+        const val noParam = -2
 
         @JvmStatic
         fun newInstance(param: Int) =

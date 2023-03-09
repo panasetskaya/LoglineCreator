@@ -18,7 +18,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val deleteLoglineUseCase = DeleteLoglineUseCase(repo)
     private val getAllUseCase = GetAllUseCase(repo)
     private val searchUseCase = SearchUseCase(repo)
-    private val changeOrderUseCase = ChangeOrderUseCase(repo)
+
 
     private val _loglinesFlow = MutableSharedFlow<List<Logline>>(
         replay = 1,
@@ -54,9 +54,5 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun changeOrder(id: Int, newPosition: Int) {
-        viewModelScope.launch {
-            changeOrderUseCase(id, newPosition)
-        }
-    }
+
 }

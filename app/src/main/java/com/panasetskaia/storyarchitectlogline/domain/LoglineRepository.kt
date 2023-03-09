@@ -1,6 +1,5 @@
 package com.panasetskaia.storyarchitectlogline.domain
 
-import com.panasetskaia.storyarchitectlogline.data.LoglineBuilder
 import kotlinx.coroutines.flow.Flow
 
 interface LoglineRepository {
@@ -25,8 +24,6 @@ interface LoglineRepository {
         stakes: String?,
         worldText: String?
     )
-
-    suspend fun changeOrder(id: Int, newPosition: Int)
 
     suspend fun changeText(id: Int, newText: String)
 

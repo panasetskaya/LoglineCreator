@@ -74,7 +74,7 @@ class CreativeViewModel(application: Application) : AndroidViewModel(application
     fun saveLogline() {
         viewModelScope.launch {
             if (allRequiredFieldsNotEmpty()) {
-                Log.e("MY_TAG", "$currentPronoun, $currentMajorEvent, $currentCharacterInfo")
+                Log.e("MY_TAG", "allRequiredFieldsNotEmpty, saving logline!")
                 addLoglineUseCase(
                     currentPronoun,
                     currentMajorEvent,

@@ -14,8 +14,7 @@ class LoglineBuilder(
     private val afterMprEvent: String?,
     private val stakes: String?,
     private val worldText: String?,
-    private val date: String,
-    private val position: Int
+    private val date: String
 ) {
 
     fun buildLogline(): Logline {
@@ -28,8 +27,7 @@ class LoglineBuilder(
             0,
             lglnText,
             date,
-            wordsCount,
-            position
+            wordsCount
         )
     }
 

@@ -16,13 +16,13 @@ interface LoglineDao {
     @Query("DELETE FROM logline WHERE id=:idToDelete")
     suspend fun deleteLogline(idToDelete: Int)
 
-    @Query("SELECT * FROM logline ORDER BY number")
+    @Query("SELECT * FROM logline ORDER BY id")
     fun getAllLoglines(): Flow<List<Logline>>
 
     @Query("SELECT * FROM logline WHERE text LIKE '%' || :query || '%'")
     fun searchLogline(query: String): Flow<List<Logline>>
 
-    @Query("SELECT * FROM logline WHERE id=:idToSelect LIMIT 1")
+    @Query("SELECT * FROM logline WHERE id=:idToSelect")
     suspend fun selectById(idToSelect: Int): Logline
 
     @Query("SELECT * FROM logline ORDER BY id DESC LIMIT 1")

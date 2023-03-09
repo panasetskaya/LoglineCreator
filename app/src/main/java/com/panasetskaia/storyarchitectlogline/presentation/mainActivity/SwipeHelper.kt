@@ -15,13 +15,11 @@ import kotlin.math.max
 
 abstract class SwipeHelper(
     private val recyclerView: RecyclerView,
-    private val adapter: LoglineAdapter
+
 ) : ItemTouchHelper.SimpleCallback(
     ItemTouchHelper.UP or ItemTouchHelper.DOWN,
     ItemTouchHelper.LEFT
 ) {
-
-    private val mAdapter: ItemTouchHelperContract = adapter
 
     private var swipedPosition = -1
     private val buttonsBuffer: MutableMap<Int, UnderlayButton> = mutableMapOf()
@@ -113,9 +111,6 @@ abstract class SwipeHelper(
         viewHolder: RecyclerView.ViewHolder,
         target: RecyclerView.ViewHolder
     ): Boolean {
-        val draggedItemIndex = viewHolder.bindingAdapterPosition
-        val targetIndex = target.bindingAdapterPosition
-        mAdapter.onItemMoved(draggedItemIndex,targetIndex)
         return false
     }
 
@@ -167,10 +162,6 @@ abstract class SwipeHelper(
                 }
             }
         }
-    }
-
-    interface ItemTouchHelperContract {
-        fun onItemMoved(fromPosition: Int, toPosition: Int)
     }
 }
 
