@@ -16,6 +16,10 @@ class LoglineRepositoryImpl(application: Application) : LoglineRepository {
         return dbDao.getAllLoglines()
     }
 
+    override fun getLastSavedLogline(): Flow<Logline> {
+        return dbDao.getLastSavedLogline()
+    }
+
     override fun searchForWords(query: String): Flow<List<Logline>> {
         return dbDao.searchLogline(query)
     }

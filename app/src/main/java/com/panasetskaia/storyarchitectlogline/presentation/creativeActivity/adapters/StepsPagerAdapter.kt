@@ -20,7 +20,7 @@ class StepsPagerAdapter(val parentActivity: AppCompatActivity) :
             4 -> Step5MidPointFragment.newInstance()
             5 -> Step6StoryWorldFragment.newInstance()
             6 -> Step7DeadlineFragment.newInstance()
-            else -> Step8ReadyFragment.newInstance(null)
+            else -> Step8ReadyFragment.newInstance(Step8ReadyFragment.newLoglineParam)
         }
     }
 }

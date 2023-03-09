@@ -30,7 +30,7 @@
             app:shapeAppearance="@style/RoundedStyle">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_world"
+                android:id="@+id/et_ready_logline"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textMultiLine"
@@ -41,17 +41,37 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_save"
+            android:id="@+id/button_save_edit_mode"
             style="@style/MyRoundButtonsStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
+            android:layout_margin="12dp"
             android:backgroundTint="@color/our_purple"
             android:text="@string/save"
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="@+id/ti_ready"
             app:layout_constraintTop_toBottomOf="@id/ti_ready"
             app:strokeColor="@color/our_purple" />
+
+        <ImageButton
+            android:id="@+id/button_copy_edit_mode"
+            android:backgroundTint="@android:color/transparent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_copy"
+            app:layout_constraintStart_toStartOf="@+id/ti_ready"
+            app:layout_constraintTop_toTopOf="@id/button_save_edit_mode"
+            app:layout_constraintBottom_toBottomOf="@id/button_save_edit_mode" />
+
+        <ImageButton
+            android:id="@+id/button_twitter_edit_mode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_twitter"
+            android:backgroundTint="@android:color/transparent"
+            app:layout_constraintStart_toEndOf="@+id/button_copy_edit_mode"
+            app:layout_constraintTop_toTopOf="@id/button_save_edit_mode"
+            app:layout_constraintBottom_toBottomOf="@id/button_save_edit_mode" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_copy"
@@ -269,17 +289,16 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.constraintlayout.widget.Group
-            android:id="@+id/group_for_edit"
+            android:id="@+id/group_edit_mode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:constraint_referenced_ids="button_save" />
+            android:visibility="invisible"
+            app:constraint_referenced_ids="button_save_edit_mode, button_twitter_edit_mode, button_copy_edit_mode" />
 
         <androidx.constraintlayout.widget.Group
-            android:id="@+id/group_for_first_save"
+            android:id="@+id/group_first_save_mode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             app:constraint_referenced_ids="button_copy, button_twitter" />
 
         <WebView

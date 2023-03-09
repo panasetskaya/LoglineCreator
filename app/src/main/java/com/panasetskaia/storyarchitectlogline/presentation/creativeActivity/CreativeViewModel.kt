@@ -5,9 +5,12 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.panasetskaia.storyarchitectlogline.data.LoglineRepositoryImpl
+import com.panasetskaia.storyarchitectlogline.domain.Logline
 import com.panasetskaia.storyarchitectlogline.domain.useCases.AddLoglineUseCase
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import com.panasetskaia.storyarchitectlogline.domain.useCases.ChangeTextUseCase
+import com.panasetskaia.storyarchitectlogline.domain.useCases.GetLastSavedUseCase
+import kotlinx.coroutines.channels.BufferOverflow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class CreativeViewModel(application: Application) : AndroidViewModel(application) {
@@ -15,6 +18,15 @@ class CreativeViewModel(application: Application) : AndroidViewModel(application
 
     private val repo = LoglineRepositoryImpl(application)
     private val addLoglineUseCase = AddLoglineUseCase(repo)
+    private val getLastSavedUseCase = GetLastSavedUseCase(repo)
+    private val changeTextUseCase = ChangeTextUseCase(repo)
+
+    private val _lastLoglineFlow = MutableSharedFlow<Logline>(
+        replay = 1,
+        onBufferOverflow = BufferOverflow.DROP_OLDEST
+    )
+    val lastLoglineFlow: SharedFlow<Logline>
+        get() = _lastLoglineFlow
 
     private val _isSwipingFromPageOneAllowed = MutableStateFlow(false)
     val isSwipingFromPageOneAllowed: StateFlow<Boolean>
@@ -76,7 +88,14 @@ class CreativeViewModel(application: Application) : AndroidViewModel(application
                     currentStoryWorld
                 )
             }
+        }
+    }
 
+    fun getLastLogline() {
+        viewModelScope.launch {
+            _lastLoglineFlow.emitAll(
+                getLastSavedUseCase()
+            )
         }
     }
 
@@ -216,6 +235,12 @@ class CreativeViewModel(application: Application) : AndroidViewModel(application
             _isSwipingFromPageSevenAllowed.tryEmit(false)
         } else {
             _isSwipingFromPageSevenAllowed.tryEmit(true)
+        }
+    }
+
+    fun editLoglineText(id: Int, newText: String) {
+        viewModelScope.launch {
+            changeTextUseCase(id,newText)
         }
     }
 

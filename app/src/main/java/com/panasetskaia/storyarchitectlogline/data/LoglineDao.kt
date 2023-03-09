@@ -24,4 +24,7 @@ interface LoglineDao {
 
     @Query("SELECT * FROM logline WHERE id=:idToSelect LIMIT 1")
     suspend fun selectById(idToSelect: Int): Logline
+
+    @Query("SELECT * FROM logline ORDER BY id DESC LIMIT 1")
+    fun getLastSavedLogline(): Flow<Logline>
 }
