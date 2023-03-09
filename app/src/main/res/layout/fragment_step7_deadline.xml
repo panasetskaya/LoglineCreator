@@ -36,12 +36,12 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="24dp"
             android:layout_marginTop="12dp"
-            app:layout_constraintEnd_toStartOf="@id/switch_include_mpr"
+            app:layout_constraintEnd_toStartOf="@id/switch_include_stakes"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_deadline" />
 
         <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/switch_include_mpr"
+            android:id="@+id/switch_include_stakes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="24dp"
@@ -50,7 +50,7 @@
             app:layout_constraintBottom_toBottomOf="@id/tv_deadline_i_want"/>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/ti_deadline"
+            android:id="@+id/ti_stakes"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -68,7 +68,7 @@
             app:shapeAppearance="@style/RoundedStyle">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_deadline"
+                android:id="@+id/et_stakes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="80dp"
@@ -78,23 +78,23 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
-            android:id="@+id/tv_deadline_eg"
+            android:id="@+id/tv_stakes_eg"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ti_deadline"
+            app:layout_constraintTop_toBottomOf="@+id/ti_stakes"
             android:layout_marginHorizontal="28dp"
             android:gravity="start"
             style="@style/MyExplanationsTextAppearance"
             android:text="@string/deadline_eg"/>
 
         <androidx.constraintlayout.widget.Group
-            android:id="@+id/group_special_deadline"
+            android:id="@+id/group_stakes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="visible"
-            app:constraint_referenced_ids="tv_deadline_eg, ti_deadline"/>
+            android:visibility="invisible"
+            app:constraint_referenced_ids="tv_stakes_eg, ti_stakes"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

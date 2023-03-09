@@ -1,11 +1,12 @@
 package com.panasetskaia.storyarchitectlogline.domain
 
-import com.panasetskaia.storyarchitectlogline.data.LoglineBuilder
 import kotlinx.coroutines.flow.Flow
 
 interface LoglineRepository {
 
     fun getAllSavedLoglines(): Flow<List<Logline>>
+
+    fun getLastSavedLogline(): Flow<Logline>
 
     fun searchForWords(query: String): Flow<List<Logline>>
 
@@ -23,8 +24,6 @@ interface LoglineRepository {
         stakes: String?,
         worldText: String?
     )
-
-    suspend fun changeOrder(id: Int, newPosition: Int)
 
     suspend fun changeText(id: Int, newText: String)
 

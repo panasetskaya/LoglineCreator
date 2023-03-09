@@ -16,6 +16,10 @@ class LoglineRepositoryImpl(application: Application) : LoglineRepository {
         return dbDao.getAllLoglines()
     }
 
+    override fun getLastSavedLogline(): Flow<Logline> {
+        return dbDao.getLastSavedLogline()
+    }
+
     override fun searchForWords(query: String): Flow<List<Logline>> {
         return dbDao.searchLogline(query)
     }
@@ -51,16 +55,8 @@ class LoglineRepositoryImpl(application: Application) : LoglineRepository {
             afterMprEvent,
             stakes,
             worldText,
-            getCurrentDate(),
-            getPositionForLast()
+            getCurrentDate()
         ).buildLogline()
-        dbDao.saveLogline(newLogline)
-    }
-
-
-    override suspend fun changeOrder(id: Int, newPosition: Int) {
-        val oldLogline = dbDao.selectById(id)
-        val newLogline = oldLogline.copy(number = newPosition)
         dbDao.saveLogline(newLogline)
     }
 
@@ -70,11 +66,11 @@ class LoglineRepositoryImpl(application: Application) : LoglineRepository {
                 it == ' '
             } + 1
             val oldLogline = dbDao.selectById(id)
+            Log.e("MY_TAG", "oldLogline id is: ${oldLogline}")
             val newLogline =
                 oldLogline.copy(
                     text = newText,
                     date = getCurrentDate(),
-                    number = getPositionForLast(),
                     count = wordCount
                 )
             dbDao.saveLogline(newLogline)
@@ -83,11 +79,6 @@ class LoglineRepositoryImpl(application: Application) : LoglineRepository {
 
     private fun getCurrentDate(): String {
         return "00.00.0000"
-        //todo: Not yet implemented
-    }
-
-    private fun getPositionForLast(): Int {
-        return 0
         //todo: Not yet implemented
     }
 }

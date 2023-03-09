@@ -9,14 +9,20 @@ import android.os.Bundle
 import android.view.*
 import android.widget.Toast
 import androidx.core.content.ContextCompat.getSystemService
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.panasetskaia.storyarchitectlogline.R
 import com.panasetskaia.storyarchitectlogline.databinding.FragmentStep8ReadyBinding
 import com.panasetskaia.storyarchitectlogline.presentation.creativeActivity.CreativeActivity
 import com.panasetskaia.storyarchitectlogline.presentation.creativeActivity.CreativeViewModel
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 
-private const val ARG_LOGLINE_STRING = "logline string"
+private const val ARG_LOGLINE = "logline arg param"
 
 class Step8ReadyFragment : Fragment() {
 
@@ -26,12 +32,12 @@ class Step8ReadyFragment : Fragment() {
     private val binding: FragmentStep8ReadyBinding
         get() = _binding ?: throw RuntimeException("FragmentStep8ReadyBinding is null")
 
-    private var loglineParam: String? = null
+    private var loglineParam: Int = noParam
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            loglineParam = it.getString(ARG_LOGLINE_STRING)
+            loglineParam = it.getInt(ARG_LOGLINE)
         }
     }
 
@@ -48,11 +54,17 @@ class Step8ReadyFragment : Fragment() {
         _binding = null
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setButtons()
+        binding.webView.settings.javaScriptEnabled = true
         viewModel = (requireActivity() as CreativeActivity).viewModel
-        viewModel.saveLogline()
+        if (loglineParam==newLoglineParam) {
+            launchInitialSavingState()
+        } else {
+            launchEditState()
+        }
+
     }
 
     override fun onResume() {
@@ -60,25 +72,86 @@ class Step8ReadyFragment : Fragment() {
         binding.progressBar.visibility = View.GONE
     }
 
-    @SuppressLint("SetJavaScriptEnabled")
-    private fun setButtons() {
+    private fun launchInitialSavingState() {
         with(binding) {
-            webView.settings.javaScriptEnabled = true
+            viewModel.saveLogline()
+            binding.groupEditMode.visibility = View.GONE
+            binding.groupFirstSaveMode.visibility = View.VISIBLE
+            viewModel.getLastLogline()
+            viewLifecycleOwner.lifecycleScope.launch {
+                viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    launch {
+                        viewModel.lastLoglineFlow.collectLatest {
+                            binding.etReadyLogline.setText(it.text)
+                            loglineParam = it.id
+                        }
+                    }
+                }
+            }
+//            etReadyLogline.addTextChangedListener {
+//                viewModel.editLoglineText(loglineParam, it.toString())
+//            }
+            //todo: сохранение изменений!
+            setInitialModeButtons()
+        }
+
+
+    }
+
+    private fun launchEditState() {
+        binding.groupEditMode.visibility = View.VISIBLE
+        binding.groupFirstSaveMode.visibility = View.GONE
+        setEditModeButtons()
+    }
+
+    private fun setInitialModeButtons() {
+        with(binding) {
             buttonTwitter.setOnClickListener {
-                progressBar.visibility = View.VISIBLE
-                val twtrUrl = getString(R.string.twitter_share_base_url)
-                val lgln = etWorld.text.toString()
-                webView.loadUrl("$twtrUrl$lgln")
+                shareOntwitter()
             }
             buttonCopy.setOnClickListener {
-                val clipboard = requireActivity().getSystemService(Context.CLIPBOARD_SERVICE)
-                        as ClipboardManager
-                val lgln = etWorld.text.toString()
-                val clip: ClipData = ClipData.newPlainText(copyLabel, lgln)
-                clipboard.setPrimaryClip(clip)
-                Toast.makeText(requireContext(), getString(R.string.copied), Toast.LENGTH_SHORT).show()
-
+                copyText()
             }
+
+            setAdverts()
+        }
+    }
+
+    private fun setEditModeButtons() {
+        with (binding) {
+            buttonCopyEditMode.setOnClickListener {
+                copyText()
+            }
+            buttonTwitterEditMode.setOnClickListener {
+                shareOntwitter()
+            }
+            buttonSaveEditMode.setOnClickListener {
+                viewModel.editLoglineText(loglineParam, etReadyLogline.text.toString())
+            }
+        }
+        setAdverts()
+    }
+
+    private fun copyText() {
+        val clipboard = requireActivity().getSystemService(Context.CLIPBOARD_SERVICE)
+                as ClipboardManager
+        val lgln = binding.etReadyLogline.text.toString()
+        val clip: ClipData = ClipData.newPlainText(copyLabel, lgln)
+        clipboard.setPrimaryClip(clip)
+        Toast.makeText(requireContext(), getString(R.string.copied), Toast.LENGTH_SHORT).show()
+    }
+
+    private fun shareOntwitter() {
+        with (binding) {
+            progressBar.visibility = View.VISIBLE
+            val twtrUrl = getString(R.string.twitter_share_base_url)
+            val lgln = etReadyLogline.text.toString()
+            webView.loadUrl("$twtrUrl$lgln")
+        }
+    }
+
+    private fun setAdverts() {
+        with(binding) {
             cardAdv1.setOnClickListener {
                 progressBar.visibility = View.VISIBLE
                 webView.loadUrl(getString(R.string.ready_learn_url))
@@ -88,17 +161,21 @@ class Step8ReadyFragment : Fragment() {
                 webView.loadUrl(getString(R.string.ready_continue_url))
             }
         }
+
     }
 
 
     companion object {
+
         const val copyLabel = "simple text"
+        const val newLoglineParam = -1
+        const val noParam = -2
 
         @JvmStatic
-        fun newInstance(param: String?) =
+        fun newInstance(param: Int) =
             Step8ReadyFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_LOGLINE_STRING, param)
+                    putInt(ARG_LOGLINE, param)
                 }
             }
     }

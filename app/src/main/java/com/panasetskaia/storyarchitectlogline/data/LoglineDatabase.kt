@@ -9,7 +9,7 @@ import com.panasetskaia.storyarchitectlogline.domain.Logline
 
 @Database(
     entities = [Logline::class],
-    version = 1,
+    version = 2,
     exportSchema = true
 )
 abstract class LoglineDatabase : RoomDatabase() {

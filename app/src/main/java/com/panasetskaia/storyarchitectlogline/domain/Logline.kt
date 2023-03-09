@@ -9,6 +9,5 @@ data class Logline(
     val id: Int,
     val text: String,
     val date: String,
-    val count: Int,
-    val number: Int
+    val count: Int
 )

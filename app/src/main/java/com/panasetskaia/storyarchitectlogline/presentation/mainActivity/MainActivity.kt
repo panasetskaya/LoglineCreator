@@ -36,29 +36,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: MainViewModel
     private lateinit var loglineAdapter: LoglineAdapter
-    private val dummyList: MutableList<Logline> = mutableListOf(
-        Logline(
-            0,
-            "На Аляске терпит крушение самолет, и оставшиеся в живых пассажиры оказываются в плену безлюдной снежной пустыни, где только стая волков скрашивает пейзаж.",
-            "11.01.2023",
-            256,
-            0
-        ),
-        Logline(
-            1,
-            "На Аляске терпит крушение самолет, и оставшиеся в живых пассажиры оказываются в плену безлюдной снежной пустыни, где только стая волков скрашивает пейзаж.",
-            "12.01.2023",
-            281,
-            1
-        ),
-        Logline(
-            2,
-            "На Аляске терпит крушение самолет, и оставшиеся в живых пассажиры оказываются в плену безлюдной снежной пустыни, где только стая волков скрашивает пейзаж.",
-            "13.01.2023",
-            220,
-            2
-        )
-    )
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -114,9 +92,12 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun setUpRecyclerView(recyclerView: RecyclerView) {
+        loglineAdapter.onCharacterItemClickListener = {
+            Toast.makeText(this, "The logline's id is: ${it.id}", Toast.LENGTH_SHORT).show()
+        }
         recyclerView.adapter = loglineAdapter
         recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
-        val itemTouchHelper = ItemTouchHelper(object : SwipeHelper(recyclerView, loglineAdapter) {
+        val itemTouchHelper = ItemTouchHelper(object : SwipeHelper(recyclerView) {
             override fun instantiateUnderlayButton(position: Int): UnderlayButton {
                 return createDeleteButton(position)
             }

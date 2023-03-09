@@ -19,7 +19,6 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.sidesheet.SideSheetDialog
 import com.panasetskaia.storyarchitectlogline.R
 import com.panasetskaia.storyarchitectlogline.presentation.creativeActivity.adapters.StepsPagerAdapter
-import com.panasetskaia.storyarchitectlogline.presentation.mainActivity.MainViewModel
 
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
 import kotlinx.coroutines.flow.collectLatest
@@ -39,6 +38,8 @@ class CreativeActivity : AppCompatActivity() {
     lateinit var defaultMenuProvider: MenuProvider
     lateinit var readyMenuProvider: MenuProvider
     private var isGoingBackFromReady = false
+
+    private var isSwipingAllowed = false
 
     lateinit var viewModel: CreativeViewModel
 
@@ -88,8 +89,13 @@ class CreativeActivity : AppCompatActivity() {
         buttonNext.icon = getDrawable(R.drawable.ic_arrow_forward)
         buttonNext.setTextColor(resources.getColor(R.color.our_subheader_grey))
         buttonNext.setOnClickListener {
-            val currentItem = viewPager2.currentItem
-            viewPager2.currentItem = currentItem + 1
+            if (isSwipingAllowed) {
+                val currentItem = viewPager2.currentItem
+                viewPager2.currentItem = currentItem + 1
+            } else {
+                Toast.makeText(this@CreativeActivity, getString(R.string.pleaseFill), Toast.LENGTH_SHORT).show()
+            }
+
         }
     }
 
@@ -105,15 +111,15 @@ class CreativeActivity : AppCompatActivity() {
     }
 
     fun disableSwiping() {
+        isSwipingAllowed = false
         viewPager2.isUserInputEnabled = false
-        buttonNext.isEnabled = false
         buttonNext.setTextColor( ContextCompat.getColor(this, R.color.our_subheader_grey))
         buttonNext.iconTint = ContextCompat.getColorStateList(this,R.color.our_subheader_grey)
     }
 
     fun enableSwiping() {
+        isSwipingAllowed = true
         viewPager2.isUserInputEnabled = true
-        buttonNext.isEnabled = true
         buttonNext.setTextColor( ContextCompat.getColor(this, R.color.our_green))
         buttonNext.iconTint = ContextCompat.getColorStateList(this,R.color.our_green)
     }
@@ -126,7 +132,7 @@ class CreativeActivity : AppCompatActivity() {
                         hintText.text = getString(R.string.mc_hint)
                         lifecycleScope.launch {
                             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                                viewModel.isSwipingFromPage1Allowed.collectLatest {
+                                viewModel.isSwipingFromPageOneAllowed.collectLatest {
                                     if (it) {
                                         enableSwiping()
                                     } else {
@@ -137,17 +143,98 @@ class CreativeActivity : AppCompatActivity() {
                             }
                         }
                     }
-                    1 -> hintText.text = getString(R.string.major_event_hint)
-                    2 -> hintText.text = getString(R.string.theme_hint)
-                    3 -> hintText.text = getString(R.string.action_hint)
-                    4 -> hintText.text = getString(R.string.mid_point_hint)
-                    5 -> hintText.text = getString(R.string.world_hint)
+                    1 -> {
+                        hintText.text = getString(R.string.major_event_hint)
+                        lifecycleScope.launch {
+                            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                                viewModel.isSwipingFromPageTwoAllowed.collectLatest {
+                                    if (it) {
+                                        enableSwiping()
+                                    } else {
+                                        disableSwiping()
+                                     }
+                                }
+
+                            }
+                        }
+                    }
+                    2 -> {
+                        hintText.text = getString(R.string.theme_hint)
+                        lifecycleScope.launch {
+                            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                                viewModel.isSwipingFromPageThreeAllowed.collectLatest {
+                                    if (it) {
+                                        enableSwiping()
+                                    } else {
+                                        disableSwiping()
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+                    3 -> {
+                        hintText.text = getString(R.string.action_hint)
+                        lifecycleScope.launch {
+                            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                                viewModel.isSwipingFromPageFourAllowed.collectLatest {
+                                    if (it) {
+                                        enableSwiping()
+                                    } else {
+                                        disableSwiping()
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    4 -> {
+                        hintText.text = getString(R.string.mid_point_hint)
+                        lifecycleScope.launch {
+                            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                                viewModel.isSwipingFromPageFiveAllowed.collectLatest {
+                                    if (it) {
+                                        enableSwiping()
+                                    } else {
+                                        disableSwiping()
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+                    5 -> {
+                        hintText.text = getString(R.string.world_hint)
+                        lifecycleScope.launch {
+                            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                                viewModel.isSwipingFromPageSixAllowed.collectLatest {
+                                    if (it) {
+                                        enableSwiping()
+                                    } else {
+                                        disableSwiping()
+                                    }
+                                }
+
+                            }
+                        }
+                    }
                     6 -> {
                         if (isGoingBackFromReady) {
                             changeBackToDefaultMenu()
                             isGoingBackFromReady = false
                         }
                         hintText.text = getString(R.string.deadline_hint)
+                        lifecycleScope.launch {
+                            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                                viewModel.isSwipingFromPageSevenAllowed.collectLatest {
+                                    if (it) {
+                                        enableSwiping()
+                                    } else {
+                                        disableSwiping()
+                                    }
+                                }
+
+                            }
+                        }
                     }
                     else -> {
                         isGoingBackFromReady = true

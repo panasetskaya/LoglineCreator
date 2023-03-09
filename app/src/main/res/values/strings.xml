@@ -127,5 +127,10 @@
     <string name="copied">Copied!</string>
     <string name="pleaseFill">Please fill all the required fields above</string>
 
+    <!-- viewModels -->
+    <string name="gender_male">he</string>
+    <string name="gender_female">she</string>
+    <string name="gender_other">they</string>
+
 
 </resources>
