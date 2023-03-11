@@ -8,7 +8,6 @@ import android.net.http.*
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
@@ -17,7 +16,8 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.panasetskaia.storyarchitectlogline.R
 import com.panasetskaia.storyarchitectlogline.databinding.FragmentStep8ReadyBinding
 import com.panasetskaia.storyarchitectlogline.presentation.creativeActivity.CreativeActivity
-import com.panasetskaia.storyarchitectlogline.presentation.creativeActivity.CreativeViewModel
+import com.panasetskaia.storyarchitectlogline.presentation.creativeActivity.EditorViewModel
+import com.panasetskaia.storyarchitectlogline.presentation.mainActivity.MainActivity
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -25,8 +25,6 @@ import kotlinx.coroutines.launch
 private const val ARG_LOGLINE = "logline arg param"
 
 class Step8ReadyFragment : Fragment() {
-
-    private lateinit var viewModel: CreativeViewModel
 
     private var _binding: FragmentStep8ReadyBinding? = null
     private val binding: FragmentStep8ReadyBinding
@@ -58,7 +56,6 @@ class Step8ReadyFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.webView.settings.javaScriptEnabled = true
-        viewModel = (requireActivity() as CreativeActivity).viewModel
         if (loglineParam==newLoglineParam) {
             launchInitialSavingState()
         } else {
@@ -74,24 +71,24 @@ class Step8ReadyFragment : Fragment() {
 
     private fun launchInitialSavingState() {
         with(binding) {
-            viewModel.saveLogline()
+            val creativeViewModel = (requireActivity() as CreativeActivity).viewModel
+            val editorViewModel = (requireActivity() as CreativeActivity).editorViewModel
+            creativeViewModel.saveNewLogline()
             binding.groupEditMode.visibility = View.GONE
             binding.groupFirstSaveMode.visibility = View.VISIBLE
-            viewModel.getLastLogline()
+            editorViewModel.getLastLogline()
             viewLifecycleOwner.lifecycleScope.launch {
                 viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                     launch {
-                        viewModel.lastLoglineFlow.collectLatest {
-                            binding.etReadyLogline.setText(it.text)
-                            loglineParam = it.id
+                        editorViewModel.editedLoglineFlow.collectLatest { logline ->
+                            binding.etReadyLogline.setText(logline.text)
+                            etReadyLogline.addTextChangedListener {
+                                editorViewModel.editLoglineText(logline.id, it.toString())
+                            }
                         }
                     }
                 }
             }
-//            etReadyLogline.addTextChangedListener {
-//                viewModel.editLoglineText(loglineParam, it.toString())
-//            }
-            //todo: сохранение изменений!
             setInitialModeButtons()
         }
 
@@ -101,7 +98,18 @@ class Step8ReadyFragment : Fragment() {
     private fun launchEditState() {
         binding.groupEditMode.visibility = View.VISIBLE
         binding.groupFirstSaveMode.visibility = View.GONE
-        setEditModeButtons()
+        val editorViewModel = (requireActivity() as MainActivity).editorViewModel
+        editorViewModel.getLoglineById(loglineParam)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    editorViewModel.editedLoglineFlow.collectLatest {
+                        binding.etReadyLogline.setText(it.text)
+                    }
+                }
+            }
+        }
+        setEditModeButtons(editorViewModel)
     }
 
     private fun setInitialModeButtons() {
@@ -112,12 +120,11 @@ class Step8ReadyFragment : Fragment() {
             buttonCopy.setOnClickListener {
                 copyText()
             }
-
             setAdverts()
         }
     }
 
-    private fun setEditModeButtons() {
+    private fun setEditModeButtons(editorViewModel: EditorViewModel) {
         with (binding) {
             buttonCopyEditMode.setOnClickListener {
                 copyText()
@@ -126,7 +133,9 @@ class Step8ReadyFragment : Fragment() {
                 shareOntwitter()
             }
             buttonSaveEditMode.setOnClickListener {
-                viewModel.editLoglineText(loglineParam, etReadyLogline.text.toString())
+                editorViewModel.editLoglineText(loglineParam, etReadyLogline.text.toString())
+                editorViewModel.saveChangedLogline()
+                parentFragmentManager.popBackStack()
             }
         }
         setAdverts()

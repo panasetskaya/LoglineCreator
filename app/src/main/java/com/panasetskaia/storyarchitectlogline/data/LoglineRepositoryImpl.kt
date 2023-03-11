@@ -7,6 +7,8 @@ import com.panasetskaia.storyarchitectlogline.domain.LoglineRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class LoglineRepositoryImpl(application: Application) : LoglineRepository {
 
@@ -18,6 +20,12 @@ class LoglineRepositoryImpl(application: Application) : LoglineRepository {
 
     override fun getLastSavedLogline(): Flow<Logline> {
         return dbDao.getLastSavedLogline()
+    }
+
+    override suspend fun getLoglineById(id: Int): Logline {
+        return withContext(Dispatchers.IO) {
+            dbDao.selectById(id)
+        }
     }
 
     override fun searchForWords(query: String): Flow<List<Logline>> {
@@ -78,7 +86,8 @@ class LoglineRepositoryImpl(application: Application) : LoglineRepository {
     }
 
     private fun getCurrentDate(): String {
-        return "00.00.0000"
-        //todo: Not yet implemented
+        val current = LocalDateTime.now()
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+        return current.format(formatter)
     }
 }

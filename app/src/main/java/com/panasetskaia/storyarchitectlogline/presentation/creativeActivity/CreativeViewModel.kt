@@ -18,15 +18,6 @@ class CreativeViewModel(application: Application) : AndroidViewModel(application
 
     private val repo = LoglineRepositoryImpl(application)
     private val addLoglineUseCase = AddLoglineUseCase(repo)
-    private val getLastSavedUseCase = GetLastSavedUseCase(repo)
-    private val changeTextUseCase = ChangeTextUseCase(repo)
-
-    private val _lastLoglineFlow = MutableSharedFlow<Logline>(
-        replay = 1,
-        onBufferOverflow = BufferOverflow.DROP_OLDEST
-    )
-    val lastLoglineFlow: SharedFlow<Logline>
-        get() = _lastLoglineFlow
 
     private val _isSwipingFromPageOneAllowed = MutableStateFlow(false)
     val isSwipingFromPageOneAllowed: StateFlow<Boolean>
@@ -71,7 +62,9 @@ class CreativeViewModel(application: Application) : AndroidViewModel(application
     private var currentAreStakesNeeded = false
     private var currentStakes: String? = null
 
-    fun saveLogline() {
+
+
+    fun saveNewLogline() {
         viewModelScope.launch {
             if (allRequiredFieldsNotEmpty()) {
                 Log.e("MY_TAG", "allRequiredFieldsNotEmpty, saving logline!")
@@ -88,14 +81,6 @@ class CreativeViewModel(application: Application) : AndroidViewModel(application
                     currentStoryWorld
                 )
             }
-        }
-    }
-
-    fun getLastLogline() {
-        viewModelScope.launch {
-            _lastLoglineFlow.emitAll(
-                getLastSavedUseCase()
-            )
         }
     }
 
@@ -238,14 +223,13 @@ class CreativeViewModel(application: Application) : AndroidViewModel(application
         }
     }
 
-    fun editLoglineText(id: Int, newText: String) {
-        viewModelScope.launch {
-            changeTextUseCase(id,newText)
-        }
-    }
+
+
+
 
     companion object {
         private const val initialState = ""
+        private const val nullId = -1
         private const val genderMalePosition = 1
         private const val genderFemalePosition = 2
         private const val genderOtherPosition = 3
