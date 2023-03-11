@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -39,6 +40,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var viewModel: MainViewModel
     private lateinit var loglineAdapter: LoglineAdapter
     lateinit var editorViewModel: EditorViewModel
+    private var isSearchViewActivated = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,20 +76,18 @@ class MainActivity : AppCompatActivity() {
         searchView.maxWidth = Integer.MAX_VALUE
         searchView.queryHint = getString(R.string.search_title)
 //        searchView.isSubmitButtonEnabled = true
+        searchView.setOnCloseListener {
+            isSearchViewActivated = false
+            false
+        }
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
-                if (true) {
-                    //todo: filter recyclerView
-                    Toast.makeText(this@MainActivity, "found", Toast.LENGTH_LONG).show()
-                } else {
-                    //todo: показать заглушку Not found
-                    Toast.makeText(this@MainActivity, "Not found", Toast.LENGTH_LONG).show()
-                }
                 return false
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
-                //todo: filter recyclerView
+                isSearchViewActivated = true
+                viewModel.searchInLoglines(newText)
                 return false
             }
         })
@@ -165,8 +165,21 @@ class MainActivity : AppCompatActivity() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     viewModel.loglinesFlow.collectLatest {
-                        loglineAdapter.submitList(it)
-                        binding.rvYourLoglines.scrollToPosition(it.size-1)
+                        if (it.isEmpty() && !isSearchViewActivated) {
+                            binding.groupWhenEmpty.visibility = View.VISIBLE
+                            binding.groupWhenNotEmpty.visibility = View.INVISIBLE
+                        } else {
+                            binding.groupWhenEmpty.visibility = View.INVISIBLE
+                            binding.groupWhenNotEmpty.visibility = View.VISIBLE
+                            loglineAdapter.submitList(it)
+                            binding.rvYourLoglines.scrollToPosition(it.size-1)
+                            if (it.isEmpty()) {
+                                binding.tvNothingFound.visibility = View.VISIBLE
+                            } else {
+                                binding.tvNothingFound.visibility = View.INVISIBLE
+                            }
+                        }
+
                     }
                 }
             }

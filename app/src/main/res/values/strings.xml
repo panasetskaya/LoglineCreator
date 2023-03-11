@@ -131,6 +131,7 @@
     <string name="gender_male">he</string>
     <string name="gender_female">she</string>
     <string name="gender_other">they</string>
+    <string name="nothing_found">Nothing found</string>
 
 
 </resources>
