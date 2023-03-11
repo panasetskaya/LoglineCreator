@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
+    android:background="@color/white"
     tools:context=".presentation.creativeActivity.creativeFragments.Step8ReadyFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -36,7 +37,6 @@
                 android:inputType="textMultiLine"
                 android:minHeight="80dp"
                 android:nestedScrollingEnabled="true"
-                android:text="@string/dummy_ready"
                 android:textColorHint="@color/our_hint_grey" />
         </com.google.android.material.textfield.TextInputLayout>
 

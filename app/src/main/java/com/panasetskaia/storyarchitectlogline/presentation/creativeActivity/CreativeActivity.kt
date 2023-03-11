@@ -19,6 +19,7 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.sidesheet.SideSheetDialog
 import com.panasetskaia.storyarchitectlogline.R
 import com.panasetskaia.storyarchitectlogline.presentation.creativeActivity.adapters.StepsPagerAdapter
+import com.panasetskaia.storyarchitectlogline.presentation.creativeActivity.creativeFragments.Step8ReadyFragment
 
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
 import kotlinx.coroutines.flow.collectLatest
@@ -42,6 +43,7 @@ class CreativeActivity : AppCompatActivity() {
     private var isSwipingAllowed = false
 
     lateinit var viewModel: CreativeViewModel
+    lateinit var editorViewModel: EditorViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +58,7 @@ class CreativeActivity : AppCompatActivity() {
         setDefaultBottomButtons()
         setHintText()
         viewModel = ViewModelProvider(this)[CreativeViewModel::class.java]
+        editorViewModel = ViewModelProvider(this)[EditorViewModel::class.java]
     }
 
     private fun setHint() {
@@ -307,8 +310,8 @@ class CreativeActivity : AppCompatActivity() {
         setRightButtonAsNext()
     }
 
-    private fun saveLogline() { //переписать на сохранение во вьюмодель!
-        //todo: переписать на edit!!!
+    private fun saveLogline() {
+        editorViewModel.saveChangedLogline()
         Toast.makeText(this@CreativeActivity, "Saved it!", Toast.LENGTH_SHORT).show()
     }
 }

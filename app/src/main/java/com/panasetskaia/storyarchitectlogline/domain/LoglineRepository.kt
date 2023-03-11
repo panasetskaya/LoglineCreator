@@ -8,6 +8,8 @@ interface LoglineRepository {
 
     fun getLastSavedLogline(): Flow<Logline>
 
+    suspend fun getLoglineById(id: Int): Logline
+
     fun searchForWords(query: String): Flow<List<Logline>>
 
     suspend fun deleteLogline(id: Int)

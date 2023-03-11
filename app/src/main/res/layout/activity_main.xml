@@ -98,6 +98,7 @@
         android:visibility="gone"
         app:constraint_referenced_ids="button_start,iv_writer_pic,tv_main_create_logline,tv_answer_questions"/>
 
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_your_loglines"
         android:layout_width="0dp"
@@ -108,6 +109,7 @@
         app:layout_constraintTop_toBottomOf="@id/main_bar_layout"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:listitem="@layout/item_logline"/>
+
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_create"
@@ -134,5 +136,14 @@
         android:layout_height="wrap_content"
         android:visibility="visible"
         app:constraint_referenced_ids="rv_your_loglines, button_create"/>
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fcvMain"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/main_bar_layout"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

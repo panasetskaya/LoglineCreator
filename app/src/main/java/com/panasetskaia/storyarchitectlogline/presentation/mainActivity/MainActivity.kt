@@ -27,6 +27,8 @@ import com.panasetskaia.storyarchitectlogline.R
 import com.panasetskaia.storyarchitectlogline.databinding.ActivityMainBinding
 import com.panasetskaia.storyarchitectlogline.domain.Logline
 import com.panasetskaia.storyarchitectlogline.presentation.creativeActivity.CreativeActivity
+import com.panasetskaia.storyarchitectlogline.presentation.creativeActivity.EditorViewModel
+import com.panasetskaia.storyarchitectlogline.presentation.creativeActivity.creativeFragments.Step8ReadyFragment
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -36,6 +38,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: MainViewModel
     private lateinit var loglineAdapter: LoglineAdapter
+    lateinit var editorViewModel: EditorViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,6 +49,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.main_toolbar))
         title = getString(R.string.toolbar_your_loglines)
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
+        editorViewModel = ViewModelProvider(this)[EditorViewModel::class.java]
         loglineAdapter = LoglineAdapter(this, viewModel)
         setButtons()
         setUpRecyclerView(binding.rvYourLoglines)
@@ -93,7 +97,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun setUpRecyclerView(recyclerView: RecyclerView) {
         loglineAdapter.onCharacterItemClickListener = {
-            Toast.makeText(this, "The logline's id is: ${it.id}", Toast.LENGTH_SHORT).show()
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fcvMain, Step8ReadyFragment.newInstance(it.id))
+                .addToBackStack(null)
+                .commit()
         }
         recyclerView.adapter = loglineAdapter
         recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
