@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
     android:background="@color/white"
+    android:fillViewport="true"
     tools:context=".presentation.creativeActivity.creativeFragments.Step8ReadyFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -51,27 +51,28 @@
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="@+id/ti_ready"
             app:layout_constraintTop_toBottomOf="@id/ti_ready"
+            app:layout_constraintBottom_toTopOf="@+id/space_barrier"
             app:strokeColor="@color/our_purple" />
 
         <ImageButton
             android:id="@+id/button_copy_edit_mode"
-            android:backgroundTint="@android:color/transparent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="@android:color/transparent"
             android:src="@drawable/ic_copy"
+            app:layout_constraintBottom_toBottomOf="@id/button_save_edit_mode"
             app:layout_constraintStart_toStartOf="@+id/ti_ready"
-            app:layout_constraintTop_toTopOf="@id/button_save_edit_mode"
-            app:layout_constraintBottom_toBottomOf="@id/button_save_edit_mode" />
+            app:layout_constraintTop_toTopOf="@id/button_save_edit_mode" />
 
         <ImageButton
             android:id="@+id/button_twitter_edit_mode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_twitter"
             android:backgroundTint="@android:color/transparent"
+            android:src="@drawable/ic_twitter"
+            app:layout_constraintBottom_toBottomOf="@id/button_save_edit_mode"
             app:layout_constraintStart_toEndOf="@+id/button_copy_edit_mode"
-            app:layout_constraintTop_toTopOf="@id/button_save_edit_mode"
-            app:layout_constraintBottom_toBottomOf="@id/button_save_edit_mode" />
+            app:layout_constraintTop_toTopOf="@id/button_save_edit_mode" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_copy"
@@ -86,6 +87,7 @@
             app:iconTint="@color/our_purple"
             app:layout_constraintEnd_toEndOf="@+id/ti_ready"
             app:layout_constraintTop_toBottomOf="@id/ti_ready"
+            app:layout_constraintBottom_toTopOf="@+id/space_barrier"
             app:strokeColor="@color/our_purple" />
 
         <com.google.android.material.button.MaterialButton
@@ -101,7 +103,31 @@
             app:iconTint="@color/our_purple"
             app:layout_constraintEnd_toStartOf="@+id/button_copy"
             app:layout_constraintTop_toBottomOf="@id/ti_ready"
+            app:layout_constraintBottom_toTopOf="@+id/space_barrier"
             app:strokeColor="@color/our_purple" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/buttons_barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="button_copy,button_save_edit_mode" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/space_barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="top"
+            app:constraint_referenced_ids="empty_space,card_adv_1"/>
+
+        <Space
+            android:id="@+id/empty_space"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/buttons_barrier"
+            app:layout_constraintBottom_toTopOf="@+id/card_adv_1"/>
 
 
         <androidx.cardview.widget.CardView
@@ -130,13 +156,13 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
+                    android:clickable="false"
+                    android:focusable="false"
                     android:fontFamily="@font/nunito"
                     android:text="@string/ready_learn"
                     android:textColor="@color/our_text_grey"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:clickable="false"
-                    android:focusable="false"
                     app:layout_constraintBottom_toTopOf="@id/button_adv_1"
                     app:layout_constraintEnd_toStartOf="@id/guideline_card1"
                     app:layout_constraintStart_toStartOf="parent"
@@ -149,12 +175,12 @@
                     android:layout_height="34dp"
                     android:layout_marginStart="4dp"
                     android:layout_marginEnd="16dp"
+                    android:clickable="false"
+                    android:focusable="false"
                     android:gravity="start|center"
                     android:padding="0dp"
                     android:text="@string/ready_learn_url"
                     android:textSize="14sp"
-                    android:clickable="false"
-                    android:focusable="false"
                     app:icon="@drawable/ic_link"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/guideline_card1"
@@ -165,9 +191,9 @@
                     android:id="@+id/link_icon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_link"
                     android:clickable="false"
                     android:focusable="false"
+                    android:src="@drawable/ic_link"
                     app:layout_constraintBottom_toBottomOf="@id/button_adv_1"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@id/button_adv_1" />
@@ -184,9 +210,9 @@
                     android:id="@+id/iv_pic_adv_1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/pic_adv_1"
                     android:clickable="false"
                     android:focusable="false"
+                    android:src="@drawable/pic_adv_1"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/guideline_card1"
@@ -223,13 +249,13 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
+                    android:clickable="false"
+                    android:focusable="false"
                     android:fontFamily="@font/nunito"
                     android:text="@string/ready_continue"
                     android:textColor="@color/our_text_grey"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:clickable="false"
-                    android:focusable="false"
                     app:layout_constraintBottom_toTopOf="@id/button_adv_2"
                     app:layout_constraintEnd_toStartOf="@id/guideline_card2"
                     app:layout_constraintStart_toStartOf="parent"
@@ -242,12 +268,12 @@
                     android:layout_height="35dp"
                     android:layout_marginStart="4dp"
                     android:layout_marginEnd="16dp"
+                    android:clickable="false"
+                    android:focusable="false"
                     android:gravity="start|center"
                     android:padding="0dp"
                     android:text="@string/ready_continue_url"
                     android:textSize="14sp"
-                    android:clickable="false"
-                    android:focusable="false"
                     app:icon="@drawable/ic_link"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/guideline_card2"
@@ -258,9 +284,9 @@
                     android:id="@+id/link_icon2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_link"
                     android:clickable="false"
                     android:focusable="false"
+                    android:src="@drawable/ic_link"
                     app:layout_constraintBottom_toBottomOf="@id/button_adv_2"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@id/button_adv_2" />
@@ -276,9 +302,9 @@
                     android:id="@+id/iv_pic_adv_2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/pic_adv_2"
                     android:clickable="false"
                     android:focusable="false"
+                    android:src="@drawable/pic_adv_2"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/guideline_card2"
@@ -316,6 +342,14 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+
+        <!--        <androidx.constraintlayout.widget.Barrier-->
+        <!--            android:id="@+id/barrier_for_adverts"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            app:barrierDirection="top"-->
+        <!--            app:constraint_referenced_ids="guideline_for_barrier, card_adv_1"/>-->
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
