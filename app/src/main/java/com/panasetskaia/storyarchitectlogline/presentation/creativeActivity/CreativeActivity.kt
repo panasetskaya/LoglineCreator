@@ -18,12 +18,16 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.sidesheet.SideSheetDialog
 import com.panasetskaia.storyarchitectlogline.R
+import com.panasetskaia.storyarchitectlogline.application.LoglineCreatorApplication
+import com.panasetskaia.storyarchitectlogline.di.ViewModelFactory
 import com.panasetskaia.storyarchitectlogline.presentation.creativeActivity.adapters.StepsPagerAdapter
 import com.panasetskaia.storyarchitectlogline.presentation.creativeActivity.creativeFragments.Step8ReadyFragment
+import com.panasetskaia.storyarchitectlogline.presentation.mainActivity.MainViewModel
 
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 class CreativeActivity : AppCompatActivity() {
 
@@ -42,12 +46,25 @@ class CreativeActivity : AppCompatActivity() {
 
     private var isSwipingAllowed = false
 
-    lateinit var viewModel: CreativeViewModel
-    lateinit var editorViewModel: EditorViewModel
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+
+    private val component by lazy {
+        (application as LoglineCreatorApplication).component
+    }
+
+    val viewModel by lazy {
+        ViewModelProvider(this, viewModelFactory)[CreativeViewModel::class.java]
+    }
+
+    val editorViewModel by lazy {
+        ViewModelProvider(this, viewModelFactory)[EditorViewModel::class.java]
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen()
+        component.inject(this)
         setContentView(R.layout.activity_creative)
         setSupportActionBar(findViewById(R.id.toolbar))
         setupToolbar()
@@ -57,8 +74,6 @@ class CreativeActivity : AppCompatActivity() {
         setDots()
         setDefaultBottomButtons()
         setHintText()
-        viewModel = ViewModelProvider(this)[CreativeViewModel::class.java]
-        editorViewModel = ViewModelProvider(this)[EditorViewModel::class.java]
     }
 
     private fun setHint() {

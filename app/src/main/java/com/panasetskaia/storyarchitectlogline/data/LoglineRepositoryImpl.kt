@@ -1,6 +1,5 @@
 package com.panasetskaia.storyarchitectlogline.data
 
-import android.app.Application
 import android.util.Log
 import com.panasetskaia.storyarchitectlogline.domain.Logline
 import com.panasetskaia.storyarchitectlogline.domain.LoglineRepository
@@ -9,17 +8,31 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import javax.inject.Inject
 
-class LoglineRepositoryImpl(application: Application) : LoglineRepository {
+class LoglineRepositoryImpl @Inject constructor(
+//    private val application: Application,
+    private val dbDao: LoglineDao
+) : LoglineRepository {
 
-    private val dbDao = LoglineDatabase.getInstance(application).loglineDao()
+    private var newLoglineText = emptyString
 
     override fun getAllSavedLoglines(): Flow<List<Logline>> {
         return dbDao.getAllLoglines()
     }
 
-    override fun getLastSavedLogline(): Flow<Logline> {
-        return dbDao.getLastSavedLogline()
+    override suspend fun getLastSavedLogline(): Logline {
+        return withContext(Dispatchers.IO) {
+            val newLogline = Logline(
+                idForNewLogline,
+                newLoglineText,
+                getCurrentDate(),
+                countWords(newLoglineText)
+            )
+            dbDao.saveLogline(newLogline)
+            val lastLogline = dbDao.getLastSavedLogline()
+            lastLogline
+        }
     }
 
     override suspend fun getLoglineById(id: Int): Logline {
@@ -36,10 +49,9 @@ class LoglineRepositoryImpl(application: Application) : LoglineRepository {
         withContext(Dispatchers.IO) {
             dbDao.deleteLogline(id)
         }
-
     }
 
-    override suspend fun addLogline(
+    override fun addLogline(
         pronoun: String,
         majorEvent: String,
         storyGoal: String,
@@ -51,8 +63,7 @@ class LoglineRepositoryImpl(application: Application) : LoglineRepository {
         stakes: String?,
         worldText: String?
     ) {
-        Log.e("MY_TAG", "repo.addLogline")
-        val newLogline = LoglineBuilder(
+        newLoglineText = LoglineBuilder(
             pronoun,
             majorEvent,
             storyGoal,
@@ -62,10 +73,8 @@ class LoglineRepositoryImpl(application: Application) : LoglineRepository {
             mprEvent,
             afterMprEvent,
             stakes,
-            worldText,
-            getCurrentDate()
+            worldText
         ).buildLogline()
-        dbDao.saveLogline(newLogline)
     }
 
     override suspend fun changeText(id: Int, newText: String) {
@@ -89,5 +98,16 @@ class LoglineRepositoryImpl(application: Application) : LoglineRepository {
         val current = LocalDateTime.now()
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
         return current.format(formatter)
+    }
+
+    private fun countWords(s: String): Int {
+        return s.count{
+            it == ' '
+        } + 1
+    }
+
+    companion object {
+        private val emptyString = ""
+        private val idForNewLogline = 0
     }
 }

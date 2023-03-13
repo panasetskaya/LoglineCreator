@@ -1,23 +1,16 @@
 package com.panasetskaia.storyarchitectlogline.presentation.creativeActivity
 
-import android.app.Application
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.panasetskaia.storyarchitectlogline.data.LoglineRepositoryImpl
-import com.panasetskaia.storyarchitectlogline.domain.Logline
 import com.panasetskaia.storyarchitectlogline.domain.useCases.AddLoglineUseCase
-import com.panasetskaia.storyarchitectlogline.domain.useCases.ChangeTextUseCase
-import com.panasetskaia.storyarchitectlogline.domain.useCases.GetLastSavedUseCase
-import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class CreativeViewModel(application: Application) : AndroidViewModel(application) {
-
-
-    private val repo = LoglineRepositoryImpl(application)
-    private val addLoglineUseCase = AddLoglineUseCase(repo)
+class CreativeViewModel @Inject constructor(
+    private val addLoglineUseCase: AddLoglineUseCase
+    ) : ViewModel() {
 
     private val _isSwipingFromPageOneAllowed = MutableStateFlow(false)
     val isSwipingFromPageOneAllowed: StateFlow<Boolean>
@@ -61,7 +54,6 @@ class CreativeViewModel(application: Application) : AndroidViewModel(application
     private var currentStoryWorld: String? = null
     private var currentAreStakesNeeded = false
     private var currentStakes: String? = null
-
 
 
     fun saveNewLogline() {
@@ -126,7 +118,7 @@ class CreativeViewModel(application: Application) : AndroidViewModel(application
     }
 
     private fun emitSwipingFromPage2Admission() {
-        if (currentMajorEvent==initialState && currentMajorEventIncludesMainCharacter) {
+        if (currentMajorEvent == initialState && currentMajorEventIncludesMainCharacter) {
             _isSwipingFromPageTwoAllowed.tryEmit(false)
         } else {
             _isSwipingFromPageTwoAllowed.tryEmit(true)
@@ -144,7 +136,7 @@ class CreativeViewModel(application: Application) : AndroidViewModel(application
     }
 
     private fun emitSwipingFromPage3Admission() {
-        if (currentIsThemeNeeded && currentTheme==null) {
+        if (currentIsThemeNeeded && currentTheme == null) {
             _isSwipingFromPageThreeAllowed.tryEmit(false)
         } else {
             _isSwipingFromPageThreeAllowed.tryEmit(true)
@@ -157,7 +149,7 @@ class CreativeViewModel(application: Application) : AndroidViewModel(application
     }
 
     private fun emitSwipingFromPage4Admission() {
-        if (currentStoryGoal!= initialState) {
+        if (currentStoryGoal != initialState) {
             _isSwipingFromPageFourAllowed.tryEmit(true)
         } else {
             _isSwipingFromPageFourAllowed.tryEmit(false)
@@ -180,7 +172,7 @@ class CreativeViewModel(application: Application) : AndroidViewModel(application
     }
 
     private fun emitSwipingFromPage5Admission() {
-        if (currentIsMprNeeded && (currentMprEvent==null || currentAfterMprEvent==null )) {
+        if (currentIsMprNeeded && (currentMprEvent == null || currentAfterMprEvent == null)) {
             _isSwipingFromPageFiveAllowed.tryEmit(false)
         } else {
             _isSwipingFromPageFiveAllowed.tryEmit(true)
@@ -198,7 +190,7 @@ class CreativeViewModel(application: Application) : AndroidViewModel(application
     }
 
     private fun emitSwipingFromPage6Admission() {
-        if (currentIsWorldNeeded && currentStoryWorld==null) {
+        if (currentIsWorldNeeded && currentStoryWorld == null) {
             _isSwipingFromPageSixAllowed.tryEmit(false)
         } else {
             _isSwipingFromPageSixAllowed.tryEmit(true)
@@ -216,15 +208,12 @@ class CreativeViewModel(application: Application) : AndroidViewModel(application
     }
 
     private fun emitSwipingFromPage7Admission() {
-        if (currentAreStakesNeeded && currentStakes==null) {
+        if (currentAreStakesNeeded && currentStakes == null) {
             _isSwipingFromPageSevenAllowed.tryEmit(false)
         } else {
             _isSwipingFromPageSevenAllowed.tryEmit(true)
         }
     }
-
-
-
 
 
     companion object {
