@@ -25,33 +25,48 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.panasetskaia.storyarchitectlogline.R
+import com.panasetskaia.storyarchitectlogline.application.LoglineCreatorApplication
 import com.panasetskaia.storyarchitectlogline.databinding.ActivityMainBinding
+import com.panasetskaia.storyarchitectlogline.di.ViewModelFactory
 import com.panasetskaia.storyarchitectlogline.domain.Logline
 import com.panasetskaia.storyarchitectlogline.presentation.creativeActivity.CreativeActivity
 import com.panasetskaia.storyarchitectlogline.presentation.creativeActivity.EditorViewModel
 import com.panasetskaia.storyarchitectlogline.presentation.creativeActivity.creativeFragments.Step8ReadyFragment
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var viewModel: MainViewModel
     private lateinit var loglineAdapter: LoglineAdapter
-    lateinit var editorViewModel: EditorViewModel
     private var isSearchViewActivated = false
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+
+    private val component by lazy {
+        (application as LoglineCreatorApplication).component
+    }
+
+    val viewModel by lazy {
+        ViewModelProvider(this, viewModelFactory)[MainViewModel::class.java]
+    }
+
+    val editorViewModel by lazy {
+        ViewModelProvider(this, viewModelFactory)[EditorViewModel::class.java]
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        component.inject(this)
         super.onCreate(savedInstanceState)
         installSplashScreen()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(findViewById(R.id.main_toolbar))
         title = getString(R.string.toolbar_your_loglines)
-        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
-        editorViewModel = ViewModelProvider(this)[EditorViewModel::class.java]
         loglineAdapter = LoglineAdapter(this, viewModel)
         setButtons()
         setUpRecyclerView(binding.rvYourLoglines)

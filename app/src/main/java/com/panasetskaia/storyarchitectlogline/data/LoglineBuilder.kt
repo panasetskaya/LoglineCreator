@@ -1,10 +1,5 @@
 package com.panasetskaia.storyarchitectlogline.data
 
-import com.panasetskaia.storyarchitectlogline.domain.Logline
-import java.text.FieldPosition
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
-
 class LoglineBuilder(
     private val pronoun: String,
     private val majorEvent: String,
@@ -16,21 +11,12 @@ class LoglineBuilder(
     private val afterMprEvent: String?,
     private val stakes: String?,
     private val worldText: String?,
-    private val date: String
 ) {
 
-    fun buildLogline(): Logline {
+    fun buildLogline(): String {
         //todo: rewrite build algorithm
         val lglnText = "$pronoun $majorEvent $storyGoal $characterInfo"
-        val wordsCount = lglnText.count{
-            it == ' '
-        } + 1
-        return Logline(
-            0,
-            lglnText,
-            date,
-            wordsCount
-        )
+        return lglnText
     }
 
 //    private fun buildLogline(): String {

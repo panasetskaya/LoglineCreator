@@ -1,30 +1,26 @@
 package com.panasetskaia.storyarchitectlogline.presentation.creativeActivity
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.panasetskaia.storyarchitectlogline.data.LoglineRepositoryImpl
 import com.panasetskaia.storyarchitectlogline.domain.Logline
 import com.panasetskaia.storyarchitectlogline.domain.useCases.ChangeTextUseCase
 import com.panasetskaia.storyarchitectlogline.domain.useCases.GetLastSavedUseCase
 import com.panasetskaia.storyarchitectlogline.domain.useCases.GetLoglineByIdUseCase
 import kotlinx.coroutines.channels.BufferOverflow
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class EditorViewModel (application: Application) : AndroidViewModel(application) {
+class EditorViewModel @Inject constructor(
+    private val getLastSavedUseCase: GetLastSavedUseCase,
+    private val changeTextUseCase: ChangeTextUseCase,
+    private val getLoglineByIdUseCase: GetLoglineByIdUseCase
+
+) : ViewModel() {
 
     private var editedLoglineText = initialState
     private var editedLoglineId = nullId
-
-
-    private val repo = LoglineRepositoryImpl(application)
-    private val getLastSavedUseCase = GetLastSavedUseCase(repo)
-    private val changeTextUseCase = ChangeTextUseCase(repo)
-    private val getLoglineByIdUseCase = GetLoglineByIdUseCase(repo)
 
     private val _editedLoglineFlow = MutableSharedFlow<Logline>(
         replay = 1,
@@ -35,10 +31,8 @@ class EditorViewModel (application: Application) : AndroidViewModel(application)
 
     fun getLastLogline() {
         viewModelScope.launch {
-            delay(100)
-            _editedLoglineFlow.emitAll(
-                getLastSavedUseCase()
-            )
+            val lastLogline = getLastSavedUseCase()
+            _editedLoglineFlow.emit(lastLogline)
         }
     }
 
@@ -55,9 +49,9 @@ class EditorViewModel (application: Application) : AndroidViewModel(application)
     }
 
     fun saveChangedLogline() {
-        if (editedLoglineText!= initialState && editedLoglineId!= nullId) {
+        if (editedLoglineText != initialState && editedLoglineId != nullId) {
             viewModelScope.launch {
-                changeTextUseCase(editedLoglineId,editedLoglineText)
+                changeTextUseCase(editedLoglineId, editedLoglineText)
             }
         }
     }

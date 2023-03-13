@@ -1,10 +1,11 @@
 package com.panasetskaia.storyarchitectlogline.domain.useCases
 
 import com.panasetskaia.storyarchitectlogline.domain.LoglineRepository
+import javax.inject.Inject
 
-class AddLoglineUseCase(private val repo: LoglineRepository) {
+class AddLoglineUseCase @Inject constructor(private val repo: LoglineRepository) {
 
-    suspend operator fun invoke(
+    operator fun invoke(
         pronoun: String,
         majorEvent: String,
         storyGoal: String,
