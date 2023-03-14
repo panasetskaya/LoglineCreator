@@ -1,14 +1,18 @@
 package com.panasetskaia.storyarchitectlogline.presentation.creativeActivity
 
 import android.annotation.SuppressLint
-import androidx.appcompat.app.AppCompatActivity
+import android.content.res.Configuration
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.view.*
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.MenuProvider
+import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -21,9 +25,7 @@ import com.panasetskaia.storyarchitectlogline.R
 import com.panasetskaia.storyarchitectlogline.application.LoglineCreatorApplication
 import com.panasetskaia.storyarchitectlogline.di.ViewModelFactory
 import com.panasetskaia.storyarchitectlogline.presentation.creativeActivity.adapters.StepsPagerAdapter
-import com.panasetskaia.storyarchitectlogline.presentation.creativeActivity.creativeFragments.Step8ReadyFragment
-import com.panasetskaia.storyarchitectlogline.presentation.mainActivity.MainViewModel
-
+import com.panasetskaia.storyarchitectlogline.tools.isLandscapeTablet
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -33,8 +35,10 @@ class CreativeActivity : AppCompatActivity() {
 
     private lateinit var wormDotsIndicator: WormDotsIndicator
     private lateinit var viewPager2: ViewPager2
-    private lateinit var sideSheetDialog: SideSheetDialog
-    private lateinit var sideSheetView: View
+    private var sideSheetDialog: SideSheetDialog? = null
+    private var sideSheetView: View? = null
+    private var ivHint: ImageView? = null
+    private var tvHintHeader: TextView? = null
     private lateinit var hintText: TextView
     private lateinit var adapter: StepsPagerAdapter
     private lateinit var buttonBack: MaterialButton
@@ -45,6 +49,8 @@ class CreativeActivity : AppCompatActivity() {
     private var isGoingBackFromReady = false
 
     private var isSwipingAllowed = false
+
+    private var isBigTablet = false
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -66,21 +72,34 @@ class CreativeActivity : AppCompatActivity() {
         installSplashScreen()
         component.inject(this)
         setContentView(R.layout.activity_creative)
+        isBigTablet = this.isLandscapeTablet()
         setSupportActionBar(findViewById(R.id.toolbar))
         setupToolbar()
         createMenuProviders()
+        if (!isBigTablet) {
+            setHintAsSideSheet()
+        } else {
+            setHintAsTextView()
+        }
         setupDefaultMenu()
-        setHint()
         setDots()
         setDefaultBottomButtons()
         setHintText()
     }
 
-    private fun setHint() {
+    private fun setHintAsTextView() {
+        hintText = findViewById(R.id.tv_mc_hint)
+        ivHint = findViewById(R.id.iv_hint)
+        tvHintHeader = findViewById(R.id.tv_hint_header)
+    }
+
+    private fun setHintAsSideSheet() {
         sideSheetDialog = SideSheetDialog(this)
         sideSheetView = layoutInflater.inflate(R.layout.side_sheet_hint, null)
-        sideSheetDialog.setContentView(sideSheetView)
-        hintText = sideSheetView.findViewById(R.id.tv_mc_hint)
+        sideSheetDialog?.setContentView(sideSheetView)
+        sideSheetView?.let {
+            hintText = it.findViewById(R.id.tv_mc_hint)
+        }
     }
 
     private fun setDots() {
@@ -290,12 +309,16 @@ class CreativeActivity : AppCompatActivity() {
         defaultMenuProvider = object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menuInflater.inflate(R.menu.menu_creative, menu)
+                val item = menu.findItem(R.id.toolbar_menu_hint)
+                if (isBigTablet) {
+                    item.isVisible = false
+                }
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 return when (menuItem.itemId) {
                     R.id.toolbar_menu_hint -> {
-                        sideSheetDialog.show()
+                        sideSheetDialog?.show()
                         true
                     }
                     else -> {
@@ -304,12 +327,12 @@ class CreativeActivity : AppCompatActivity() {
                 }
             }
         }
-
     }
 
     private fun setupDefaultMenu() {
         title = getString(R.string.toolbar_create)
         addMenuProvider(defaultMenuProvider, this)
+        hintText.visibility = View.VISIBLE
     }
 
     private fun changeToReadyMenu() {
@@ -317,12 +340,18 @@ class CreativeActivity : AppCompatActivity() {
         removeMenuProvider(defaultMenuProvider)
         addMenuProvider(readyMenuProvider, this)
         setRightButtonAsSave()
+        hintText.visibility = View.INVISIBLE
+        ivHint?.isVisible = false
+        tvHintHeader?.isVisible = false
     }
 
     private fun changeBackToDefaultMenu() {
         removeMenuProvider(readyMenuProvider)
         setupDefaultMenu()
         setRightButtonAsNext()
+        hintText.visibility = View.VISIBLE
+        ivHint?.isVisible = true
+        tvHintHeader?.isVisible = true
     }
 
     private fun saveLogline() {

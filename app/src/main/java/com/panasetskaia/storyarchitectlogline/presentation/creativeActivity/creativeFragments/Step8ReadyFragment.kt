@@ -18,11 +18,13 @@ import com.panasetskaia.storyarchitectlogline.databinding.FragmentStep8ReadyBind
 import com.panasetskaia.storyarchitectlogline.presentation.creativeActivity.CreativeActivity
 import com.panasetskaia.storyarchitectlogline.presentation.creativeActivity.EditorViewModel
 import com.panasetskaia.storyarchitectlogline.presentation.mainActivity.MainActivity
+import com.panasetskaia.storyarchitectlogline.tools.isLandscapeTablet
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 
 private const val ARG_LOGLINE = "logline arg param"
+
 
 class Step8ReadyFragment : Fragment() {
 
@@ -56,6 +58,13 @@ class Step8ReadyFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.webView.settings.javaScriptEnabled = true
+        if (!this.isLandscapeTablet()) {
+            binding.cardAdv1.visibility = View.VISIBLE
+            binding.cardAdv2.visibility = View.VISIBLE
+        } else {
+            binding.cardAdv1.visibility = View.INVISIBLE
+            binding.cardAdv2.visibility = View.INVISIBLE
+        }
         if (loglineParam==newLoglineParam) {
             launchInitialSavingState()
         } else {
@@ -181,10 +190,10 @@ class Step8ReadyFragment : Fragment() {
         const val noParam = -2
 
         @JvmStatic
-        fun newInstance(param: Int) =
+        fun newInstance(idParam: Int) =
             Step8ReadyFragment().apply {
                 arguments = Bundle().apply {
-                    putInt(ARG_LOGLINE, param)
+                    putInt(ARG_LOGLINE, idParam)
                 }
             }
     }
