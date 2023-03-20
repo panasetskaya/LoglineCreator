@@ -2,7 +2,7 @@ package com.panasetskaia.storyarchitectlogline.data
 
 class LoglineBuilder(
     private val pronoun: String,
-    private val majorEvent: String,
+    private val majorEvent: String?,
     private val storyGoal: String,
     private val majorEventIncludesMainCharacter: Boolean,
     private val characterInfo: String,
@@ -14,14 +14,41 @@ class LoglineBuilder(
 ) {
 
     fun buildLogline(): String {
-        //todo: rewrite build algorithm
-        val lglnText = "$pronoun $majorEvent $storyGoal $characterInfo"
-        return lglnText
+        var logline = ""
+        majorEvent?.let {
+            logline = "when ${it.lowercase()}"
+        }
+        worldText?.let {
+            logline += " in $it"
+        }
+        if (majorEventIncludesMainCharacter && majorEvent!=null && majorEvent!="") {
+            logline += pronoun
+        } else {
+            logline += characterInfo
+        }
+        logline += " must "
+        if (mprEvent==null && theme==null) {
+            logline += storyGoal
+        } else {
+            if (mprEvent==null) {
+                logline += " in order to $theme "
+            } else {
+                logline += "but when $mprEvent $pronoun must "
+                if (theme==null) {
+                    logline += " in order to $theme "
+                }
+                logline += afterMprEvent
+            }
+        }
+        stakes?.let {
+            logline += "before $it"
+        }
+        return logline
     }
 
 //    private fun buildLogline(): String {
 //        val text = String({ textField ->
-//            var text1: String = textField.getText().trim()
+//            var text1: String = textField.getText().trim() //todo: вот это какой textField?
 //            if (text1.startsWith("to ", Qt.CaseInsensitive)) {
 //                text1 = text1.mid(3)
 //            }
