@@ -33,6 +33,8 @@ import javax.inject.Inject
 
 class CreativeActivity : AppCompatActivity() {
 
+
+
     private lateinit var wormDotsIndicator: WormDotsIndicator
     private lateinit var viewPager2: ViewPager2
     private var sideSheetDialog: SideSheetDialog? = null
@@ -68,6 +70,10 @@ class CreativeActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        TODO()
+        //todo: isBigTablet = this.isLandscapeTablet() на переворот экрана на обычном телефоне срабатывает так,
+        // будто это планшет. А Лэйаут встает не sw720dp-land, а обычный, в котором R.id.tv_mc_hint нет (он же в отдельном side_sheet_layout.
+        // надо сделать другую проверку, соответсвующую лэйауту.
         super.onCreate(savedInstanceState)
         installSplashScreen()
         component.inject(this)
