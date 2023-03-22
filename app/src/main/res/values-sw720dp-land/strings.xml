@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
     <string name="app_name">Logline Creator</string>
@@ -7,7 +8,7 @@
     <string name="toolbar_your_loglines">Your loglines</string>
     <string name="toolbar_create">Create a logline</string>
     <string name="close">Close</string>
-    <string name="selected_configuration">01</string>
+    <string name="selected_configuration">02</string>
 
 
     <!-- dummies -->
