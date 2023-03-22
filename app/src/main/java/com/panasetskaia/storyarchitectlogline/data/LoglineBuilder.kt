@@ -16,34 +16,52 @@ class LoglineBuilder(
     fun buildLogline(): String {
         var logline = ""
         majorEvent?.let {
-            logline = "when ${it.lowercase()}"
+            logline = "when ${prepareText(it)} "
         }
         worldText?.let {
-            logline += " in $it"
+            val newWorldText = if (!it.contains(" world where")) {
+                it.replace("it is", "")
+            } else it
+            logline += "in ${prepareText(newWorldText)} "
         }
-        if (majorEventIncludesMainCharacter && majorEvent!=null && majorEvent!="") {
-            logline += pronoun
+        logline += if (majorEvent!=null && majorEventIncludesMainCharacter && majorEvent!="") {
+            "${prepareText(pronoun)} "
         } else {
-            logline += characterInfo
+            "${prepareText(characterInfo)} "
         }
-        logline += " must "
+        logline += "must "
         if (mprEvent==null && theme==null) {
-            logline += storyGoal
+            logline += "${prepareText(storyGoal)} "
         } else {
             if (mprEvent==null) {
-                logline += " in order to $theme "
+                logline += " in order to ${theme?.let { prepareText(it) }} "
+                logline += "${prepareText(storyGoal)} "
             } else {
-                logline += "but when $mprEvent $pronoun must "
-                if (theme==null) {
-                    logline += " in order to $theme "
-                }
-                logline += afterMprEvent
+                logline += "${prepareText(storyGoal)} "
+                logline += "but when ${prepareText(mprEvent)} $pronoun must "
+                logline += "in order to ${theme?.let { prepareText(it) }} "
+                logline += "${afterMprEvent?.let { prepareText(it) }} "
             }
         }
         stakes?.let {
-            logline += "before $it"
+            logline += "before ${prepareText(it)}"
+        }
+        if (logline.last()!='.') {
+            logline = logline.trim() + "."
+        }
+        logline.replaceFirstChar {
+            it.uppercaseChar()
         }
         return logline
+    }
+
+
+    private fun prepareText(oldText: String): String {
+        var result = oldText.trim().lowercase()
+        if (result.startsWith("to ")) {
+            return result.substring(3)
+        }
+        return result
     }
 
 //    private fun buildLogline(): String {

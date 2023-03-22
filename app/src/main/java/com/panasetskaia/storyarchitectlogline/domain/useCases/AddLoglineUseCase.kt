@@ -7,7 +7,7 @@ class AddLoglineUseCase @Inject constructor(private val repo: LoglineRepository)
 
     operator fun invoke(
         pronoun: String,
-        majorEvent: String,
+        majorEvent: String?,
         storyGoal: String,
         majorEventIncludesMainCharacter: Boolean,
         characterInfo: String,
