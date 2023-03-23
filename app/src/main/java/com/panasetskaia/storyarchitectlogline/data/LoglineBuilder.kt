@@ -24,11 +24,7 @@ class LoglineBuilder(
             } else it
             logline += "in ${prepareText(newWorldText)} "
         }
-        logline += if (majorEvent!=null && majorEventIncludesMainCharacter && majorEvent!="") {
-            "${prepareText(pronoun)} "
-        } else {
-            "${prepareText(characterInfo)} "
-        }
+        logline += "${prepareText(characterInfo)} "
         logline += "must "
         if (mprEvent==null && theme==null) {
             logline += "${prepareText(storyGoal)} "
