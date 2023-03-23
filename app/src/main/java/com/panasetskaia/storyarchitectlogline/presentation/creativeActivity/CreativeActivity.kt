@@ -24,6 +24,7 @@ import com.google.android.material.sidesheet.SideSheetDialog
 import com.panasetskaia.storyarchitectlogline.R
 import com.panasetskaia.storyarchitectlogline.application.LoglineCreatorApplication
 import com.panasetskaia.storyarchitectlogline.di.ViewModelFactory
+import com.panasetskaia.storyarchitectlogline.presentation.common.AdvertsFragment
 import com.panasetskaia.storyarchitectlogline.presentation.creativeActivity.adapters.StepsPagerAdapter
 import com.panasetskaia.storyarchitectlogline.tools.isLandscapeTablet
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
@@ -145,8 +146,12 @@ class CreativeActivity : AppCompatActivity() {
         buttonNext.setTextColor(resources.getColor(R.color.our_purple))
         buttonNext.setOnClickListener {
             saveLogline()
-            onBackPressedDispatcher.onBackPressed()
-
+            if (isBigTablet) {
+                supportFragmentManager.popBackStack()
+                supportFragmentManager.popBackStack()
+            } else {
+                onBackPressedDispatcher.onBackPressed()
+            }
         }
     }
 
@@ -260,6 +265,9 @@ class CreativeActivity : AppCompatActivity() {
                     6 -> {
                         if (isGoingBackFromReady) {
                             changeBackToDefaultMenu()
+                            if (isBigTablet) {
+                                supportFragmentManager.popBackStack()
+                            }
                             isGoingBackFromReady = false
                         }
                         hintText.text = getString(R.string.deadline_hint)
@@ -279,6 +287,12 @@ class CreativeActivity : AppCompatActivity() {
                     else -> {
                         isGoingBackFromReady = true
                         changeToReadyMenu()
+                        if (isBigTablet) {
+                            supportFragmentManager.beginTransaction()
+                                .replace(R.id.fcvCreative_for_adverts, AdvertsFragment.newInstance())
+                                .addToBackStack(null)
+                                .commit()
+                        }
                     }
                 }
             }
