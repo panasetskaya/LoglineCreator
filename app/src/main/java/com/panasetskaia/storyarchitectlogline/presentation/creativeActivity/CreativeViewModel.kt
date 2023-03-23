@@ -42,7 +42,7 @@ class CreativeViewModel @Inject constructor(
         get() = _isSwipingFromPageSevenAllowed
 
     private var currentPronoun: String = initialState
-    var currentCharacterInfo: String = initialState
+    private var currentCharacterInfo: String = initialState
     private var currentMajorEvent: String? = initialState
     private var currentStoryGoal: String = initialState
     private var currentMajorEventIncludesMainCharacter: Boolean = false
@@ -60,7 +60,10 @@ class CreativeViewModel @Inject constructor(
     fun saveNewLogline() {
         viewModelScope.launch {
             if (allRequiredFieldsNotEmpty()) {
-                Log.e("MY_TAG", "allRequiredFieldsNotEmpty, saving logline!")
+                Log.e("MY_TAG", "allRequiredFieldsNotEmpty:" +
+                        "$currentPronoun $currentMajorEvent $currentStoryGoal $currentCharacterInfo" +
+                        "$currentTheme $currentMprEvent $currentAfterMprEvent $currentStakes $currentStoryWorld" +
+                        ", saving logline!")
                 addLoglineUseCase(
                     currentPronoun,
                     currentMajorEvent,
