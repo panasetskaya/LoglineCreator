@@ -32,12 +32,15 @@ import com.panasetskaia.storyarchitectlogline.domain.Logline
 import com.panasetskaia.storyarchitectlogline.presentation.creativeActivity.CreativeActivity
 import com.panasetskaia.storyarchitectlogline.presentation.creativeActivity.EditorViewModel
 import com.panasetskaia.storyarchitectlogline.presentation.creativeActivity.creativeFragments.Step8ReadyFragment
+import com.panasetskaia.storyarchitectlogline.tools.isLandscapeTablet
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
 class MainActivity : AppCompatActivity() {
+
+    private var isBigTablet = false
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var loglineAdapter: LoglineAdapter
@@ -65,6 +68,7 @@ class MainActivity : AppCompatActivity() {
         installSplashScreen()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        isBigTablet = this.isLandscapeTablet()
         setSupportActionBar(findViewById(R.id.main_toolbar))
         title = getString(R.string.toolbar_your_loglines)
         loglineAdapter = LoglineAdapter(this, viewModel)

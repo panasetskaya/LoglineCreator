@@ -4,13 +4,14 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.panasetskaia.storyarchitectlogline.domain.useCases.AddLoglineUseCase
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class CreativeViewModel @Inject constructor(
     private val addLoglineUseCase: AddLoglineUseCase
-    ) : ViewModel() {
+) : ViewModel() {
 
     private val _isSwipingFromPageOneAllowed = MutableStateFlow(false)
     val isSwipingFromPageOneAllowed: StateFlow<Boolean>
@@ -42,7 +43,7 @@ class CreativeViewModel @Inject constructor(
 
     private var currentPronoun: String = initialState
     private var currentCharacterInfo: String = initialState
-    private var currentMajorEvent: String = initialState
+    private var currentMajorEvent: String? = initialState
     private var currentStoryGoal: String = initialState
     private var currentMajorEventIncludesMainCharacter: Boolean = false
     private var currentIsThemeNeeded: Boolean = false
@@ -59,7 +60,10 @@ class CreativeViewModel @Inject constructor(
     fun saveNewLogline() {
         viewModelScope.launch {
             if (allRequiredFieldsNotEmpty()) {
-                Log.e("MY_TAG", "allRequiredFieldsNotEmpty, saving logline!")
+                Log.e("MY_TAG", "allRequiredFieldsNotEmpty:" +
+                        "$currentPronoun $currentMajorEvent $currentStoryGoal $currentCharacterInfo" +
+                        "$currentTheme $currentMprEvent $currentAfterMprEvent $currentStakes $currentStoryWorld" +
+                        ", saving logline!")
                 addLoglineUseCase(
                     currentPronoun,
                     currentMajorEvent,
@@ -72,15 +76,22 @@ class CreativeViewModel @Inject constructor(
                     currentStakes,
                     currentStoryWorld
                 )
+            } else {
+                Log.e("MY_TAG", "something not filled!")
             }
         }
     }
 
     private fun allRequiredFieldsNotEmpty(): Boolean {
-        return currentPronoun != initialState &&
+        val essentials = currentPronoun != initialState &&
                 currentStoryGoal != initialState &&
                 currentCharacterInfo != initialState
-        //todo: дописать свитчеры
+        val themeFilled = !(currentIsThemeNeeded && currentTheme == null)
+        val mprFilled =
+            !(currentIsMprNeeded && (currentMprEvent == null || currentAfterMprEvent == null))
+        val worldFilled = !(currentIsWorldNeeded && currentStoryWorld == null)
+        val stakesFilled = !(currentAreStakesNeeded && currentStakes == null)
+        return essentials && themeFilled && mprFilled && worldFilled && stakesFilled
     }
 
 
@@ -218,7 +229,6 @@ class CreativeViewModel @Inject constructor(
 
     companion object {
         private const val initialState = ""
-        private const val nullId = -1
         private const val genderMalePosition = 1
         private const val genderFemalePosition = 2
         private const val genderOtherPosition = 3

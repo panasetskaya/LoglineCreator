@@ -53,7 +53,7 @@ class LoglineRepositoryImpl @Inject constructor(
 
     override fun addLogline(
         pronoun: String,
-        majorEvent: String,
+        majorEvent: String?,
         storyGoal: String,
         majorEventIncludesMainCharacter: Boolean,
         characterInfo: String,

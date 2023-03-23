@@ -2,7 +2,7 @@ package com.panasetskaia.storyarchitectlogline.data
 
 class LoglineBuilder(
     private val pronoun: String,
-    private val majorEvent: String,
+    private val majorEvent: String?,
     private val storyGoal: String,
     private val majorEventIncludesMainCharacter: Boolean,
     private val characterInfo: String,
@@ -14,14 +14,55 @@ class LoglineBuilder(
 ) {
 
     fun buildLogline(): String {
-        //todo: rewrite build algorithm
-        val lglnText = "$pronoun $majorEvent $storyGoal $characterInfo"
-        return lglnText
+        var logline = ""
+        majorEvent?.let {
+            logline = "when ${prepareText(it)} "
+        }
+        worldText?.let {
+            val newWorldText = if (!it.contains(" world where")) {
+                it.replace("it is", "")
+            } else it
+            logline += "in ${prepareText(newWorldText)} "
+        }
+        logline += "${prepareText(characterInfo)} "
+        logline += "must "
+        if (mprEvent==null && theme==null) {
+            logline += "${prepareText(storyGoal)} "
+        } else {
+            if (mprEvent==null) {
+                logline += " in order to ${theme?.let { prepareText(it) }} "
+                logline += "${prepareText(storyGoal)} "
+            } else {
+                logline += "${prepareText(storyGoal)} "
+                logline += "but when ${prepareText(mprEvent)} $pronoun must "
+                logline += "in order to ${theme?.let { prepareText(it) }} "
+                logline += "${afterMprEvent?.let { prepareText(it) }} "
+            }
+        }
+        stakes?.let {
+            logline += "before ${prepareText(it)}"
+        }
+        if (logline.last()!='.') {
+            logline = logline.trim() + "."
+        }
+        logline.replaceFirstChar {
+            it.uppercaseChar()
+        }
+        return logline
+    }
+
+
+    private fun prepareText(oldText: String): String {
+        var result = oldText.trim().lowercase()
+        if (result.startsWith("to ")) {
+            return result.substring(3)
+        }
+        return result
     }
 
 //    private fun buildLogline(): String {
 //        val text = String({ textField ->
-//            var text1: String = textField.getText().trim()
+//            var text1: String = textField.getText().trim() //todo: вот это какой textField?
 //            if (text1.startsWith("to ", Qt.CaseInsensitive)) {
 //                text1 = text1.mid(3)
 //            }
