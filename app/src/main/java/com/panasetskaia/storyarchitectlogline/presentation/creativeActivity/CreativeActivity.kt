@@ -1,9 +1,7 @@
 package com.panasetskaia.storyarchitectlogline.presentation.creativeActivity
 
 import android.annotation.SuppressLint
-import android.content.res.Configuration
 import android.os.Bundle
-import android.util.DisplayMetrics
 import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
@@ -13,6 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
+import androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -24,6 +23,7 @@ import com.google.android.material.sidesheet.SideSheetDialog
 import com.panasetskaia.storyarchitectlogline.R
 import com.panasetskaia.storyarchitectlogline.application.LoglineCreatorApplication
 import com.panasetskaia.storyarchitectlogline.di.ViewModelFactory
+import com.panasetskaia.storyarchitectlogline.presentation.common.AdvertsFragment
 import com.panasetskaia.storyarchitectlogline.presentation.creativeActivity.adapters.StepsPagerAdapter
 import com.panasetskaia.storyarchitectlogline.tools.isLandscapeTablet
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
@@ -32,7 +32,6 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class CreativeActivity : AppCompatActivity() {
-
 
 
     private lateinit var wormDotsIndicator: WormDotsIndicator
@@ -133,7 +132,11 @@ class CreativeActivity : AppCompatActivity() {
                 val currentItem = viewPager2.currentItem
                 viewPager2.currentItem = currentItem + 1
             } else {
-                Toast.makeText(this@CreativeActivity, getString(R.string.pleaseFill), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this@CreativeActivity,
+                    getString(R.string.pleaseFill),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
 
         }
@@ -145,23 +148,28 @@ class CreativeActivity : AppCompatActivity() {
         buttonNext.setTextColor(resources.getColor(R.color.our_purple))
         buttonNext.setOnClickListener {
             saveLogline()
+            if (isBigTablet) {
+                supportFragmentManager.popBackStack(
+                    AdvertsFragment.BACKSTACK_PARAM,
+                    POP_BACK_STACK_INCLUSIVE
+                )
+            }
             onBackPressedDispatcher.onBackPressed()
-
         }
     }
 
     fun disableSwiping() {
         isSwipingAllowed = false
         viewPager2.isUserInputEnabled = false
-        buttonNext.setTextColor( ContextCompat.getColor(this, R.color.our_subheader_grey))
-        buttonNext.iconTint = ContextCompat.getColorStateList(this,R.color.our_subheader_grey)
+        buttonNext.setTextColor(ContextCompat.getColor(this, R.color.our_subheader_grey))
+        buttonNext.iconTint = ContextCompat.getColorStateList(this, R.color.our_subheader_grey)
     }
 
     fun enableSwiping() {
         isSwipingAllowed = true
         viewPager2.isUserInputEnabled = true
-        buttonNext.setTextColor( ContextCompat.getColor(this, R.color.our_green))
-        buttonNext.iconTint = ContextCompat.getColorStateList(this,R.color.our_green)
+        buttonNext.setTextColor(ContextCompat.getColor(this, R.color.our_green))
+        buttonNext.iconTint = ContextCompat.getColorStateList(this, R.color.our_green)
     }
 
     private fun setHintText() {
@@ -177,7 +185,7 @@ class CreativeActivity : AppCompatActivity() {
                                         enableSwiping()
                                     } else {
                                         disableSwiping()
-                                         }
+                                    }
                                 }
 
                             }
@@ -192,7 +200,7 @@ class CreativeActivity : AppCompatActivity() {
                                         enableSwiping()
                                     } else {
                                         disableSwiping()
-                                     }
+                                    }
                                 }
 
                             }
@@ -260,6 +268,9 @@ class CreativeActivity : AppCompatActivity() {
                     6 -> {
                         if (isGoingBackFromReady) {
                             changeBackToDefaultMenu()
+                            if (isBigTablet) {
+                                supportFragmentManager.popBackStack()
+                            }
                             isGoingBackFromReady = false
                         }
                         hintText.text = getString(R.string.deadline_hint)
@@ -279,6 +290,15 @@ class CreativeActivity : AppCompatActivity() {
                     else -> {
                         isGoingBackFromReady = true
                         changeToReadyMenu()
+                        if (isBigTablet) {
+                            supportFragmentManager.beginTransaction()
+                                .replace(
+                                    R.id.fcvCreative_for_adverts,
+                                    AdvertsFragment.newInstance()
+                                )
+                                .addToBackStack(AdvertsFragment.BACKSTACK_PARAM)
+                                .commit()
+                        }
                     }
                 }
             }

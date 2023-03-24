@@ -1,4 +1,4 @@
-package com.panasetskaia.storyarchitectlogline.presentation.creativeActivity.creativeFragments
+package com.panasetskaia.storyarchitectlogline.presentation.common
 
 import android.annotation.SuppressLint
 import android.content.ClipData
@@ -10,6 +10,7 @@ import android.view.*
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -65,7 +66,7 @@ class Step8ReadyFragment : Fragment() {
             binding.cardAdv1.visibility = View.INVISIBLE
             binding.cardAdv2.visibility = View.INVISIBLE
         }
-        if (loglineParam==newLoglineParam) {
+        if (loglineParam == newLoglineParam) {
             launchInitialSavingState()
         } else {
             launchEditState()
@@ -108,6 +109,8 @@ class Step8ReadyFragment : Fragment() {
         binding.groupEditMode.visibility = View.VISIBLE
         binding.groupFirstSaveMode.visibility = View.GONE
         val editorViewModel = (requireActivity() as MainActivity).editorViewModel
+        requireActivity().title = getString(R.string.logline_ready)
+        (requireActivity() as MainActivity).searchView?.visibility = View.INVISIBLE
         editorViewModel.getLoglineById(loglineParam)
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -129,12 +132,12 @@ class Step8ReadyFragment : Fragment() {
             buttonCopy.setOnClickListener {
                 copyText()
             }
-            setAdverts()
+            setPortraitOrientationAdverts()
         }
     }
 
     private fun setEditModeButtons(editorViewModel: EditorViewModel) {
-        with (binding) {
+        with(binding) {
             buttonCopyEditMode.setOnClickListener {
                 copyText()
             }
@@ -144,10 +147,16 @@ class Step8ReadyFragment : Fragment() {
             buttonSaveEditMode.setOnClickListener {
                 editorViewModel.editLoglineText(loglineParam, etReadyLogline.text.toString())
                 editorViewModel.saveChangedLogline()
+                if (isLandscapeTablet()) {
+                    parentFragmentManager.popBackStack(AdvertsFragment.BACKSTACK_PARAM, POP_BACK_STACK_INCLUSIVE)
+                }
                 parentFragmentManager.popBackStack()
             }
         }
-        setAdverts()
+        if (!isLandscapeTablet()) {
+            setPortraitOrientationAdverts()
+        }
+
     }
 
     private fun copyText() {
@@ -160,7 +169,7 @@ class Step8ReadyFragment : Fragment() {
     }
 
     private fun shareOntwitter() {
-        with (binding) {
+        with(binding) {
             progressBar.visibility = View.VISIBLE
             val twtrUrl = getString(R.string.twitter_share_base_url)
             val lgln = etReadyLogline.text.toString()
@@ -168,7 +177,7 @@ class Step8ReadyFragment : Fragment() {
         }
     }
 
-    private fun setAdverts() {
+    private fun setPortraitOrientationAdverts() {
         with(binding) {
             cardAdv1.setOnClickListener {
                 progressBar.visibility = View.VISIBLE
@@ -182,12 +191,20 @@ class Step8ReadyFragment : Fragment() {
 
     }
 
+    override fun onStop() {
+        super.onStop()
+        if (requireActivity() is MainActivity) {
+            (requireActivity() as MainActivity).searchView?.visibility = View.VISIBLE
+            requireActivity().title = getString(R.string.toolbar_your_loglines)
+        }
+    }
 
     companion object {
 
         const val copyLabel = "simple text"
         const val newLoglineParam = -1
         const val noParam = -2
+        const val BACKSTACK_PARAM = "step8"
 
         @JvmStatic
         fun newInstance(idParam: Int) =

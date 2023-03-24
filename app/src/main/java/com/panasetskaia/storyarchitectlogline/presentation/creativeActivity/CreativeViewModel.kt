@@ -43,7 +43,7 @@ class CreativeViewModel @Inject constructor(
 
     private var currentPronoun: String = initialState
     private var currentCharacterInfo: String = initialState
-    private var currentMajorEvent: String? = initialState
+    private var currentMajorEvent: String? = null
     private var currentStoryGoal: String = initialState
     private var currentMajorEventIncludesMainCharacter: Boolean = false
     private var currentIsThemeNeeded: Boolean = false

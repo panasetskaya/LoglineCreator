@@ -3,7 +3,7 @@ package com.panasetskaia.storyarchitectlogline.presentation.creativeActivity.ada
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.panasetskaia.storyarchitectlogline.presentation.creativeActivity.CreativeActivity
+import com.panasetskaia.storyarchitectlogline.presentation.common.Step8ReadyFragment
 import com.panasetskaia.storyarchitectlogline.presentation.creativeActivity.creativeFragments.*
 
 class StepsPagerAdapter(val parentActivity: AppCompatActivity) :

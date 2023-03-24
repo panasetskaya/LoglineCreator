@@ -133,6 +133,8 @@
     <string name="gender_female">she</string>
     <string name="gender_other">they</string>
     <string name="nothing_found">Nothing found</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

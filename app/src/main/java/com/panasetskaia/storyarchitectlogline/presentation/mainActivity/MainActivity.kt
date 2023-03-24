@@ -4,17 +4,14 @@ package com.panasetskaia.storyarchitectlogline.presentation.mainActivity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
-import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.SearchView
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.MenuItemCompat
 import androidx.lifecycle.Lifecycle
@@ -28,10 +25,10 @@ import com.panasetskaia.storyarchitectlogline.R
 import com.panasetskaia.storyarchitectlogline.application.LoglineCreatorApplication
 import com.panasetskaia.storyarchitectlogline.databinding.ActivityMainBinding
 import com.panasetskaia.storyarchitectlogline.di.ViewModelFactory
-import com.panasetskaia.storyarchitectlogline.domain.Logline
+import com.panasetskaia.storyarchitectlogline.presentation.common.AdvertsFragment
+import com.panasetskaia.storyarchitectlogline.presentation.common.Step8ReadyFragment
 import com.panasetskaia.storyarchitectlogline.presentation.creativeActivity.CreativeActivity
 import com.panasetskaia.storyarchitectlogline.presentation.creativeActivity.EditorViewModel
-import com.panasetskaia.storyarchitectlogline.presentation.creativeActivity.creativeFragments.Step8ReadyFragment
 import com.panasetskaia.storyarchitectlogline.tools.isLandscapeTablet
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -41,10 +38,10 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity() {
 
     private var isBigTablet = false
-
     private lateinit var binding: ActivityMainBinding
     private lateinit var loglineAdapter: LoglineAdapter
     private var isSearchViewActivated = false
+    var searchView: SearchView? = null
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -91,15 +88,15 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
         val searchViewItem: MenuItem = menu.findItem(R.id.search)
-        val searchView = MenuItemCompat.getActionView(searchViewItem) as SearchView
-        searchView.maxWidth = Integer.MAX_VALUE
-        searchView.queryHint = getString(R.string.search_title)
+        searchView = MenuItemCompat.getActionView(searchViewItem) as SearchView?
+        searchView?.maxWidth = Integer.MAX_VALUE
+        searchView?.queryHint = getString(R.string.search_title)
 //        searchView.isSubmitButtonEnabled = true
-        searchView.setOnCloseListener {
+        searchView?.setOnCloseListener {
             isSearchViewActivated = false
             false
         }
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 return false
             }
@@ -120,6 +117,12 @@ class MainActivity : AppCompatActivity() {
                 .replace(R.id.fcvMain, Step8ReadyFragment.newInstance(it.id))
                 .addToBackStack(null)
                 .commit()
+            if (isBigTablet) {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.fcvMain_for_adverts, AdvertsFragment.newInstance())
+                    .addToBackStack(AdvertsFragment.BACKSTACK_PARAM)
+                    .commit()
+            }
         }
         recyclerView.adapter = loglineAdapter
         recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
@@ -191,7 +194,6 @@ class MainActivity : AppCompatActivity() {
                             binding.groupWhenEmpty.visibility = View.INVISIBLE
                             binding.groupWhenNotEmpty.visibility = View.VISIBLE
                             loglineAdapter.submitList(it)
-                            binding.rvYourLoglines.scrollToPosition(it.size-1)
                             if (it.isEmpty()) {
                                 binding.tvNothingFound.visibility = View.VISIBLE
                             } else {

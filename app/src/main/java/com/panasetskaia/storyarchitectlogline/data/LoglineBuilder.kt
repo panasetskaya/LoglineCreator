@@ -1,5 +1,7 @@
 package com.panasetskaia.storyarchitectlogline.data
 
+import android.util.Log
+
 class LoglineBuilder(
     private val pronoun: String,
     private val majorEvent: String?,
@@ -16,7 +18,8 @@ class LoglineBuilder(
     fun buildLogline(): String {
         var logline = ""
         majorEvent?.let {
-            logline = "when ${prepareText(it)} "
+            logline = "when ${prepareText(it)}, "
+            Log.e("my_tag", "when added")
         }
         worldText?.let {
             val newWorldText = if (!it.contains(" world where")) {
@@ -33,7 +36,7 @@ class LoglineBuilder(
                 logline += " in order to ${theme?.let { prepareText(it) }} "
                 logline += "${prepareText(storyGoal)} "
             } else {
-                logline += "${prepareText(storyGoal)} "
+                logline += "${prepareText(storyGoal)}, "
                 logline += "but when ${prepareText(mprEvent)} $pronoun must "
                 logline += "in order to ${theme?.let { prepareText(it) }} "
                 logline += "${afterMprEvent?.let { prepareText(it) }} "
@@ -45,9 +48,7 @@ class LoglineBuilder(
         if (logline.last()!='.') {
             logline = logline.trim() + "."
         }
-        logline.replaceFirstChar {
-            it.uppercaseChar()
-        }
+        logline = logline.capitalize()
         return logline
     }
 
