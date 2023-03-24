@@ -57,6 +57,8 @@ class AdvertsFragment : Fragment() {
 
     companion object {
 
+        const val BACKSTACK_PARAM = "adverts"
+
         @JvmStatic
         fun newInstance() =
             AdvertsFragment()

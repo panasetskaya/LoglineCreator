@@ -120,7 +120,7 @@ class MainActivity : AppCompatActivity() {
             if (isBigTablet) {
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.fcvMain_for_adverts, AdvertsFragment.newInstance())
-                    .addToBackStack(null)
+                    .addToBackStack(AdvertsFragment.BACKSTACK_PARAM)
                     .commit()
             }
         }
