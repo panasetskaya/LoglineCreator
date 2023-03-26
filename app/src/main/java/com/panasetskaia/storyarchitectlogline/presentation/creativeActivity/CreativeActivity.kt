@@ -33,7 +33,6 @@ import javax.inject.Inject
 
 class CreativeActivity : AppCompatActivity() {
 
-
     private lateinit var wormDotsIndicator: WormDotsIndicator
     private lateinit var viewPager2: ViewPager2
     private var sideSheetDialog: SideSheetDialog? = null
@@ -47,7 +46,8 @@ class CreativeActivity : AppCompatActivity() {
     private lateinit var toolbar: MaterialToolbar
     lateinit var defaultMenuProvider: MenuProvider
     lateinit var readyMenuProvider: MenuProvider
-    private var isGoingBackFromReady = false
+
+    var lastPosition = -1
 
     private var isSwipingAllowed = false
 
@@ -138,7 +138,27 @@ class CreativeActivity : AppCompatActivity() {
                     Toast.LENGTH_SHORT
                 ).show()
             }
+        }
+    }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private fun setRightButtonAsNextAndGenerate() {
+        buttonNext.setText(R.string.next)
+        buttonNext.icon = getDrawable(R.drawable.ic_arrow_forward)
+        buttonNext.setTextColor(resources.getColor(R.color.our_subheader_grey))
+        buttonNext.setOnClickListener {
+            if (isSwipingAllowed) {
+                viewModel.buildNewLogline()
+                val currentItem = viewPager2.currentItem
+                viewPager2.currentItem = currentItem + 1
+
+            } else {
+                Toast.makeText(
+                    this@CreativeActivity,
+                    getString(R.string.pleaseFill),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
     }
 
@@ -237,6 +257,7 @@ class CreativeActivity : AppCompatActivity() {
                     }
                     4 -> {
                         hintText.text = getString(R.string.mid_point_hint)
+                        lastPosition = 4
                         lifecycleScope.launch {
                             repeatOnLifecycle(Lifecycle.State.STARTED) {
                                 viewModel.isSwipingFromPageFiveAllowed.collectLatest {
@@ -252,6 +273,10 @@ class CreativeActivity : AppCompatActivity() {
                     }
                     5 -> {
                         hintText.text = getString(R.string.world_hint)
+                        if (lastPosition==6) {
+                            setRightButtonAsNext()
+                        }
+                        lastPosition = 5
                         lifecycleScope.launch {
                             repeatOnLifecycle(Lifecycle.State.STARTED) {
                                 viewModel.isSwipingFromPageSixAllowed.collectLatest {
@@ -266,13 +291,15 @@ class CreativeActivity : AppCompatActivity() {
                         }
                     }
                     6 -> {
-                        if (isGoingBackFromReady) {
-                            changeBackToDefaultMenu()
+                        if (lastPosition==7) {
+                            removeMenuProvider(readyMenuProvider)
+                            setupDefaultMenu()
                             if (isBigTablet) {
                                 supportFragmentManager.popBackStack()
                             }
-                            isGoingBackFromReady = false
                         }
+                        setRightButtonAsNextAndGenerate()
+                        lastPosition = 6
                         hintText.text = getString(R.string.deadline_hint)
                         lifecycleScope.launch {
                             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -288,7 +315,7 @@ class CreativeActivity : AppCompatActivity() {
                         }
                     }
                     else -> {
-                        isGoingBackFromReady = true
+                        lastPosition = 7
                         changeToReadyMenu()
                         if (isBigTablet) {
                             supportFragmentManager.beginTransaction()
@@ -322,6 +349,7 @@ class CreativeActivity : AppCompatActivity() {
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 return when (menuItem.itemId) {
                     R.id.toolbar_menu_close -> {
+                        saveLogline()
                         onBackPressedDispatcher.onBackPressed()
                         true
                     }
@@ -356,6 +384,8 @@ class CreativeActivity : AppCompatActivity() {
         title = getString(R.string.toolbar_create)
         addMenuProvider(defaultMenuProvider, this)
         hintText.visibility = View.VISIBLE
+        ivHint?.isVisible = true
+        tvHintHeader?.isVisible = true
     }
 
     private fun changeToReadyMenu() {
@@ -368,17 +398,8 @@ class CreativeActivity : AppCompatActivity() {
         tvHintHeader?.isVisible = false
     }
 
-    private fun changeBackToDefaultMenu() {
-        removeMenuProvider(readyMenuProvider)
-        setupDefaultMenu()
-        setRightButtonAsNext()
-        hintText.visibility = View.VISIBLE
-        ivHint?.isVisible = true
-        tvHintHeader?.isVisible = true
-    }
-
     private fun saveLogline() {
-        editorViewModel.saveChangedLogline()
+        editorViewModel.saveNewLogline()
         Toast.makeText(this@CreativeActivity, "Saved it!", Toast.LENGTH_SHORT).show()
     }
 }

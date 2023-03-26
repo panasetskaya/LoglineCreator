@@ -3,14 +3,14 @@ package com.panasetskaia.storyarchitectlogline.presentation.creativeActivity
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.panasetskaia.storyarchitectlogline.domain.useCases.AddLoglineUseCase
+import com.panasetskaia.storyarchitectlogline.domain.useCases.BuildLoglineUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class CreativeViewModel @Inject constructor(
-    private val addLoglineUseCase: AddLoglineUseCase
+    private val buildLoglineUseCase: BuildLoglineUseCase
 ) : ViewModel() {
 
     private val _isSwipingFromPageOneAllowed = MutableStateFlow(false)
@@ -57,14 +57,14 @@ class CreativeViewModel @Inject constructor(
     private var currentStakes: String? = null
 
 
-    fun saveNewLogline() {
+    fun buildNewLogline() {
         viewModelScope.launch {
             if (allRequiredFieldsNotEmpty()) {
                 Log.e("MY_TAG", "allRequiredFieldsNotEmpty:" +
                         "$currentPronoun $currentMajorEvent $currentStoryGoal $currentCharacterInfo" +
                         "$currentTheme $currentMprEvent $currentAfterMprEvent $currentStakes $currentStoryWorld" +
                         ", saving logline!")
-                addLoglineUseCase(
+                buildLoglineUseCase(
                     currentPronoun,
                     currentMajorEvent,
                     currentStoryGoal,

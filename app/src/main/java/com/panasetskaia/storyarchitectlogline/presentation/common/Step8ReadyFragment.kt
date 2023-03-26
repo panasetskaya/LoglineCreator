@@ -81,19 +81,20 @@ class Step8ReadyFragment : Fragment() {
 
     private fun launchInitialSavingState() {
         with(binding) {
-            val creativeViewModel = (requireActivity() as CreativeActivity).viewModel
             val editorViewModel = (requireActivity() as CreativeActivity).editorViewModel
-            creativeViewModel.saveNewLogline()
             binding.groupEditMode.visibility = View.GONE
             binding.groupFirstSaveMode.visibility = View.VISIBLE
-            editorViewModel.getLastLogline()
+            editorViewModel.getGeneratedLoglineText()
             viewLifecycleOwner.lifecycleScope.launch {
                 viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                     launch {
-                        editorViewModel.editedLoglineFlow.collectLatest { logline ->
-                            binding.etReadyLogline.setText(logline.text)
+                        editorViewModel.editedLoglineFlow.collectLatest { loglineText ->
+                            binding.etReadyLogline.setText(loglineText)
+                            editorViewModel.editLoglineText(null, loglineText)
                             etReadyLogline.addTextChangedListener {
-                                editorViewModel.editLoglineText(logline.id, it.toString())
+                                it?.let {
+                                    editorViewModel.editLoglineText(null, it.toString())
+                                }
                             }
                         }
                     }
@@ -101,8 +102,6 @@ class Step8ReadyFragment : Fragment() {
             }
             setInitialModeButtons()
         }
-
-
     }
 
     private fun launchEditState() {
@@ -116,7 +115,7 @@ class Step8ReadyFragment : Fragment() {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     editorViewModel.editedLoglineFlow.collectLatest {
-                        binding.etReadyLogline.setText(it.text)
+                        binding.etReadyLogline.setText(it)
                     }
                 }
             }
@@ -204,7 +203,6 @@ class Step8ReadyFragment : Fragment() {
         const val copyLabel = "simple text"
         const val newLoglineParam = -1
         const val noParam = -2
-        const val BACKSTACK_PARAM = "step8"
 
         @JvmStatic
         fun newInstance(idParam: Int) =
