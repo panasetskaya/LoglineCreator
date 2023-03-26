@@ -5,7 +5,7 @@ import javax.inject.Inject
 
 class BuildLoglineUseCase @Inject constructor(private val repo: LoglineRepository) {
 
-    operator fun invoke(
+    suspend operator fun invoke(
         pronoun: String,
         majorEvent: String?,
         storyGoal: String,

@@ -21,7 +21,7 @@ class LoglineRepositoryImpl @Inject constructor(
         return dbDao.getAllLoglines()
     }
 
-    override fun getGeneratedLoglineText(): Flow<String?> {
+    override suspend fun getGeneratedLoglineText(): Flow<String?> {
         return newLoglineText
     }
 
@@ -41,7 +41,7 @@ class LoglineRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun buildLogline(
+    override suspend fun buildLogline(
         pronoun: String,
         majorEvent: String?,
         storyGoal: String,
@@ -65,7 +65,9 @@ class LoglineRepositoryImpl @Inject constructor(
             stakes,
             worldText
         ).buildLogline()
-        newLoglineText.tryEmit(newText)
+        withContext(Dispatchers.IO) {
+            newLoglineText.emit(newText)
+        }
     }
 
     override suspend fun changeText(id: Int, newText: String) {

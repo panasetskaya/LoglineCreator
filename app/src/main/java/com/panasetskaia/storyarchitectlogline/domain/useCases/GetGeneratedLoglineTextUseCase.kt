@@ -6,7 +6,7 @@ import javax.inject.Inject
 
 class GetGeneratedLoglineTextUseCase @Inject constructor(private val repo: LoglineRepository) {
 
-    operator fun invoke(): Flow<String?> {
+    suspend operator fun invoke(): Flow<String?> {
         return repo.getGeneratedLoglineText()
     }
 
