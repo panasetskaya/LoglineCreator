@@ -1,7 +1,5 @@
 package com.panasetskaia.storyarchitectlogline.data
 
-import android.util.Log
-
 class LoglineBuilder(
     private val pronoun: String,
     private val majorEvent: String?,
@@ -17,35 +15,40 @@ class LoglineBuilder(
 
     fun buildLogline(): String {
         var logline = ""
-        majorEvent?.let {
-            logline = "when ${prepareText(it)}, "
-            Log.e("my_tag", "when added")
+        majorEvent?.let { event ->
+            logline = "when ${prepareText(event)} "
         }
-        worldText?.let {
-            val newWorldText = if (!it.contains(" world where")) {
-                it.replace("it is", "")
-            } else it
-            logline += "in ${prepareText(newWorldText)} "
+        if (worldText != null) {
+            val newWorldText = if (!worldText.contains("world where")) {
+                worldText.replace("it is", "")
+            } else worldText
+            logline += "in ${prepareText(newWorldText)}, "
+        } else if (majorEvent != null) {
+            logline += ", "
         }
         logline += "${prepareText(characterInfo)} "
         logline += "must "
-        if (mprEvent==null && theme==null) {
+        if (mprEvent == null && theme == null) {
+            logline += "${prepareText(storyGoal)} "
+        } else if (mprEvent == null && theme != null) {
+            logline += "in order to ${prepareText(theme)} "
             logline += "${prepareText(storyGoal)} "
         } else {
-            if (mprEvent==null) {
-                logline += " in order to ${theme?.let { prepareText(it) }} "
-                logline += "${prepareText(storyGoal)} "
-            } else {
-                logline += "${prepareText(storyGoal)}, "
+            logline += "${prepareText(storyGoal)}, "
+            if (mprEvent != null) {
                 logline += "but when ${prepareText(mprEvent)} $pronoun must "
-                logline += "in order to ${theme?.let { prepareText(it) }} "
-                logline += "${afterMprEvent?.let { prepareText(it) }} "
+            }
+            if (theme != null) {
+                logline += "in order to ${prepareText(theme)} "
+            }
+            if (afterMprEvent != null) {
+                logline += "${prepareText(afterMprEvent)} "
             }
         }
         stakes?.let {
             logline += "before ${prepareText(it)}"
         }
-        if (logline.last()!='.') {
+        if (logline.last() != '.') {
             logline = logline.trim() + "."
         }
         logline = logline.capitalize()

@@ -43,10 +43,15 @@ class Step5MidPointFragment : Fragment() {
                 }
             }
             etMidPoint.addTextChangedListener {
-                viewModel.changeMidPoint(it.toString())
+                it?.let {
+                    viewModel.changeMidPoint(it.toString())
+                }
+
             }
             etMidPointAfter.addTextChangedListener {
-                viewModel.changeAfterMpr(it.toString())
+                it?.let {
+                    viewModel.changeAfterMpr(it.toString())
+                }
             }
         }
     }

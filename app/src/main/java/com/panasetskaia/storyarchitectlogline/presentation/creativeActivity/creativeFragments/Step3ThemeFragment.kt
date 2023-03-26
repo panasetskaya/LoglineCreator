@@ -46,7 +46,9 @@ class Step3ThemeFragment : Fragment() {
                 }
             }
             etTheme.addTextChangedListener {
-                viewModel.changeTheme(it.toString())
+                it?.let {
+                    viewModel.changeTheme(it.toString())
+                }
             }
         }
     }

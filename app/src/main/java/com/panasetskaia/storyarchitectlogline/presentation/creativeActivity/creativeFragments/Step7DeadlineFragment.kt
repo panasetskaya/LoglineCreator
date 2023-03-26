@@ -45,9 +45,10 @@ class Step7DeadlineFragment : Fragment() {
                 }
             }
             etStakes.addTextChangedListener {
-                viewModel.changeStakes(it.toString())
+                it?.let {
+                    viewModel.changeStakes(it.toString())
+                }
             }
-
         }
     }
 

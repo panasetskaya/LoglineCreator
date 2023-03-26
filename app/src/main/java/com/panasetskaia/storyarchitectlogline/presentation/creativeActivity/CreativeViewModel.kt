@@ -129,7 +129,7 @@ class CreativeViewModel @Inject constructor(
     }
 
     private fun emitSwipingFromPage2Admission() {
-        if (currentMajorEvent == initialState && currentMajorEventIncludesMainCharacter) {
+        if (currentMajorEventIncludesMainCharacter && currentMajorEvent == null) {
             _isSwipingFromPageTwoAllowed.tryEmit(false)
         } else {
             _isSwipingFromPageTwoAllowed.tryEmit(true)
