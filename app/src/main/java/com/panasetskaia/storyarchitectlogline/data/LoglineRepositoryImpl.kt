@@ -5,34 +5,24 @@ import com.panasetskaia.storyarchitectlogline.domain.Logline
 import com.panasetskaia.storyarchitectlogline.domain.LoglineRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.withContext
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 class LoglineRepositoryImpl @Inject constructor(
-//    private val application: Application,
     private val dbDao: LoglineDao
 ) : LoglineRepository {
 
-    private var newLoglineText = emptyString
+    private val newLoglineText = MutableStateFlow<String?>(null)
 
     override fun getAllSavedLoglines(): Flow<List<Logline>> {
         return dbDao.getAllLoglines()
     }
 
-    override suspend fun getLastSavedLogline(): Logline {
-        return withContext(Dispatchers.IO) {
-            val newLogline = Logline(
-                idForNewLogline,
-                newLoglineText,
-                getCurrentDate(),
-                countWords(newLoglineText)
-            )
-            dbDao.saveLogline(newLogline)
-            val lastLogline = dbDao.getLastSavedLogline()
-            lastLogline
-        }
+    override fun getGeneratedLoglineText(): Flow<String?> {
+        return newLoglineText
     }
 
     override suspend fun getLoglineById(id: Int): Logline {
@@ -51,7 +41,7 @@ class LoglineRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun addLogline(
+    override fun buildLogline(
         pronoun: String,
         majorEvent: String?,
         storyGoal: String,
@@ -63,7 +53,7 @@ class LoglineRepositoryImpl @Inject constructor(
         stakes: String?,
         worldText: String?
     ) {
-        newLoglineText = LoglineBuilder(
+        val newText = LoglineBuilder(
             pronoun,
             majorEvent,
             storyGoal,
@@ -75,6 +65,7 @@ class LoglineRepositoryImpl @Inject constructor(
             stakes,
             worldText
         ).buildLogline()
+        newLoglineText.tryEmit(newText)
     }
 
     override suspend fun changeText(id: Int, newText: String) {
@@ -94,20 +85,32 @@ class LoglineRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun saveNewLogline(s: String) {
+        withContext(Dispatchers.IO) {
+            val newLogline = Logline(
+                idForNewLogline,
+                s,
+                getCurrentDate(),
+                countWords(s)
+            )
+            dbDao.saveLogline(newLogline)
+        }
+    }
+
     private fun getCurrentDate(): String {
         val current = LocalDateTime.now()
-        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+        val formatter = DateTimeFormatter.ofPattern(datePattern)
         return current.format(formatter)
     }
 
     private fun countWords(s: String): Int {
-        return s.count{
+        return s.count {
             it == ' '
         } + 1
     }
 
     companion object {
-        private val emptyString = ""
-        private val idForNewLogline = 0
+        private const val idForNewLogline = 0
+        private const val datePattern = "yyyy-MM-dd"
     }
 }

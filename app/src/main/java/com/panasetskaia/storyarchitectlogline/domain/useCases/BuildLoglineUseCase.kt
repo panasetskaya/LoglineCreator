@@ -3,7 +3,7 @@ package com.panasetskaia.storyarchitectlogline.domain.useCases
 import com.panasetskaia.storyarchitectlogline.domain.LoglineRepository
 import javax.inject.Inject
 
-class AddLoglineUseCase @Inject constructor(private val repo: LoglineRepository) {
+class BuildLoglineUseCase @Inject constructor(private val repo: LoglineRepository) {
 
     operator fun invoke(
         pronoun: String,
@@ -17,7 +17,7 @@ class AddLoglineUseCase @Inject constructor(private val repo: LoglineRepository)
         stakes: String?,
         worldText: String?
     ) {
-        repo.addLogline(
+        repo.buildLogline(
             pronoun,
             majorEvent,
             storyGoal,

@@ -6,7 +6,7 @@ interface LoglineRepository {
 
     fun getAllSavedLoglines(): Flow<List<Logline>>
 
-    suspend fun getLastSavedLogline(): Logline
+    fun getGeneratedLoglineText(): Flow<String?>
 
     suspend fun getLoglineById(id: Int): Logline
 
@@ -14,7 +14,7 @@ interface LoglineRepository {
 
     suspend fun deleteLogline(id: Int)
 
-    fun addLogline(
+    fun buildLogline(
         pronoun: String,
         majorEvent: String?,
         storyGoal: String,
@@ -28,5 +28,7 @@ interface LoglineRepository {
     )
 
     suspend fun changeText(id: Int, newText: String)
+
+    suspend fun saveNewLogline(s: String)
 
 }
