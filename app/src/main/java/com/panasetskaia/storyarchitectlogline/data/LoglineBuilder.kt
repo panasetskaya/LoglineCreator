@@ -19,9 +19,7 @@ class LoglineBuilder(
             logline = "when ${prepareText(event)} "
         }
         if (worldText != null) {
-            val newWorldText = if (!worldText.contains("world where")) {
-                worldText.replace("it is", "", ignoreCase = true)
-            } else worldText
+            val newWorldText = worldText.replace("it is", "", ignoreCase = true)
             logline += "in ${prepareText(newWorldText)}, "
         } else if (majorEvent != null) {
             logline += ", "
@@ -69,7 +67,7 @@ class LoglineBuilder(
 
 //    private fun buildLogline(): String {
 //        val text = String({ textField ->
-//            var text1: String = textField.getText().trim() //todo: вот это какой textField?
+//            var text1: String = textField.getText().trim()
 //            if (text1.startsWith("to ", Qt.CaseInsensitive)) {
 //                text1 = text1.mid(3)
 //            }
