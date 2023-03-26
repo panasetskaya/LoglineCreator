@@ -35,10 +35,11 @@ class Step4MainActionFragment : Fragment() {
     private fun setListeners() {
         with (binding) {
             etMainAction.addTextChangedListener {
-                viewModel.changeStoryGoal(it.toString())
+                it?.let {
+                    viewModel.changeStoryGoal(it.toString())
+                }
             }
         }
-
     }
 
     override fun onDestroyView() {

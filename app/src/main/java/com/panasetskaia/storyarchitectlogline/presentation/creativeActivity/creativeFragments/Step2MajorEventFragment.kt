@@ -38,7 +38,9 @@ class Step2MajorEventFragment : Fragment() {
     private fun setListeners() {
         with (binding) {
             etMajorEvent.addTextChangedListener {
-                viewModel.changeMajorEvent(it.toString())
+                it?.let {
+                    viewModel.changeMajorEvent(it.toString())
+                }
             }
             switchMajorEventInclMc.setOnCheckedChangeListener { _, isChecked ->
                 viewModel.changeIsMCIncludedSwitch(isChecked)

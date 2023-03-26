@@ -40,7 +40,9 @@ class Step1MainCharFragment : Fragment() {
 
     private fun setListeners() {
         binding.etMcInfo.addTextChangedListener {
-            viewModel.changeCharacterInfo(it.toString())
+            it?.let {
+                viewModel.changeCharacterInfo(it.toString())
+            }
         }
         binding.spinnerMcGender.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {

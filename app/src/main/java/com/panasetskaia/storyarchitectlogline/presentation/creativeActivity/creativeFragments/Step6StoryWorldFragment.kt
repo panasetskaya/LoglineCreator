@@ -45,9 +45,10 @@ class Step6StoryWorldFragment : Fragment() {
                 }
             }
             etWorld.addTextChangedListener {
-                viewModel.changeStoryWorld(it.toString())
+                it?.let {
+                    viewModel.changeStoryWorld(it.toString())
+                }
             }
-
         }
     }
 
