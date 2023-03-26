@@ -20,7 +20,7 @@ class LoglineBuilder(
         }
         if (worldText != null) {
             val newWorldText = if (!worldText.contains("world where")) {
-                worldText.replace("it is", "")
+                worldText.replace("it is", "", ignoreCase = true)
             } else worldText
             logline += "in ${prepareText(newWorldText)}, "
         } else if (majorEvent != null) {
@@ -57,7 +57,10 @@ class LoglineBuilder(
 
 
     private fun prepareText(oldText: String): String {
-        var result = oldText.trim().lowercase()
+        val trimmed = oldText.trim()
+        var result = trimmed.replaceFirstChar {
+            it.lowercase()
+        }
         if (result.startsWith("to ")) {
             return result.substring(3)
         }
