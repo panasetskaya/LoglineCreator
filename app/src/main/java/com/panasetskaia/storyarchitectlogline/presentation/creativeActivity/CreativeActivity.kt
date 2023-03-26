@@ -51,8 +51,6 @@ class CreativeActivity : AppCompatActivity() {
 
     private var isSwipingAllowed = false
 
-    private var isBigTablet = false
-
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
@@ -74,11 +72,10 @@ class CreativeActivity : AppCompatActivity() {
         installSplashScreen()
         component.inject(this)
         setContentView(R.layout.activity_creative)
-        isBigTablet = this.isLandscapeTablet()
         setSupportActionBar(findViewById(R.id.toolbar))
         setupToolbar()
         createMenuProviders()
-        if (!isBigTablet) {
+        if (!isLandscapeTablet()) {
             setHintAsSideSheet()
         } else {
             setHintAsTextView()
@@ -87,6 +84,11 @@ class CreativeActivity : AppCompatActivity() {
         setDots()
         setDefaultBottomButtons()
         setHintText()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        popExtraFragmentIfBigTablet()
     }
 
     private fun setHintAsTextView() {
@@ -168,13 +170,7 @@ class CreativeActivity : AppCompatActivity() {
         buttonNext.setTextColor(resources.getColor(R.color.our_purple))
         buttonNext.setOnClickListener {
             saveLogline()
-            if (isBigTablet) {
-                supportFragmentManager.popBackStack(
-                    AdvertsFragment.BACKSTACK_PARAM,
-                    POP_BACK_STACK_INCLUSIVE
-                )
-            }
-            onBackPressedDispatcher.onBackPressed()
+            popExtraFragmentIfBigTablet()
         }
     }
 
@@ -294,7 +290,7 @@ class CreativeActivity : AppCompatActivity() {
                         if (lastPosition==7) {
                             removeMenuProvider(readyMenuProvider)
                             setupDefaultMenu()
-                            if (isBigTablet) {
+                            if (isLandscapeTablet()) {
                                 supportFragmentManager.popBackStack()
                             }
                         }
@@ -317,7 +313,7 @@ class CreativeActivity : AppCompatActivity() {
                     else -> {
                         lastPosition = 7
                         changeToReadyMenu()
-                        if (isBigTablet) {
+                        if (isLandscapeTablet()) {
                             supportFragmentManager.beginTransaction()
                                 .replace(
                                     R.id.fcvCreative_for_adverts,
@@ -335,7 +331,7 @@ class CreativeActivity : AppCompatActivity() {
     private fun setupToolbar() {
         toolbar = findViewById(R.id.toolbar)
         toolbar.setNavigationOnClickListener {
-            onBackPressedDispatcher.onBackPressed()
+            popExtraFragmentIfBigTablet()
             true
         }
     }
@@ -350,7 +346,7 @@ class CreativeActivity : AppCompatActivity() {
                 return when (menuItem.itemId) {
                     R.id.toolbar_menu_close -> {
                         saveLogline()
-                        onBackPressedDispatcher.onBackPressed()
+                        popExtraFragmentIfBigTablet()
                         true
                     }
                     else -> true
@@ -361,7 +357,7 @@ class CreativeActivity : AppCompatActivity() {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menuInflater.inflate(R.menu.menu_creative, menu)
                 val item = menu.findItem(R.id.toolbar_menu_hint)
-                if (isBigTablet) {
+                if (isLandscapeTablet()) {
                     item.isVisible = false
                 }
             }
@@ -378,6 +374,16 @@ class CreativeActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun popExtraFragmentIfBigTablet() {
+        if (isLandscapeTablet() && lastPosition==7) {
+            supportFragmentManager.popBackStack(
+                AdvertsFragment.BACKSTACK_PARAM,
+                POP_BACK_STACK_INCLUSIVE
+            )
+        }
+        onBackPressedDispatcher.onBackPressed()
     }
 
     private fun setupDefaultMenu() {

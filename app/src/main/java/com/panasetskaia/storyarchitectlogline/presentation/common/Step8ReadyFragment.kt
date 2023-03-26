@@ -10,6 +10,7 @@ import android.view.*
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -146,10 +147,7 @@ class Step8ReadyFragment : Fragment() {
             buttonSaveEditMode.setOnClickListener {
                 editorViewModel.editLoglineText(loglineParam, etReadyLogline.text.toString())
                 editorViewModel.saveChangedLogline()
-                if (isLandscapeTablet()) {
-                    parentFragmentManager.popBackStack(AdvertsFragment.BACKSTACK_PARAM, POP_BACK_STACK_INCLUSIVE)
-                }
-                parentFragmentManager.popBackStack()
+                popExtraFragmentIfBigTablet()
             }
         }
         if (!isLandscapeTablet()) {
@@ -196,6 +194,16 @@ class Step8ReadyFragment : Fragment() {
             (requireActivity() as MainActivity).searchView?.visibility = View.VISIBLE
             requireActivity().title = getString(R.string.toolbar_your_loglines)
         }
+    }
+
+    private fun popExtraFragmentIfBigTablet() {
+        if (isLandscapeTablet()) {
+            parentFragmentManager.popBackStack(
+                AdvertsFragment.BACKSTACK_PARAM,
+                POP_BACK_STACK_INCLUSIVE
+            )
+        }
+        parentFragmentManager.popBackStack()
     }
 
     companion object {

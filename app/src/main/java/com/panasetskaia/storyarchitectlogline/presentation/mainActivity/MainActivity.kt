@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.MenuItemCompat
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -72,6 +73,11 @@ class MainActivity : AppCompatActivity() {
         setButtons()
         setUpRecyclerView(binding.rvYourLoglines)
         collectFlow()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        popExtraFragmentIfBigTablet()
     }
 
     private fun setButtons() {
@@ -212,7 +218,15 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-
+    private fun popExtraFragmentIfBigTablet() {
+        if (isLandscapeTablet()) {
+            supportFragmentManager.popBackStack(
+                AdvertsFragment.BACKSTACK_PARAM,
+                FragmentManager.POP_BACK_STACK_INCLUSIVE
+            )
+        }
+        onBackPressedDispatcher.onBackPressed()
+    }
 }
 
 //todo: баг - один раз при удалении последнего логлайна из списка показалась initial заглушка.
