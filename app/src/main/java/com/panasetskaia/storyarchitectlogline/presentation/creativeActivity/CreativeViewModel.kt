@@ -61,8 +61,8 @@ class CreativeViewModel @Inject constructor(
         viewModelScope.launch {
             if (allRequiredFieldsNotEmpty()) {
                 Log.e("MY_TAG", "allRequiredFieldsNotEmpty:" +
-                        "$currentPronoun $currentMajorEvent $currentStoryGoal $currentCharacterInfo" +
-                        "$currentTheme $currentMprEvent $currentAfterMprEvent $currentStakes $currentStoryWorld" +
+                        "currentPronoun:$currentPronoun currentMajorEvent:$currentMajorEvent currentStoryGoal:$currentStoryGoal currentCharacterInfo:$currentCharacterInfo" +
+                        "currentTheme:$currentTheme currentMprEvent:$currentMprEvent currentAfterMprEvent:$currentAfterMprEvent currentStakes:$currentStakes currentStoryWorld:$currentStoryWorld" +
                         ", saving logline!")
                 buildLoglineUseCase(
                     currentPronoun,
