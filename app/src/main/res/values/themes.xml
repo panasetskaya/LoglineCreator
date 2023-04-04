@@ -2,7 +2,7 @@
 
     <style name="Theme.LoglineSplash" parent="Theme.SplashScreen.IconBackground">
         <item name="windowSplashScreenBackground">@color/our_green</item>
-        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher_round</item>
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
         <item name="postSplashScreenTheme">@style/Theme.StoryArchitectLogline</item>
     </style>
 
@@ -12,9 +12,9 @@
         <item name="colorOnPrimary">@color/our_text_grey</item>
         <item name="colorOnSurface">@color/our_text_grey</item>
         <item name="colorSecondary">@color/our_green</item>
-        <item name="colorSecondaryVariant">@color/white</item>
+        <item name="colorSecondaryVariant">@color/mode_color</item>
         <item name="colorOnSecondary">@color/our_headline_grey</item>
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor">@color/status_bar_color</item>
         <item name="fontFamily">@font/roboto</item>
         <item name="searchViewStyle">@style/SearchViewMy</item>
 
@@ -61,6 +61,7 @@
         <item name="textAllCaps">false</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textAllCaps">false</item>
+
         <item name="shapeAppearanceOverlay">@style/RoundedShapeAppearance</item>
     </style>
 
@@ -109,7 +110,7 @@
         <item name="android:paddingRight">20dp</item>
         <item name="android:paddingTop">5dp</item>
         <item name="android:paddingBottom">5dp</item>
-        <item name="android:popupBackground">#DFFFFFFF</item>
+        <item name="android:popupBackground">?attr/colorSecondaryVariant</item>
     </style>
 
     <style name="AlertDialogTheme" parent="ThemeOverlay.MaterialComponents.Dialog.Alert">
