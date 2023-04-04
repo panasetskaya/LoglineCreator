@@ -6,23 +6,17 @@
         <item name="postSplashScreenTheme">@style/Theme.StoryArchitectLogline</item>
     </style>
 
-    <!-- Base application theme. -->
     <style name="Theme.StoryArchitectLogline" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Primary brand color. -->
         <item name="colorPrimary">@color/our_green</item>
         <item name="colorPrimaryVariant">@color/our_background_grey</item>
         <item name="colorOnPrimary">@color/our_text_grey</item>
         <item name="colorOnSurface">@color/our_text_grey</item>
-        <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/our_green</item>
         <item name="colorSecondaryVariant">@color/white</item>
         <item name="colorOnSecondary">@color/our_headline_grey</item>
-        <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
         <item name="fontFamily">@font/roboto</item>
-
-<!--        <item name="android:windowAnimationStyle">@null</item>-->
+        <item name="searchViewStyle">@style/SearchViewMy</item>
 
     </style>
 
@@ -131,6 +125,13 @@
     <style name="PositiveButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
         <item name="android:textColor">@android:color/holo_red_dark</item>
     </style>
+
+    <style name="SearchViewMy" parent="TextAppearance.Material3.SearchView">
+        <item name="submitBackground">@android:color/transparent</item>
+        <item name="queryBackground">@android:color/transparent</item>
+    </style>
+
+
 
 
 </resources>

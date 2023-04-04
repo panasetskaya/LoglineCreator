@@ -1,9 +1,11 @@
 package com.panasetskaia.storyarchitectlogline.presentation.mainActivity
 
 
+
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -13,7 +15,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.core.view.MenuItemCompat
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
@@ -93,10 +94,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
         val searchViewItem: MenuItem = menu.findItem(R.id.search)
-        searchView = MenuItemCompat.getActionView(searchViewItem) as SearchView?
+        searchView = searchViewItem.actionView as SearchView?
         searchView?.maxWidth = Integer.MAX_VALUE
-        searchView?.queryHint = getString(R.string.search_title)
-//        searchView.isSubmitButtonEnabled = true
+        val plateId = searchView?.context?.resources?.getIdentifier("android:id/search_plate", null, null)
+        val plate = plateId?.let { searchView?.findViewById<View>(it) }
+        plate?.background = null
+
         searchView?.setOnCloseListener {
             isSearchViewActivated = false
             false
