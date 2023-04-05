@@ -10,7 +10,7 @@
     <color name="our_green">#DED61D</color>
     <color name="our_purple">#6750A4</color>
     <color name="our_red">#EB5757</color>
-    <color name="our_headline_grey">#1C1B1F</color>
+    <color name="our_headline_grey">#80FFFFFF</color>
     <color name="our_text_grey">#FFFFFFFF</color>
     <color name="our_subheader_grey">#60FFFFFF</color>
     <color name="our_hint_grey">#6A6D74</color>
