@@ -1,6 +1,6 @@
 # LoglineCreator
 
-A stand-alone mobile feature of [Story Architect app](https://starc.app/), which lets you create a short and memorable logline for your future movie. 
+A stand-alone mobile feature of [Story Architect app](https://starc.app/) that lets you create a short and memorable logline for your future movie. 
 
 <img src="https://user-images.githubusercontent.com/90948269/230065132-fc501fea-6833-4398-ae33-e75aefe5394c.png" width="300" height="533"> <img src="https://user-images.githubusercontent.com/90948269/230065168-ce19bc8f-2528-484e-b885-89a6bca32af5.png" width="300" height="533"> 
 
