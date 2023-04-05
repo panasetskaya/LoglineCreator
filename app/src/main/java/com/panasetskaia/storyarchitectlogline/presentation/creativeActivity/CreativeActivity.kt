@@ -84,6 +84,7 @@ class CreativeActivity : AppCompatActivity() {
         setDots()
         setDefaultBottomButtons()
         setHintText()
+        setSwipeToGenerate()
     }
 
     override fun onBackPressed() {
@@ -407,5 +408,24 @@ class CreativeActivity : AppCompatActivity() {
     private fun saveLogline() {
         editorViewModel.saveNewLogline()
         Toast.makeText(this@CreativeActivity, "Saved it!", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun setSwipeToGenerate() {
+        viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                if (position == 7) {
+                    if (isSwipingAllowed) {
+                        viewModel.buildNewLogline()
+                        super.onPageSelected(position)
+                    } else {
+                        Toast.makeText(
+                            this@CreativeActivity,
+                            getString(R.string.pleaseFill),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            }
+        })
     }
 }

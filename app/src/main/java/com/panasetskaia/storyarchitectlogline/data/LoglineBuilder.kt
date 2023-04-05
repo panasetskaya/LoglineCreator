@@ -15,36 +15,36 @@ class LoglineBuilder(
 
     fun buildLogline(): String {
         var logline = ""
-        majorEvent?.let { event ->
-            logline = "when ${prepareText(event)} "
+        if (majorEvent!=null && majorEvent!=empty) {
+            logline = "when ${prepareText(majorEvent)} "
         }
-        if (worldText != null) {
+        if (worldText != null && worldText!=empty) {
             val newWorldText = worldText.replace("it is", "", ignoreCase = true)
             logline += "in ${prepareText(newWorldText)}, "
-        } else if (majorEvent != null) {
+        } else if (majorEvent != null && majorEvent!= empty) {
             logline += ", "
         }
         logline += "${prepareText(characterInfo)} "
         logline += "must "
-        if (mprEvent == null && theme == null) {
+        if ((mprEvent == null || mprEvent== empty)&& (theme == null || theme== empty)) {
             logline += "${prepareText(storyGoal)} "
-        } else if (mprEvent == null && theme != null) {
+        } else if ((mprEvent == null || mprEvent== empty) && (theme != null && theme!= empty)) {
             logline += "in order to ${prepareText(theme)} "
             logline += "${prepareText(storyGoal)} "
         } else {
             logline += "${prepareText(storyGoal)}, "
-            if (mprEvent != null) {
+            if (mprEvent != null && mprEvent!= empty) {
                 logline += "but when ${prepareText(mprEvent)} $pronoun must "
             }
-            if (theme != null) {
+            if (theme != null && theme!= empty) {
                 logline += "in order to ${prepareText(theme)} "
             }
-            if (afterMprEvent != null) {
+            if (afterMprEvent != null && afterMprEvent!= empty) {
                 logline += "${prepareText(afterMprEvent)} "
             }
         }
-        stakes?.let {
-            logline += "before ${prepareText(it)}"
+        if (stakes!=null && stakes!= empty) {
+            logline += "before ${prepareText(stakes)}"
         }
         if (logline.last() != '.') {
             logline = logline.trim() + "."
@@ -63,6 +63,10 @@ class LoglineBuilder(
             return result.substring(3)
         }
         return result
+    }
+
+    companion object {
+        private const val empty = ""
     }
 
 //    private fun buildLogline(): String {

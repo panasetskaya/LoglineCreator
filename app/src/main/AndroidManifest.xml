@@ -12,12 +12,12 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:theme="@style/Theme.MySplash"
+        android:theme="@style/Theme.LoglineSplash"
         tools:targetApi="31">
         <activity
             android:name=".presentation.creativeActivity.CreativeActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustPan">
+            >
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -25,7 +25,7 @@
         <activity
             android:name=".presentation.mainActivity.MainActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustPan">
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -42,3 +42,5 @@
     </application>
 
 </manifest>
+
+<!--    android:windowSoftInputMode="adjustPan"-->
